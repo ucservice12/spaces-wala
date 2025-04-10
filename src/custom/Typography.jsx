@@ -11,7 +11,7 @@ export const TypographyH1 = ({ children, className }) => {
 
 export const TypographyH2 = ({ children, className }) => {
     return (
-        <h2 className={clsx("text-3xl lg:text-5xl font-semibold", className)}>
+        <h2 className={clsx("text-2xl lg:text-3xl font-semibold", className)}>
             {children}
         </h2>
     )
@@ -27,7 +27,7 @@ export const TypographyH3 = ({ children, className }) => {
 
 export const TypographyH4 = ({ children, className }) => {
     return (
-        <h3 className={clsx("text-xl font-semibold dark:text-primary-foreground", className)}>
+        <h3 className={clsx("text-xl font-semibold dark:text-primary", className)}>
             {children}
         </h3>
     )
@@ -46,6 +46,22 @@ export const TypographyP = ({ children, className }) => {
         <p className={clsx("", className)}>
             {children}
         </p>
+    )
+}
+
+export const Paragraph = ({ children, className }) => {
+    return (
+        <p className={clsx("leading-7 text-sm mt-4", className)}>
+            {children}
+        </p>
+    )
+}
+
+export const Span = ({ children, className }) => {
+    return (
+        <span className={clsx("", className)}>
+            {children}
+        </span>
     )
 }
 

@@ -25,7 +25,7 @@ export const commitmentPoints = [
 
 export default function ValuesSection() {
     return (
-        <div className="my-16">
+        <div className="my-16" id="commitment">
             <div className="text-center">
                 <Headline smallHeadline="Commitment & Vision" headline="Why Choose Us" />
             </div>

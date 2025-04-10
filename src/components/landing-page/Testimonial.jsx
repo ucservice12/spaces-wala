@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Small, TypographyMuted } from "@/custom/Typography";
+import { Small, TypographyMuted, TypographyH4 } from "@/custom/Typography";
 import Headline from "@/custom/Headline";
 import { FaStar, FaRegStar } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
+import { IoStar, IoStarOutline } from "react-icons/io5";
+
 
 const testimonials = [
   {
@@ -80,6 +82,28 @@ const testimonials = [
 export default function Testimonial() {
   const [startIndex, setStartIndex] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(3);
+
+  // State to track the rating
+  const [rating, setRating] = useState(0);
+  const [hoverRating, setHoverRating] = useState(0);
+
+  // Ratings text
+  const ratingText = [
+    'Poor',
+    'Fair',
+    'Average',
+    'Good',
+    'Excellent',
+  ];
+
+  // Handle the hover effect
+  const handleMouseEnter = (index) => {
+    setHoverRating(index + 1);
+  };
+
+  const handleMouseLeave = () => {
+    setHoverRating(0);
+  };
 
   useEffect(() => {
     const updateItemsPerPage = () => {
@@ -176,11 +200,58 @@ export default function Testimonial() {
             key={idx}
             onClick={() => setStartIndex(idx * itemsPerPage)}
             className={`w-3 h-3 rounded-full transition-colors ${startIndex / itemsPerPage === idx
-                ? "bg-blue-600"
-                : "bg-gray-300"
+              ? "bg-blue-600"
+              : "bg-gray-300"
               }`}
           ></button>
         ))}
+      </div>
+
+      <div className="bg-[#fde2cf] rounded-md max-w-2xl mx-auto p-6 my-8 relative h-[160px] grid grid-cols-2 gap-4">
+        <div>
+          <img src="/assets/ReviewAvatar.png" alt="avatar" className="w-42 absolute bottom-0 left-8" />
+        </div>
+        <div className="grid gap-4 items-center">
+          <TypographyH4 className="dark:text-primary-foreground">
+            How would you rate your locality / society?
+          </TypographyH4>
+          <div className="flex items-center space-x-4">
+            {[1, 2, 3, 4, 5].map((starIndex) => (
+              <div
+                key={starIndex}
+                onMouseEnter={() => handleMouseEnter(starIndex - 1)}
+                onMouseLeave={handleMouseLeave}
+                onClick={() => setRating(starIndex)}
+                className="relative flex flex-col items-center cursor-pointer"
+              >
+                {/* Motion wrapper for scaling */}
+                <motion.div
+                  initial={{ scale: 1 }}
+                  whileHover={{ scale: 1.2 }}  // Scale only the star
+                  transition={{ type: 'spring', stiffness: 300 }}
+                >
+                  {/* Show filled star if rating is greater than or equal to the index */}
+                  {hoverRating >= starIndex || rating >= starIndex ? (
+                    <IoStar size={24} className="text-yellow-500" />
+                  ) : (
+                    <IoStarOutline size={24} className="text-yellow-500" />
+                  )}
+                </motion.div>
+                {/* Conditionally show the rating text only for the hovered star */}
+                {hoverRating === starIndex && (
+                  <motion.p
+                    className="text-[10px] text-center mt-1 text-black"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    {ratingText[starIndex - 1]}
+                  </motion.p>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </>
   );

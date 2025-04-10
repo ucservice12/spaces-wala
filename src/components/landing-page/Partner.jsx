@@ -4,7 +4,7 @@ import Headline from "@/custom/Headline";
 export default function Partner() {
     return (
         <>
-            <div className="text-center">
+            <div className="text-center" id="our-partner">
                 <Headline smallHeadline="Partner" headline="Our Partner" />
             </div>
 

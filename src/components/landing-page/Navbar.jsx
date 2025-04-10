@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { HiMenuAlt3 } from "react-icons/hi";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import {
     Sheet,
     SheetClose,
@@ -11,25 +11,31 @@ import {
     SheetDescription
 } from "@/components/ui/sheet";
 import { Small } from "@/custom/Typography";
-import ThemeToggle from '../theme-toggle'
+import ThemeToggle from '../theme-toggle';
 
 export const navLinks = [
-    { name: "Home", path: "/" },
-    { name: "Property", path: "/property" },
-    { name: "News", path: "/our-news" },
-    { name: "Partner", path: "/our-partner" },
-    { name: "Commitment", path: "/commitment" },
-    { name: "Benefits", path: "/our-benefits" },
-    { name: "Contact", path: "/contact" },
+    { name: "Home", path: "#home" },
+    { name: "Property", path: "#property" },
+    { name: "News", path: "#our-news" },
+    { name: "Partner", path: "#our-partner" },
+    { name: "Commitment", path: "#commitment" },
+    { name: "Benefits", path: "#our-benefits" },
+    { name: "Contact", path: "#contact" },
 ];
 
 export default function Navbar() {
     const [hoveredIndex, setHoveredIndex] = useState(null);
-    const navigate = useNavigate();
     const location = useLocation();
 
+
     const handleNavigation = (path) => {
-        navigate(path);
+        const element = document.querySelector(path);
+        if (element) {
+            window.scrollTo({
+                top: element.offsetTop - 260,
+                behavior: "smooth",
+            });
+        }
     };
 
     return (

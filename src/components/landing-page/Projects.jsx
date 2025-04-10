@@ -177,7 +177,7 @@ export default function Projects() {
         controls.start({
             x: "-50%",
             transition: {
-                duration: 50,
+                duration: 80,
                 ease: "linear",
                 repeat: Infinity,
             },
@@ -196,7 +196,7 @@ export default function Projects() {
                     controls.start({
                         x: "-50%",
                         transition: {
-                            duration: 50,
+                            duration: 80,
                             ease: "linear",
                             repeat: Infinity,
                         },
