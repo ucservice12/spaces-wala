@@ -11,9 +11,15 @@ import Testimonial from "@/components/landing-page/Testimonial";
 import News from "@/components/landing-page/News";
 import Navbar2 from "@/components/Navbar-2";
 
+import AboutUs from "@/pages/AboutUs";
 import TermsCondition from "@/pages/Terms&Condition";
 import PrivacyPolicy from "@/pages/PrivacyPolicy";
-import NotFound from "./pages/NotFound";
+import NotFound from "@/pages/NotFound";
+import ContactUs from "@/pages/ContactUs";
+import RequestInfo from "@/pages/RequestInfo";
+import FeedBackSend from "@/pages/FeedBackSend";
+import AllTestimonials from "@/pages/AllTestimonials";
+import SafetyGuid from "@/pages/SafetyGuid";
 
 // Define the Layout Component that will contain the common parts (Banner, Home, etc.)
 const Layout = () => (
@@ -46,19 +52,18 @@ function App() {
       {/* Conditionally render Navbar2 based on whether the current route is not active */}
       {!isOnSpecialPage && <Navbar2 />}
 
-      {/* Routes will render the content based on the current route */}
       <Routes>
-        {/* Main route for the layout */}
         <Route path="/" element={<Layout />} />
-        {/* Privacy policy page route */}
+        <Route path="/about-us" element={<AboutUs />} />
+        <Route path="/contact-us" element={<ContactUs />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-and-conditions" element={<TermsCondition />} />
-
-        {/* Catch-all route for 404 page */}
+        <Route path="/request-info" element={<RequestInfo />} />
+        <Route path="/feedback" element={<FeedBackSend />} />
+        <Route path="/testimonials" element={<AllTestimonials />} />
+        <Route path="/safety-guide" element={<SafetyGuid />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
-
-      {/* Footer will be shown on all routes */}
       <Footer />
     </>
   );

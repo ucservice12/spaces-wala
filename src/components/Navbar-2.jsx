@@ -6,7 +6,7 @@ export default function Navbar2() {
     const navigate = useNavigate();
 
     return (
-        <div className='top-0 fixed left-0 w-full bg-[#083e9cdd] backdrop-blur-xl p-1 px-4'>
+        <div className='top-0 fixed left-0 z-50 w-full bg-[#083e9cdd] backdrop-blur-xl p-1 px-4'>
             <div className='max-w-7xl mx-auto flex justify-between items-center'>
                 <div className='flex items-center gap-1'>
                     <IoArrowBackSharp size={24} color='white' className='sm:hidden flex' onClick={() => navigate(-1)} />

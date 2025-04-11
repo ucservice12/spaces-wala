@@ -61,7 +61,7 @@ const AdvertiserSection = () => {
       <div className="flex flex-col gap-4">
         <img src="/assets/building-3.webp" loading="lazy" alt="building-3" className="w-16" />
         <div className="grid gap-2">
-          <TypographyH4>Properties posted by</TypographyH4>
+          <TypographyH4 className="dark:text-primary-foreground">Properties posted by</TypographyH4>
           <TypographyP className="text-sm dark:text-primary-foreground">Choose type of advertiser</TypographyP>
           <TypographyMuted>
             Discover properties posted by dealers, owners, and builders.

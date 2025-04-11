@@ -24,17 +24,15 @@ export const links = [
 ];
 
 export const CompanyLinks = [
-    { name: "About us", href: "/about" },
-    { name: "Contact us", href: "/contact" },
-    { name: "Careers with us", href: "/careers" },
+    { name: "About us", href: "/about-us" },
+    { name: "Contact us", href: "/contact-us" },
+    { name: "Careers with us", href: "https://ucindia.services/" },
     { name: "Terms & Conditions", href: "/terms-and-conditions" },
     { name: "Request Info", href: "/request-info" },
     { name: "Feedback", href: "/feedback" },
-    { name: "Report a problem", href: "/report-problem" },
+    { name: "Report a problem", href: "/feedback" },
     { name: "Testimonials", href: "/testimonials" },
     { name: "Privacy Policy", href: "/privacy-policy" },
-    { name: "Summons/Notices", href: "/summons-notices" },
-    { name: "Grievances", href: "/grievances" },
     { name: "Safety Guide", href: "/safety-guide" },
 ];
 
