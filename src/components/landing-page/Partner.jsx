@@ -25,6 +25,7 @@ export default function Partner() {
                         Transparent, reliable, and customer-first — that's our promise.
                         Because your future deserves the best partner in real estate.
                     </TypographyMuted>
+                    <img src="/assets/partner-2.avif" alt="partner-2" className="rounded-md" />
                 </div>
             </div>
         </>

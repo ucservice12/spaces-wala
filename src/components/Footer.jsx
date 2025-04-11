@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { navLinks } from "./landing-page/Navbar";
 import { version } from "../../package.json";
 import SocialMedia from "./SocialMedia";
 import { PiMapPin } from "react-icons/pi";
@@ -7,30 +6,36 @@ import { FaWhatsapp } from "react-icons/fa";
 import { MdOutlineMailOutline, MdLocalPhone } from "react-icons/md";
 import { VscSend } from "react-icons/vsc";
 import { Input } from "@/components/ui/input";
-import { TypographyH3, TypographyMuted, Small } from "@/custom/Typography";
+import { TypographyH4, TypographyMuted, Small } from "@/custom/Typography";
 import { useState } from "react";
 
-export const Quicklinks = [
-    {
-        id: 1,
-        quickName: "Privacy Policy",
-        href: "/privacyPolicy",
-    },
-    {
-        id: 2,
-        quickName: "Terms & Services",
-        href: "/terms-and-conditions",
-    },
-    {
-        id: 3,
-        quickName: "Credit",
-        href: "",
-    },
-    {
-        id: 4,
-        quickName: "FAQ",
-        href: "",
-    },
+export const links = [
+    { name: "Mobile Apps", href: "/mobile-apps" },
+    { name: "Our Services", href: "/services" },
+    { name: "Price Trends", href: "/price-trends" },
+    { name: "Post your Property", href: "/post-property" },
+    { name: "Real Estate Investments", href: "/investments" },
+    { name: "Builders in India", href: "/builders" },
+    { name: "Area Converter", href: "/area-converter" },
+    { name: "Articles", href: "/articles" },
+    { name: "Rent Receipt", href: "/rent-receipt" },
+    { name: "Customer Service", href: "/customer-service" },
+    { name: "Sitemap", href: "/sitemap" },
+];
+
+export const CompanyLinks = [
+    { name: "About us", href: "/about" },
+    { name: "Contact us", href: "/contact" },
+    { name: "Careers with us", href: "/careers" },
+    { name: "Terms & Conditions", href: "/terms-and-conditions" },
+    { name: "Request Info", href: "/request-info" },
+    { name: "Feedback", href: "/feedback" },
+    { name: "Report a problem", href: "/report-problem" },
+    { name: "Testimonials", href: "/testimonials" },
+    { name: "Privacy Policy", href: "/privacy-policy" },
+    { name: "Summons/Notices", href: "/summons-notices" },
+    { name: "Grievances", href: "/grievances" },
+    { name: "Safety Guide", href: "/safety-guide" },
 ];
 
 export const contactDetails = [
@@ -49,8 +54,8 @@ export const contactDetails = [
     {
         id: 3,
         icon: <MdOutlineMailOutline size={20} />,
-        contactLink: "mailto:ucservices.rajesh@gmail.com",
-        contactName: "ucservices.rajesh@gmail.com"
+        contactLink: "mailto:info@spaceswala.com",
+        contactName: "info@spaceswala.com"
     },
     {
         id: 4,
@@ -74,7 +79,7 @@ export default function Footer() {
             const body = `A user has subscribed with this email: ${email}\n\nSpaceswala Real Estate Services\n\nIf you have any questions, feel free to contact us!`;
 
             // Open the default email client with pre-filled fields
-            window.location.href = `mailto:ucservices.rajesh@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            window.location.href = `mailto:info@spaceswala.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
             setEmail('');
         } else {
             alert("Please enter a valid email.");
@@ -82,18 +87,18 @@ export default function Footer() {
     };
 
     return (
-        <div className='bg-accent p-6'>
-            <div className="flex flex-col text-center justify-center items-center border-b-2 pb-4 mb-4">
+        <div className='bg-black border-t-2 shadow-3xl text-white p-6'>
+            <div className="flex flex-col text-center justify-center items-center mb-4">
                 <img src="/logo.png" alt="spacesWala logo" className="w-54" />
                 <Small>
                     We Deliver the Real Estate | Architect | Commercial Estate
                 </Small>
             </div>
-            <div className='w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 sm:px-6 gap-6'>
+            <div className='w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 sm:px-6 gap-4 sm:gap-8'>
                 <div className="flex flex-col gap-4">
-                    <TypographyH3 className="opacity-75">
+                    <TypographyH4 className="opacity-75">
                         Keep Updated
-                    </TypographyH3>
+                    </TypographyH4>
                     <div className="flex flex-col gap-4">
                         <TypographyMuted>
                             Real Estate | Lease | Rent Commercial Estate | Financing
@@ -114,57 +119,68 @@ export default function Footer() {
                                 <VscSend size={22} />
                             </div>
                         </div>
+
+                        <div className="grid grid-cols-2 sm:gap-4 sm:mt-8">
+                            <img src="/assets/Play-store.png" alt="" className="w-32 sm:w-42 cursor-pointer" />
+                            <img src="/assets/ios-store.png" alt="" className="w-32 sm:w-42 cursor-pointer" />
+                        </div>
                     </div>
                 </div>
                 <div className="grid grid-cols-2">
-                    <div className="flex flex-col gap-1 sm:ml-10">
-                        <TypographyH3 className="opacity-75">
-                            Links
-                        </TypographyH3>
+                    <div className="flex flex-col gap-6 sm:ml-10">
+                        <TypographyH4 className="opacity-75">
+                            SpacesWala
+                        </TypographyH4>
 
-                        {
-                            navLinks?.map(item => (
-                                <a href={item.path} key={item.name}>
-                                    <Small className="underline opacity-60 underline-offset-4 capitalize">
-                                        {item.name}
-                                    </Small>
-                                </a>
-                            ))
-                        }
+                        <div className="grid gap-2">
+                            {
+                                links?.map(item => (
+                                    <a href={item.path} key={item.name}>
+                                        <Link className="opacity-60 text-sm capitalize cursor-pointer">
+                                            {item.name}
+                                        </Link>
+                                    </a>
+                                ))
+                            }
+                        </div>
                     </div>
                     <div className="flex flex-col gap-2">
-                        <TypographyH3 className="opacity-75">
+                        <TypographyH4 className="opacity-75">
                             Company
-                        </TypographyH3>
+                        </TypographyH4>
 
+                        <div className="grid gap-2">
+                            {
+                                CompanyLinks?.map(quick => (
+                                    <Link to={quick.href} key={quick.name}>
+                                        <Small className="text-sm opacity-60 capitalize">
+                                            {quick.name}
+                                        </Small>
+                                    </Link>
+                                ))
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div className="flex flex-col gap-6">
+                    <TypographyH4 className="opacity-75">
+                        Office Location
+                    </TypographyH4>
+
+                    <div className="grid gap-4">
                         {
-                            Quicklinks?.map(quick => (
-                                <Link to={quick.href} key={quick.id}>
-                                    <Small className="underline opacity-60 underline-offset-4 capitalize">
-                                        {quick.quickName}
+                            contactDetails?.map(contact => (
+                                <Link key={contact?.contactName} to={contact.contactLink} target="_blank" className="flex gap-4 items-center opacity-60">
+                                    <Small>
+                                        {contact?.icon}
+                                    </Small>
+                                    <Small className="leading-normal text-wrap">
+                                        {contact?.contactName}
                                     </Small>
                                 </Link>
                             ))
                         }
                     </div>
-                </div>
-                <div className="grid gap-3">
-                    <TypographyH3 className="opacity-75">
-                        Office Location
-                    </TypographyH3>
-
-                    {
-                        contactDetails?.map(contact => (
-                            <Link key={contact?.contactName} to={contact.contactLink} target="_blank" className="flex gap-4 items-center underline opacity-60 underline-offset-4">
-                                <Small>
-                                    {contact?.icon}
-                                </Small>
-                                <Small className="leading-normal text-wrap">
-                                    {contact?.contactName}
-                                </Small>
-                            </Link>
-                        ))
-                    }
                 </div>
             </div>
 

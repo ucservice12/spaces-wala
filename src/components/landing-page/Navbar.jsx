@@ -39,7 +39,7 @@ export default function Navbar() {
     };
 
     return (
-        <div className="w-full h-20 sm:mt-11 sm:h-16 z-30 flex justify-center items-center p-4">
+        <div className="w-full h-20 sm:mt-11 sm:h-16 sticky top-0 bg-white/30 backdrop-blur-2xl z-30 flex justify-center items-center p-4">
             <div className='flex justify-between items-center w-full sm:max-w-7xl mx-auto sm:px-4'>
                 {/* Logo */}
                 <div>

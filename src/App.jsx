@@ -51,7 +51,7 @@ function App() {
         {/* Main route for the layout */}
         <Route path="/" element={<Layout />} />
         {/* Privacy policy page route */}
-        <Route path="/privacyPolicy" element={<PrivacyPolicy />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-and-conditions" element={<TermsCondition />} />
 
         {/* Catch-all route for 404 page */}

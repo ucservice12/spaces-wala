@@ -1,4 +1,5 @@
 import { Paragraph } from '@/custom/Typography'
+import NavigateSloter from "@/components/NavigateSloter";
 
 export default function TermsCondition() {
     return (

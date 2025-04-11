@@ -40,7 +40,7 @@ const BHKSection = () => {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-4 relative -bottom-10 sm:mt-6">
         {bhkPropertyData.map(({ id, title, propertiesAvailable }) => (
-          <Card className="p-6 grid gap-4" key={id}>
+          <Card className="p-6 grid gap-4 hover:scale-105 transition-all cursor-pointer" key={id}>
             <img src="/assets/home-wila.png" loading="lazy" className="w-8" alt="" />
             <div className="grid gap-2">
               <TypographyH5>{title}</TypographyH5>
@@ -120,7 +120,7 @@ const PossessionSection = () => {
       </div>
 
       <div
-        className="overflow-hidden relative mt-4"
+        className="overflow-hidden relative mt-4 py-8 pb-8"
         onMouseEnter={() => controls.stop()}
         onMouseLeave={() =>
           controls.start({
