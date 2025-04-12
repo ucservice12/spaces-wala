@@ -1,5 +1,5 @@
 import { CgFacebook } from "react-icons/cg";
-import { FaInstagram, FaYoutube } from "react-icons/fa";
+import { FaInstagram, FaLinkedin } from "react-icons/fa";
 import { FaTwitter } from "react-icons/fa6";
 
 const socialIcon = [
@@ -11,7 +11,7 @@ const socialIcon = [
     {
         name: "instagram",
         icon: <FaInstagram size={24} />,
-        link: "abcs"
+        link: "https://www.instagram.com/spaceswala.com1?igsh=MXdqbm1vc3FyZzVudw=="
     },
     {
         name: "twitter",
@@ -19,9 +19,9 @@ const socialIcon = [
         link: "abcs"
     },
     {
-        name: "youtube",
-        icon: <FaYoutube size={24} />,
-        link: "abcs"
+        name: "Linkedin",
+        icon: <FaLinkedin size={24} />,
+        link: "https://www.linkedin.com/company/spaceswala-com1/"
     },
 ]
 
