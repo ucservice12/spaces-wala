@@ -58,7 +58,7 @@ export const contactDetails = [
     {
         id: 4,
         icon: <FaWhatsapp size={20} />,
-        contactLink: "https://wa.me/+919270033002",
+        contactLink: "https://wa.me/919270033002?text=Hello%2C%20I%20am%20interested%20in%20your%20real%20estate%20services.%20Please%20send%20me%20more%20details%20on%20email%20types%20and%20property%20listings.",
         contactName: "+919270033002 (WhatsApp)"
     }
 ];
@@ -119,8 +119,8 @@ export default function Footer() {
                         </div>
 
                         <div className="grid grid-cols-2 sm:gap-4 sm:mt-8">
-                            <img src="/assets/Play-store.png" alt="" className="w-32 sm:w-42 cursor-pointer" />
-                            <img src="/assets/ios-store.png" alt="" className="w-32 sm:w-42 cursor-pointer" />
+                            <img src="/assets/Play-store.png" alt="" className="w-32 cursor-pointer" />
+                            <img src="/assets/ios-store.png" alt="" className="w-32 cursor-pointer" />
                         </div>
                     </div>
                 </div>

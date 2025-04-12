@@ -1,5 +1,5 @@
 import { CgFacebook } from "react-icons/cg";
-import { FaInstagram, FaLinkedin } from "react-icons/fa";
+import { FaInstagram, FaLinkedin, FaWhatsapp } from "react-icons/fa";
 import { FaTwitter } from "react-icons/fa6";
 
 const socialIcon = [
@@ -14,9 +14,9 @@ const socialIcon = [
         link: "https://www.instagram.com/spaceswala.com1?igsh=MXdqbm1vc3FyZzVudw=="
     },
     {
-        name: "twitter",
-        icon: <FaTwitter size={24} />,
-        link: "abcs"
+        name: "WhatApps",
+        icon: <FaWhatsapp size={24} />,
+        link: "https://wa.me/919270033002?text=Hello%2C%20I%20am%20interested%20in%20your%20real%20estate%20services.%20Please%20send%20me%20more%20details%20on%20email%20types%20and%20property%20listings."
     },
     {
         name: "Linkedin",
