@@ -20,8 +20,8 @@ import RequestInfo from "@/pages/RequestInfo";
 import FeedBackSend from "@/pages/FeedBackSend";
 import AllTestimonials from "@/pages/AllTestimonials";
 import SafetyGuid from "@/pages/SafetyGuid";
+import AreaConverter from "@/pages/AreaConverter";
 
-// Define the Layout Component that will contain the common parts (Banner, Home, etc.)
 const Layout = () => (
   <>
     <Banner />
@@ -42,14 +42,12 @@ function App() {
 
   const isOnSpecialPage = location.pathname === "/";
 
-  // Scroll to the top of the page whenever the route changes
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [location]);
 
   return (
     <>
-      {/* Conditionally render Navbar2 based on whether the current route is not active */}
       {!isOnSpecialPage && <Navbar2 />}
 
       <Routes>
@@ -62,6 +60,7 @@ function App() {
         <Route path="/feedback" element={<FeedBackSend />} />
         <Route path="/testimonials" element={<AllTestimonials />} />
         <Route path="/safety-guide" element={<SafetyGuid />} />
+        <Route path="/area-converter" element={<AreaConverter />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />

@@ -2,7 +2,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { Small } from '../custom/Typography';
 import { MdNavigateNext } from "react-icons/md";
 
-export default function NavigateSloter({ img, headline }) {
+export default function NavigateSloter({ loading = "lazy", headline }) {
     const location = useLocation();
     const Navigate = useNavigate();
     return (
@@ -15,7 +15,7 @@ export default function NavigateSloter({ img, headline }) {
                 </span>
             </Small>
             <div className='bg-green-50 rounded-md p-6 my-8 flex justify-center items-center flex-col gap-6'>
-                <img src={img} alt="terms" className='w-10' />
+                <img loading="lazy" src={loading = "lazy"} alt="terms" className='w-10' />
                 <h3 className="scroll-m-20 mb-6 text-2xl font-semibold tracking-tight">
                     {headline}
                 </h3>

@@ -31,7 +31,7 @@ export default function GetInTouch() {
     return (
         <>
             <div className='flex flex-col justify-center items-center text-center gap-1'>
-                <img src="/assets/getintouch.png" alt="get in touch" />
+                <img loading="lazy" src="/assets/getintouch.png" alt="get in touch" />
                 <TypographyH4>
                     Get in touch
                 </TypographyH4>

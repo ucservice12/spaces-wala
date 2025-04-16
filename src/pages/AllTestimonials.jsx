@@ -35,6 +35,7 @@ export default function AllTestimonials() {
 
                         <div className="flex items-center gap-4">
                             <img
+                                loading="lazy"
                                 src={testimonial?.image}
                                 alt={testimonial?.name}
                                 className="w-10 h-10 rounded-full object-cover border"

@@ -65,13 +65,13 @@ export default function Navbar() {
         <div
             className={`fixed left-0 z-50 w-full transition-all duration-300
         ${showNavbar ? "translate-y-0" : "-translate-y-full"}
-        ${scrollY > 10 ? "top-0" : "sm:top-8 top-18"}
-        bg-white/10 backdrop-blur-xl shadow-md`}
+        ${scrollY > 10 ? "top-0" : "sm:top-10 top-12"}
+        bg-white/2 backdrop-blur-xl shadow-md`}
         >
-            <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ${scrollY > 10 ? "h-18" : "h-22 sm:h-28"} flex items-center justify-between`}>
+            <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ${scrollY > 600 ? "h-18" : "h-22 sm:h-28"} flex items-center justify-between`}>
                 {/* Logo */}
                 <div className="flex items-center gap-2">
-                    <img src="/logo.png" alt="Logo" className={`${scrollY > 10 ? "h-22 w-22" : "sm:h-38 h-28 w-28 sm:w-38"} mt-8 object-contain`} />
+                    <img loading="lazy" src="/logo.png" alt="Logo" className={`${scrollY > 600 ? "h-22 w-22" : "sm:h-38 h-28 w-28 sm:w-38"} mt-8 object-contain`} />
                 </div>
 
                 {/* Desktop Nav */}
@@ -84,7 +84,7 @@ export default function Navbar() {
                             onMouseLeave={() => setHoveredIndex(null)}
                             onClick={() => handleNavigation(item.path)}
                         >
-                            <Small className={`${lastScrollY > 700 ? "text-black" : "text-white"}`}>
+                            <Small className={`${lastScrollY > 700 ? "text-black dark:text-white" : "text-white"}`}>
                                 {item?.name}
                             </Small>
 
@@ -113,11 +113,11 @@ export default function Navbar() {
                         <SheetContent className="w-[70%] sm:w-[300px]">
                             <SheetHeader>
                                 <SheetTitle className="flex items-center gap-2">
-                                    <img src="/logo.png" alt="Logo" className="w-10 h-10" />
+                                    <img loading="lazy" src="/logo.png" alt="Logo" className="w-22 h-22" />
                                 </SheetTitle>
                                 <SheetDescription />
                             </SheetHeader>
-                            <div className="flex flex-col gap-6 mt-6 ml-6">
+                            <div className="flex flex-col gap-6 ml-6">
                                 {navLinks.map((item) => (
                                     <SheetClose key={item.name} asChild>
                                         <button

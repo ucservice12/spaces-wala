@@ -10,7 +10,7 @@ export default function ThemeToggle({ lastScrollY }) {
     return (
         <button
             onClick={() => setTheme(isDark ? "light" : "dark")}
-            className={`cursor-pointer sm:bg-transparent bg-blue-400 rounded-sm flex justify-center text-white sm:text-black items-center p-2 ${lastScrollY > 700 ? "sm:text-black" : 'sm:text-white'}`}
+            className={`cursor-pointer sm:bg-transparent bg-blue-400 rounded-sm flex justify-center text-white sm:text-black items-center p-2 ${lastScrollY > 700 ? "sm:text-black dark:text-white" : 'sm:text-white'}`}
         >
             {isDark ? <FiSun size={16} /> : <IoMoonOutline size={16} />}
             <span className="sr-only">{isDark ? "Switch to light mode" : "Switch to dark mode"}</span>

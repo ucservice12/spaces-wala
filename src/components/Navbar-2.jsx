@@ -11,7 +11,7 @@ export default function Navbar2() {
                     <Link to='/'>
                         <IoArrowBackSharp size={24} color='white' className='sm:hidden flex' />
                     </Link>
-                    <img src="/logo.png" alt="logo" className='w-22' />
+                    <img loading="lazy" src="/logo.png" alt="logo" className='w-22' />
                 </div>
                 <div className='bg-white w-[550px] p-2 px-4 rounded-md  hidden sm:flex'>
                     <input type="text" className='flex-1 focus:outline-none px-2 border-r-2 mr-3' />

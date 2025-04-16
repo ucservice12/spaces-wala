@@ -254,7 +254,7 @@ export default function News() {
 
             <div className="bg-[#ebf4db] sm:p-8 p-6 rounded-md">
                 <div className="flex gap-2">
-                    <img src="/assets/news.png" alt="news-photo" className="h-12" />
+                    <img loading="lazy" src="/assets/news.png" alt="news-photo" className="h-12" />
                     <div className="flex-1">
                         <TypographyH4 className="dark:text-primary-foreground">
                             Newly Launched Projects
@@ -281,6 +281,7 @@ export default function News() {
                                 <div className="flex gap-4">
                                     <div className="relative">
                                         <img
+                                            loading="lazy"
                                             src={property?.img}
                                             alt={property?.name}
                                             className="w-30 h-18 rounded-full bg-center"

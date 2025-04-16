@@ -87,7 +87,7 @@ export default function Footer() {
     return (
         <div className='bg-black border-t-2 shadow-3xl text-white p-6'>
             <div className="flex flex-col text-center justify-center items-center mb-4">
-                <img src="/logo.png" alt="spacesWala logo" className="w-54" />
+                <img src="/logo.png" alt="spacesWala logo" loading="lazy" className="w-54" />
                 <Small>
                     We Deliver the Real Estate | Architect | Commercial Estate
                 </Small>
@@ -119,8 +119,8 @@ export default function Footer() {
                         </div>
 
                         <div className="grid grid-cols-2 sm:gap-4 sm:mt-8">
-                            <img src="/assets/Play-store.png" alt="" className="w-32 cursor-pointer" />
-                            <img src="/assets/ios-store.png" alt="" className="w-32 cursor-pointer" />
+                            <img loading="lazy" src="/assets/Play-store.png" alt="" className="w-32 cursor-pointer" />
+                            <img loading="lazy" src="/assets/ios-store.png" alt="" className="w-32 cursor-pointer" />
                         </div>
                     </div>
                 </div>
@@ -130,14 +130,12 @@ export default function Footer() {
                             SpacesWala
                         </TypographyH4>
 
-                        <div className="grid gap-2">
+                        <div className="grid gap-3">
                             {
                                 links?.map(item => (
-                                    <a href={item.path} key={item.name}>
-                                        <Link className="opacity-60 text-sm capitalize cursor-pointer">
-                                            {item.name}
-                                        </Link>
-                                    </a>
+                                    <Link to={item.href} key={item.name} className="opacity-60 text-sm capitalize cursor-pointer">
+                                        {item.name}
+                                    </Link>
                                 ))
                             }
                         </div>

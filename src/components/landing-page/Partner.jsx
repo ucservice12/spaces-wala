@@ -10,7 +10,7 @@ export default function Partner() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                    <img src="/assets/partner.avif" alt="partner" className="rounded-md" />
+                    <img loading="lazy" src="/assets/partner.avif" alt="partner" className="rounded-md" />
                 </div>
                 <div className="flex flex-col justify-center items-center gap-6">
                     <TypographyH2>
@@ -25,7 +25,7 @@ export default function Partner() {
                         Transparent, reliable, and customer-first — that's our promise.
                         Because your future deserves the best partner in real estate.
                     </TypographyMuted>
-                    <img src="/assets/partner-2.avif" alt="partner-2" className="rounded-md" />
+                    <img loading="lazy" src="/assets/partner-2.avif" alt="partner-2" className="rounded-md" />
                 </div>
             </div>
         </>
