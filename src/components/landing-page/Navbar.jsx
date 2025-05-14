@@ -65,13 +65,12 @@ export default function Navbar() {
         <div
             className={`fixed left-0 z-50 w-full transition-all duration-300
         ${showNavbar ? "translate-y-0" : "-translate-y-full"}
-        ${scrollY > 10 ? "top-0" : "sm:top-10 top-12"}
         bg-white/2 backdrop-blur-xl shadow-md`}
         >
-            <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ${scrollY > 600 ? "h-18" : "h-22 sm:h-28"} flex items-center justify-between`}>
+            <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ${scrollY > 600 ? "h-18" : "h-24 sm:h-32"} flex items-center justify-between`}>
                 {/* Logo */}
                 <div className="flex items-center gap-2">
-                    <img loading="lazy" src="/logo.png" alt="Logo" className={`${scrollY > 600 ? "h-22 w-22" : "sm:h-38 h-28 w-28 sm:w-38"} mt-8 object-contain`} />
+                    <img loading="lazy" src="/logo.png" alt="Logo" className={`${scrollY > 600 ? "h-28 w-28" : "sm:h-46 h-30 w-30 sm:w-46"} object-contain`} />
                 </div>
 
                 {/* Desktop Nav */}
