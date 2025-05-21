@@ -3,6 +3,7 @@ import { useSearchParams, Link } from 'react-router-dom';
 import { Filter, MapPin, ArrowDownUp, Grid, List, Home } from 'lucide-react';
 import PropertyCard from '../components/property/PropertyCard';
 import { sampleProperties } from '../data/sampleData';
+import { TypographyH1, TypographyH2 } from '../custom/Typography';
 
 const filterOptions = {
   priceRange: { title: 'Price Range', type: 'range', placeholders: ['Min', 'Max'] },
@@ -113,10 +114,10 @@ const SearchResultsPage = () => {
       {/* Header */}
       <div className="bg-white shadow-sm">
         <div className="container mx-auto px-4 py-6">
-          <h1 className="text-2xl md:text-3xl font-bold text-gray-800">
+          <TypographyH2>
             {type === 'rent' ? 'Rental Properties' : 'Properties for Sale'}{' '}
             {location || city ? ` in ${location || city}` : ''}
-          </h1>
+          </TypographyH2>
           <p className="text-gray-600 mt-1">{filteredProperties.length} properties found</p>
         </div>
       </div>
@@ -171,17 +172,15 @@ const SearchResultsPage = () => {
               </div>
               <div className="flex items-center gap-3">
                 <button
-                  className={`p-2 rounded-md ${
-                    viewMode === 'grid' ? 'bg-blue-100 text-blue-600' : 'bg-white text-gray-600'
-                  }`}
+                  className={`p-2 rounded-md ${viewMode === 'grid' ? 'bg-blue-100 text-blue-600' : 'bg-white text-gray-600'
+                    }`}
                   onClick={() => setViewMode('grid')}
                 >
                   <Grid size={18} />
                 </button>
                 <button
-                  className={`p-2 rounded-md ${
-                    viewMode === 'list' ? 'bg-blue-100 text-blue-600' : 'bg-white text-gray-600'
-                  }`}
+                  className={`p-2 rounded-md ${viewMode === 'list' ? 'bg-blue-100 text-blue-600' : 'bg-white text-gray-600'
+                    }`}
                   onClick={() => setViewMode('list')}
                 >
                   <List size={18} />
