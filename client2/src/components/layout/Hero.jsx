@@ -25,7 +25,7 @@ const Hero = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-8 py-16 sm:py-32 flex flex-col items-start justify-center">
           <div className="w-full lg:max-w-2xl space-y-6 sm:space-y-8">
             <TypographyH1 className="text-white text-3xl sm:text-5xl font-bold leading-tight">
-              Find Your Perfect Home with spaceswala.com
+              Find Your Perfect Home with spaceswala
             </TypographyH1>
 
             <TypographyP className="text-white text-base sm:text-lg">
