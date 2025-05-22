@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Facebook, Twitter, Instagram, Linkedin, Youtube } from 'lucide-react';
+import { TypographyLarge } from '../../custom/Typography';
 
 const footerLinks = [
   {
@@ -47,15 +48,17 @@ const socialLinks = [
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-900 text-white pt-12 pb-8">
+    <footer className="bg-[#213448] text-white pt-12 pb-8">
       <div className="container max-w-7xl mx-auto px-4">
         {/* Main Footer Content */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Dynamic Link Sections */}
           {footerLinks.map((section) => (
             <div key={section.title}>
-              <h3 className="text-lg font-semibold mb-4">{section.title}</h3>
-              <ul className="space-y-2">
+              <TypographyLarge>
+                {section?.title}
+              </TypographyLarge>
+              <ul className="space-y-2 mt-4">
                 {section.links.map((link) => (
                   <li key={link.to}>
                     <Link
@@ -72,12 +75,13 @@ const Footer = () => {
 
           {/* Contact Section */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">Contact Us</h3>
-            <p className="text-gray-300 mb-4">
-              SpacesWala.com, Locon Solutions Private Limited<br />
-              Building A, 5th Floor<br />
-              Unitech Business Park, Block - B<br />
-              South City 1, Gurugram, India
+            <TypographyLarge>
+              Contact Us
+            </TypographyLarge>
+            <p className="text-gray-300 my-4">
+              UC Services Pvt Ltd.
+              Office. 02&15, Saiplaza,
+              Zeroboys Chowk Nehrunagar, Pimpri Chinchwad Pune.411018.
             </p>
             <p className="text-gray-300 mb-4">
               <strong>Phone:</strong> 1800 41 99099<br />
@@ -100,16 +104,11 @@ const Footer = () => {
         </div>
 
         {/* Bottom Footer */}
-        <div className="mt-12 pt-6 border-t border-gray-800">
+        <div className="mt-12 border-t border-gray-800">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <div className="mb-4 md:mb-0">
-              <div className="text-xl font-bold">
-                <span className="text-blue-400">spaceswala</span>
-                <span className="text-gray-300">.com</span>
-              </div>
-            </div>
+            <img src="/logo.png" alt="logo" className='h-20' loading='lazy' />
             <div className="text-gray-400 text-sm">
-              &copy; {new Date().getFullYear()} spaceswala.com. All rights reserved.
+              &copy; {new Date().getFullYear()} Umbakrar Tech(India) Pvt Ltd. All rights reserved.
             </div>
           </div>
         </div>

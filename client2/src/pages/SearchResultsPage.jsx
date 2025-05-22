@@ -1,9 +1,32 @@
 import React, { useState } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
-import { Filter, MapPin, ArrowDownUp, Grid, List, Home } from 'lucide-react';
-import PropertyCard from '../components/property/PropertyCard';
+import { Filter, MapPin, ArrowDownUp, Grid, List, Home, BedDouble, Bath, Ruler, ArrowRightToLine } from 'lucide-react';
+import PropertyCard from '@/components/property/PropertyCard';
 import { sampleProperties } from '../data/sampleData';
-import { TypographyH1, TypographyH2 } from '../custom/Typography';
+import { Button } from '@/components/ui/button'
+import { Card } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb"
+import {
+  TypographyMuted,
+  TypographyH2,
+  TypographySmall,
+  TypographyH4,
+} from '@/custom/Typography';
 
 const filterOptions = {
   priceRange: { title: 'Price Range', type: 'range', placeholders: ['Min', 'Max'] },
@@ -25,25 +48,26 @@ const filterOptions = {
 const renderFilterSection = (mobile = false) =>
   Object.entries(filterOptions).map(([key, config]) => (
     <div key={key} className="mb-6">
-      <h3 className="font-medium mb-3">{config.title}</h3>
+      <TypographySmall>
+        {config?.title}
+      </TypographySmall>
       {config.type === 'range' && (
-        <div className="flex gap-2">
+        <div className="flex gap-2 mt-2">
           {config.placeholders.map((ph, idx) => (
-            <input
+            <Input
               key={idx}
               type="text"
               placeholder={ph}
-              className="w-1/2 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
           ))}
         </div>
       )}
       {config.type === 'checkbox' && (
-        <div className="space-y-2">
+        <div className="space-y-2 mt-2">
           {config.options.map((option) => (
             <label key={option} className="flex items-center">
               <input type="checkbox" className="rounded text-blue-600 focus:ring-blue-500" />
-              <span className="ml-2 text-gray-700">{option}</span>
+              <TypographyMuted className="ml-2">{option}</TypographyMuted>
             </label>
           ))}
         </div>
@@ -53,7 +77,7 @@ const renderFilterSection = (mobile = false) =>
           {config.options.map((option) => (
             <button
               key={option}
-              className="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="px-4 mt-2 py-2 border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             >
               {option}
             </button>
@@ -94,45 +118,53 @@ const SearchResultsPage = () => {
   });
 
   return (
-    <div className="pt-16 pb-12 bg-gray-50 min-h-screen">
+    <div className="pt-16 pb-12 bg-gray-50 mt-5">
       {/* Breadcrumbs */}
       <div className="bg-white border-b">
-        <div className="container mx-auto px-4 py-3">
-          <div className="flex items-center text-sm text-gray-500">
-            <Link to="/" className="hover:text-blue-600 flex items-center">
-              <Home size={14} className="mr-1" /> Home
-            </Link>
-            <span className="mx-2">/</span>
-            <span className="text-gray-700">
-              {type === 'rent' ? 'Rent' : type === 'sell' ? 'Sell' : 'Buy'}{' '}
-              {location || city ? `in ${location || city}` : ''}
-            </span>
-          </div>
+        <div className="max-w-7xl mx-auto px-4 py-3">
+          <Breadcrumb>
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbLink href="/" className='flex items-center gap-1'>
+                  <Home size={14} /> Home
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbPage>
+                  {type === 'rent' ? 'Rent' : type === 'sell' ? 'Sell' : 'Buy'}{' '}
+                  {location || city ? `in ${location || city}` : ''}
+                </BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
         </div>
       </div>
 
       {/* Header */}
-      <div className="bg-white shadow-sm">
-        <div className="container mx-auto px-4 py-6">
+      <>
+        <div className="max-w-7xl mx-auto grid gap-2 px-4 py-6">
           <TypographyH2>
             {type === 'rent' ? 'Rental Properties' : 'Properties for Sale'}{' '}
             {location || city ? ` in ${location || city}` : ''}
           </TypographyH2>
-          <p className="text-gray-600 mt-1">{filteredProperties.length} properties found</p>
+          <TypographyMuted className="text-md">
+            {filteredProperties?.length} properties found
+          </TypographyMuted>
         </div>
-      </div>
+      </>
 
       {/* Filters & Results */}
-      <div className="container mx-auto px-4 py-6">
+      <div className="max-w-7xl mx-auto px-4 py-6">
         <div className="flex flex-col lg:flex-row gap-6">
           {/* Desktop Filters */}
-          <div className="hidden lg:block lg:w-1/4 bg-white rounded-lg shadow-md p-6 h-fit">
-            <h2 className="text-lg font-semibold mb-4">Filters</h2>
+          <Card className="hidden lg:block lg:w-1/4 p-6 h-fit">
+            <TypographyH4 className='mb-4'>Filters</TypographyH4>
             {renderFilterSection()}
-            <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md transition-colors duration-300">
+            <Button className="w-full">
               Apply Filters
-            </button>
-          </div>
+            </Button>
+          </Card>
 
           {/* Results */}
           <div className="lg:w-3/4">
@@ -148,27 +180,28 @@ const SearchResultsPage = () => {
               {showFilters && (
                 <div className="bg-white rounded-lg shadow-md p-6 mt-2">
                   {renderFilterSection(true)}
-                  <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md transition-colors duration-300">
+                  <Button className="w-full">
                     Apply Filters
-                  </button>
+                  </Button>
                 </div>
               )}
             </div>
 
             {/* Sort and View */}
-            <div className="flex flex-wrap justify-between items-center mb-4 bg-white p-3 rounded-lg shadow-md">
+            <Card className="flex flex-wrap justify-between items-center mb-4 p-3">
               <div className="flex items-center mb-2 sm:mb-0">
-                <ArrowDownUp size={18} className="mr-2 text-gray-500" />
-                <select
-                  className="border-none focus:ring-0 text-gray-700 pr-8"
-                  value={sortBy}
-                  onChange={(e) => setSortBy(e.target.value)}
-                >
-                  <option value="relevance">Relevance</option>
-                  <option value="price-low-high">Price: Low to High</option>
-                  <option value="price-high-low">Price: High to Low</option>
-                  <option value="newest">Newest First</option>
-                </select>
+                <ArrowDownUp size={18} className="mr-4 text-gray-500" />
+                <Select>
+                  <SelectTrigger className="w-[150px]">
+                    <SelectValue placeholder="filter" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="relevance">Relevance</SelectItem>
+                    <SelectItem value="price-low-high">Price: Low to High</SelectItem>
+                    <SelectItem value="price-high-low">Price: High to Low</SelectItem>
+                    <SelectItem value="newest">Newest First</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
               <div className="flex items-center gap-3">
                 <button
@@ -186,7 +219,7 @@ const SearchResultsPage = () => {
                   <List size={18} />
                 </button>
               </div>
-            </div>
+            </Card>
 
             {/* Properties */}
             {sortedProperties.length > 0 ? (
@@ -197,53 +230,67 @@ const SearchResultsPage = () => {
                     : 'space-y-4'
                 }
               >
-                {sortedProperties.map((property) =>
+                {sortedProperties?.map((property) =>
                   viewMode === 'grid' ? (
-                    <PropertyCard key={property.id} property={property} />
+                    <PropertyCard key={property?.id} property={property} />
                   ) : (
-                    <div key={property.id} className="bg-white rounded-lg shadow-md overflow-hidden">
+                    <Card key={property?.id} className="overflow-hidden">
                       <div className="flex flex-col sm:flex-row">
                         <div className="sm:w-1/3 h-48 sm:h-auto">
                           <img
-                            src={property.image}
-                            alt={property.title}
+                            src={property?.image}
+                            alt={property?.title}
+                            loading='lazy'
                             className="w-full h-full object-cover"
                           />
                         </div>
-                        <div className="sm:w-2/3 p-4">
-                          <h3 className="text-xl font-semibold text-gray-800 mb-2">{property.title}</h3>
+                        <div className="sm:w-2/3 p-4 space-y-4">
+                          <TypographyH4 className='mb-2'>{property?.title}</TypographyH4>
                           <div className="flex items-center text-gray-500 mb-3">
                             <MapPin size={16} className="mr-1" />
-                            <span className="text-sm">{property.location}</span>
+                            <span className="text-sm">{property?.location}</span>
                           </div>
-                          <div className="flex flex-wrap gap-4 mb-4">
-                            <div className="text-sm text-gray-600">{property.bedrooms} Beds</div>
-                            <div className="text-sm text-gray-600">{property.bathrooms} Baths</div>
-                            <div className="text-sm text-gray-600">{property.area} sq.ft</div>
+                          <div className="flex gap-6 mb-4">
+                            <div className="flex items-center text-gray-600">
+                              <BedDouble size={16} className="mr-1" />
+                              <span className="text-sm">{property?.bedrooms} Beds</span>
+                            </div>
+                            <div className="flex items-center text-gray-600">
+                              <Bath size={16} className="mr-1" />
+                              <span className="text-sm">{property?.bathrooms} Baths</span>
+                            </div>
+                            <div className="flex items-center text-gray-600">
+                              <Ruler size={16} className="mr-1" />
+                              <span className="text-sm">{property?.area} sq.ft</span>
+                            </div>
                           </div>
                           <div className="flex justify-between items-center">
-                            <div className="text-blue-600 font-bold text-lg">
+                            <TypographyH4 className="text-blue-600 font-bold">
                               ₹
-                              {property.type === 'rent'
-                                ? `${property.price.toLocaleString()}/mo`
-                                : property.price.toLocaleString()}
-                            </div>
+                              {property?.type === 'rent'
+                                ? `${property?.price?.toLocaleString()}/mo`
+                                : property?.price?.toLocaleString()}
+                            </TypographyH4>
                             <Link
-                              to={`/property/${property.id}`}
-                              className="text-sm text-blue-600 hover:text-blue-800 font-medium"
+                              to={`/property/${property?.id}`}
                             >
-                              View Details
+                              <Button variant="link" size="xs" className="text-blue-600">
+                                View Details  <ArrowRightToLine />
+                              </Button>
                             </Link>
+
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </Card>
                   )
                 )}
               </div>
             ) : (
               <div className="bg-white rounded-lg shadow-md p-8 text-center">
-                <p className="text-gray-600 mb-4">No properties found matching your criteria.</p>
+                <TypographyMuted>
+                  No properties found matching your criteria.
+                </TypographyMuted>
                 <Link to="/" className="text-blue-600 hover:text-blue-800 font-medium">
                   Return to Home
                 </Link>
@@ -252,7 +299,7 @@ const SearchResultsPage = () => {
           </div>
         </div>
       </div>
-    </div>
+    </div >
   );
 };
 

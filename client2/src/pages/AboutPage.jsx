@@ -1,160 +1,171 @@
 import { Link } from 'react-router-dom';
 import { Home, Users, Award, Target } from 'lucide-react';
+import { Card } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb"
+import {
+  TypographyMuted,
+  TypographyH4,
+  TypographyH3,
+  TypographyH1
+} from '@/custom/Typography';
+
+const stats = [
+  { value: '1M+', label: 'Properties Listed' },
+  { value: '500+', label: 'Cities Covered' },
+  { value: '10M+', label: 'Monthly Users' },
+  { value: '50K+', label: 'Partner Agents' },
+];
+
+const values = [
+  {
+    title: 'Innovation',
+    icon: Target,
+    description: 'We continuously strive to improve and innovate in the real estate technology space.',
+  },
+  {
+    title: 'Customer First',
+    icon: Users,
+    description: 'Our customers are at the heart of everything we do, driving our decisions and innovations.',
+  },
+  {
+    title: 'Excellence',
+    icon: Award,
+    description: 'We maintain the highest standards in our services and operations.',
+  },
+];
+
+const leaders = [
+  {
+    name: 'Rahul Sharma',
+    role: 'CEO & Co-founder',
+    image: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg',
+  },
+  {
+    name: 'Priya Patel',
+    role: 'CTO',
+    image: 'https://images.pexels.com/photos/2379005/pexels-photo-2379005.jpeg',
+  },
+  {
+    name: 'Amit Kumar',
+    role: 'COO',
+    image: 'https://images.pexels.com/photos/2379006/pexels-photo-2379006.jpeg',
+  },
+];
 
 const AboutPage = () => {
   return (
-    <div className="pt-16 min-h-screen bg-gray-50">
+    <div className="pt-24 min-h-screen bg-gray-50 px-4">
       {/* Breadcrumb */}
-      <div className="bg-white border-b">
-        <div className="container mx-auto px-4 py-3">
-          <div className="flex items-center text-sm text-gray-500">
-            <Link to="/" className="hover:text-blue-600 flex items-center">
-              <Home size={14} className="mr-1" /> Home
-            </Link>
-            <span className="mx-2">/</span>
-            <span className="text-gray-700">About Us</span>
-          </div>
-        </div>
+      <div className="max-w-7xl mx-auto py-3 border-b">
+        <Breadcrumb>
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink href="/" className="flex items-center gap-1">
+                <Home size={14} /> Home
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbPage>About Us</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
       </div>
 
-      {/* Hero Section */}
-      <div className="relative py-16 bg-blue-600">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto text-center text-white">
-            <h1 className="text-3xl md:text-4xl font-bold mb-4">
-              About SpacesWala.com
-            </h1>
-            <p className="text-lg">
-              Transforming the way people buy, sell and rent properties in India
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <div className="container mx-auto px-4 py-12">
+      {/* Content */}
+      <div className="max-w-7xl mx-auto sm:py-12 pt-3 space-y-16">
         {/* Our Story */}
-        <div className="max-w-4xl mx-auto mb-16">
-          <h2 className="text-2xl font-bold text-gray-800 mb-6">Our Story</h2>
-          <p className="text-gray-600 mb-4">
+        <section className="max-w-4xl">
+          <TypographyH3 className="font-bold mb-4">Our Story</TypographyH3>
+          <TypographyMuted className="text-base mb-4">
             Founded in 2012, SpacesWala.com has grown from a small startup to India's leading full-stack real estate platform. Our mission is to make real estate transactions simple, efficient, and transparent for everyone involved.
-          </p>
-          <p className="text-gray-600">
+          </TypographyMuted>
+          <TypographyMuted className="text-base">
             We combine cutting-edge technology with deep industry expertise to provide comprehensive solutions for property buyers, sellers, and renters. Our platform features advanced search algorithms, detailed property insights, and a seamless user experience.
-          </p>
-        </div>
+          </TypographyMuted>
+        </section>
 
         {/* Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-16">
-          <div className="bg-white p-6 rounded-lg shadow-md text-center">
-            <p className="text-3xl font-bold text-blue-600 mb-2">1M+</p>
-            <p className="text-gray-600">Properties Listed</p>
-          </div>
-          <div className="bg-white p-6 rounded-lg shadow-md text-center">
-            <p className="text-3xl font-bold text-blue-600 mb-2">500+</p>
-            <p className="text-gray-600">Cities Covered</p>
-          </div>
-          <div className="bg-white p-6 rounded-lg shadow-md text-center">
-            <p className="text-3xl font-bold text-blue-600 mb-2">10M+</p>
-            <p className="text-gray-600">Monthly Users</p>
-          </div>
-          <div className="bg-white p-6 rounded-lg shadow-md text-center">
-            <p className="text-3xl font-bold text-blue-600 mb-2">50K+</p>
-            <p className="text-gray-600">Partner Agents</p>
-          </div>
-        </div>
+        <section className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          {stats.map((stat, idx) => (
+            <Card key={idx} className="text-center grid gap-2">
+              <TypographyH1 className='text-blue-600 font-bold'>
+                {stat?.value}
+              </TypographyH1>
+              <TypographyMuted className='text-base'>
+                {stat?.label}
+              </TypographyMuted>
+            </Card>
+          ))}
+        </section>
 
         {/* Values */}
-        <div className="mb-16">
-          <h2 className="text-2xl font-bold text-gray-800 mb-8 text-center">Our Values</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-white p-6 rounded-lg shadow-md">
-              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4">
-                <Target className="w-6 h-6 text-blue-600" />
-              </div>
-              <h3 className="text-xl font-semibold mb-2">Innovation</h3>
-              <p className="text-gray-600">
-                We continuously strive to improve and innovate in the real estate technology space.
-              </p>
-            </div>
-            <div className="bg-white p-6 rounded-lg shadow-md">
-              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4">
-                <Users className="w-6 h-6 text-blue-600" />
-              </div>
-              <h3 className="text-xl font-semibold mb-2">Customer First</h3>
-              <p className="text-gray-600">
-                Our customers are at the heart of everything we do, driving our decisions and innovations.
-              </p>
-            </div>
-            <div className="bg-white p-6 rounded-lg shadow-md">
-              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4">
-                <Award className="w-6 h-6 text-blue-600" />
-              </div>
-              <h3 className="text-xl font-semibold mb-2">Excellence</h3>
-              <p className="text-gray-600">
-                We maintain the highest standards in our services and operations.
-              </p>
-            </div>
+        <section>
+          <TypographyH3 className="font-bold mb-6 text-center tracking-normal">Our Values</TypographyH3>
+          <div className="grid gap-6 md:grid-cols-3">
+            {values.map(({ title, icon: Icon, description }, idx) => (
+              <Card key={idx}>
+                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4 mx-auto md:mx-0">
+                  <Icon className="w-6 h-6 text-blue-600" />
+                </div>
+                <TypographyH4>{title}</TypographyH4>
+                <TypographyMuted className='text-base mt-3'>{description}</TypographyMuted>
+              </Card>
+            ))}
           </div>
-        </div>
+        </section>
 
         {/* Leadership */}
-        <div className="mb-16">
-          <h2 className="text-2xl font-bold text-gray-800 mb-8 text-center">Our Leadership</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="text-center">
-              <img 
-                src="https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg" 
-                alt="CEO" 
-                className="w-32 h-32 rounded-full mx-auto mb-4 object-cover"
-              />
-              <h3 className="text-xl font-semibold">Rahul Sharma</h3>
-              <p className="text-gray-600">CEO & Co-founder</p>
-            </div>
-            <div className="text-center">
-              <img 
-                src="https://images.pexels.com/photos/2379005/pexels-photo-2379005.jpeg" 
-                alt="CTO" 
-                className="w-32 h-32 rounded-full mx-auto mb-4 object-cover"
-              />
-              <h3 className="text-xl font-semibold">Priya Patel</h3>
-              <p className="text-gray-600">CTO</p>
-            </div>
-            <div className="text-center">
-              <img 
-                src="https://images.pexels.com/photos/2379006/pexels-photo-2379006.jpeg" 
-                alt="COO" 
-                className="w-32 h-32 rounded-full mx-auto mb-4 object-cover"
-              />
-              <h3 className="text-xl font-semibold">Amit Kumar</h3>
-              <p className="text-gray-600">COO</p>
-            </div>
+        <section>
+          <TypographyH3 className="font-bold mb-6 text-center tracking-normal">Our Leadership</TypographyH3>
+          <div className="grid gap-8 grid-cols-2 md:grid-cols-3">
+            {leaders.map(({ name, role, image }, idx) => (
+              <div key={idx} className="text-center">
+                <img src={image} alt={name} loading='lazy' className="w-32 h-32 rounded-full mx-auto mb-4 object-cover" />
+                <TypographyH4>
+                  {name}
+                </TypographyH4>
+                <TypographyMuted className='text-base'>
+                  {role}
+                </TypographyMuted>
+              </div>
+            ))}
           </div>
-        </div>
+        </section>
 
         {/* Call to Action */}
-        <div className="bg-blue-50 rounded-lg p-8 text-center">
-          <h2 className="text-2xl font-bold text-gray-800 mb-4">Join Our Journey</h2>
-          <p className="text-gray-600 mb-6">
+        <section className="bg-blue-50 rounded-lg p-8 text-center">
+          <TypographyH3 className="font-bold mb-6 text-center tracking-normal">Join Our Journey</TypographyH3>
+          <TypographyMuted className='text-base mb-6'>
             Be part of the revolution in Indian real estate. List your property or start your search today.
-          </p>
-          <div className="flex justify-center gap-4">
-            <Link 
-              to="/contact" 
-              className="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 transition-colors duration-300"
+          </TypographyMuted>
+          <div className="flex flex-col sm:flex-row justify-center gap-4">
+            <Link
+              to="/contact"
             >
-              Contact Us
+              <Button>
+                Contact Us
+              </Button>
             </Link>
-            <Link 
-              to="/careers" 
-              className="bg-white text-blue-600 px-6 py-2 rounded-md border border-blue-600 hover:bg-blue-50 transition-colors duration-300"
+            <Link
+              to="/careers"
             >
-              View Careers
+              <Button variant='outline'>
+                View Careers
+              </Button>
             </Link>
           </div>
-        </div>
-      </div>
-    </div>
+        </section>
+      </div >
+    </div >
   );
 };
 

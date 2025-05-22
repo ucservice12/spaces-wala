@@ -1,27 +1,27 @@
 import { Link } from 'react-router-dom';
 import { MapPin, Ruler, BedDouble, Bath, ArrowRightToLine } from 'lucide-react';
-import { TypographyH3, TypographyH4, TypographyLarge } from '../../custom/Typography';
+import { TypographyLarge } from '@/custom/Typography';
 import { Button } from '@/components/ui/button';
 
 const PropertyCard = ({ property, className = '' }) => {
   return (
     <Link
-      to={`/property/${property.id}`}
+      to={`/property/${property?.id}`}
       className={`block bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg ${className}`}
     >
       <div className="relative h-48 overflow-hidden">
         <img
           loading='lazy'
-          src={property.image}
-          alt={property.title}
+          src={property?.image}
+          alt={property?.title}
           className="w-full h-full object-cover"
         />
-        {property.featured && (
+        {property?.featured && (
           <div className="absolute top-2 left-2 bg-blue-600 text-white px-2 py-1 text-xs rounded">
             Featured
           </div>
         )}
-        {property.type === 'rent' ? (
+        {property?.type === 'rent' ? (
           <div className="absolute top-2 right-2 bg-green-600 text-white px-2 py-1 text-xs rounded">
             For Rent
           </div>
@@ -34,7 +34,7 @@ const PropertyCard = ({ property, className = '' }) => {
 
       <div className="p-4">
         <div className="flex items-center justify-between mb-2">
-          <TypographyH4>{property?.title}</TypographyH4>
+          <TypographyLarge>{property?.title}</TypographyLarge>
         </div>
 
         <div className="flex items-center text-gray-500 mb-3">

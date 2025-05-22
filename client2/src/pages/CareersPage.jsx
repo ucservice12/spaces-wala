@@ -1,6 +1,26 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Home, Briefcase, MapPin, Clock, Users, Code, BarChart as ChartBar, Headphones } from 'lucide-react';
+import {
+  Home, Briefcase, MapPin, Clock, Users, Code, BarChart as ChartBar, Headphones, DollarSign, HeartPulse, Globe, GraduationCap
+} from 'lucide-react';
+import { Card } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+import {
+  TypographyMuted,
+  TypographyH4,
+  TypographyH3,
+  TypographyH1,
+  TypographyP,
+  TypographySmall
+} from '@/custom/Typography';
 
 const CareersPage = () => {
   const departments = [
@@ -61,104 +81,130 @@ const CareersPage = () => {
     }
   ];
 
+  const perks = [
+    {
+      icon: <DollarSign className="w-6 h-6 text-blue-600" />,
+      title: 'Competitive Salary',
+      description: 'Market-leading compensation packages',
+    },
+    {
+      icon: <HeartPulse className="w-6 h-6 text-blue-600" />,
+      title: 'Health Insurance',
+      description: 'Comprehensive medical coverage',
+    },
+    {
+      icon: <Globe className="w-6 h-6 text-blue-600" />,
+      title: 'Remote Friendly',
+      description: 'Flexible working options available',
+    },
+    {
+      icon: <GraduationCap className="w-6 h-6 text-blue-600" />,
+      title: 'Learning Budget',
+      description: 'Annual budget for courses and development',
+    }
+  ];
+
+
+  const featureCards = [
+    {
+      icon: Briefcase,
+      title: "Growth Opportunities",
+      description: "Fast-paced environment with plenty of opportunities to learn and grow.",
+    },
+    {
+      icon: Users,
+      title: "Great Culture",
+      description: "Collaborative environment where innovation and creativity thrive.",
+    },
+    {
+      icon: ChartBar,
+      title: "Impact",
+      description: "Make a real difference in how people find and secure their homes.",
+    },
+  ];
+
   return (
-    <div className="pt-16 min-h-screen bg-gray-50">
+    <div className="pt-24 min-h-screen bg-gray-50">
       {/* Breadcrumb */}
-      <div className="bg-white border-b">
-        <div className="container mx-auto px-4 py-3">
-          <div className="flex items-center text-sm text-gray-500">
-            <Link to="/" className="hover:text-blue-600 flex items-center">
-              <Home size={14} className="mr-1" /> Home
-            </Link>
-            <span className="mx-2">/</span>
-            <span className="text-gray-700">Careers</span>
-          </div>
-        </div>
+      <div className="max-w-7xl mx-auto p-4 border-b">
+        <Breadcrumb>
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink href="/" className="flex items-center gap-1">
+                <Home size={14} /> Home
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbPage>About Us</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
       </div>
 
       {/* Hero Section */}
       <div className="relative py-16 bg-blue-600">
-        <div className="container mx-auto px-4">
+        <div className="max-w-7xl mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center text-white">
-            <h1 className="text-3xl md:text-4xl font-bold mb-4">
-              Join Our Team
-            </h1>
-            <p className="text-lg mb-8">
+            <TypographyH1>Join Our Team</TypographyH1>
+            <TypographyP className='mt-3'>
               Help us transform the real estate industry in India
-            </p>
-            <a 
-              href="#openings" 
-              className="bg-white text-blue-600 px-6 py-3 rounded-md hover:bg-blue-50 transition-colors duration-300 inline-block"
+            </TypographyP>
+            <Link
+              to="#openings"
+              className="bg-white mt-3 text-blue-600 px-6 py-3 rounded-md hover:bg-blue-50 transition-colors duration-300 inline-block"
             >
               View Open Positions
-            </a>
+            </Link>
           </div>
         </div>
       </div>
 
       {/* Main Content */}
-      <div className="container mx-auto px-4 py-12">
+      <div className="max-w-7xl mx-auto px-4 py-12">
         {/* Why Join Us */}
-        <div className="max-w-4xl mx-auto mb-16">
-          <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">Why Join SpacesWala.com?</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-white p-6 rounded-lg shadow-md">
+        <TypographyH3 className="font-bold mb-6 tracking-normal">Why Join spaceswala.com?</TypographyH3>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+          {featureCards?.map((item, index) => (
+            <Card key={index}>
               <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4">
-                <Briefcase className="w-6 h-6 text-blue-600" />
+                <item.icon className="w-6 h-6 text-blue-600" />
               </div>
-              <h3 className="text-xl font-semibold mb-2">Growth Opportunities</h3>
-              <p className="text-gray-600">
-                Fast-paced environment with plenty of opportunities to learn and grow.
-              </p>
-            </div>
-            <div className="bg-white p-6 rounded-lg shadow-md">
-              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4">
-                <Users className="w-6 h-6 text-blue-600" />
-              </div>
-              <h3 className="text-xl font-semibold mb-2">Great Culture</h3>
-              <p className="text-gray-600">
-                Collaborative environment where innovation and creativity thrive.
-              </p>
-            </div>
-            <div className="bg-white p-6 rounded-lg shadow-md">
-              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4">
-                <ChartBar className="w-6 h-6 text-blue-600" />
-              </div>
-              <h3 className="text-xl font-semibold mb-2">Impact</h3>
-              <p className="text-gray-600">
-                Make a real difference in how people find and secure their homes.
-              </p>
-            </div>
-          </div>
+              <TypographyH4>{item?.title}</TypographyH4>
+              <TypographyMuted className='text-base mt-3'>{item?.description}</TypographyMuted>
+            </Card>
+          ))}
         </div>
 
         {/* Departments */}
         <div className="mb-16">
-          <h2 className="text-2xl font-bold text-gray-800 mb-8 text-center">Our Departments</h2>
+          <TypographyH3 className="font-bold mb-6 text-center tracking-normal">Our Departments</TypographyH3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {departments.map((dept, index) => (
-              <div key={index} className="bg-white p-6 rounded-lg shadow-md">
+              <Card key={index}>
                 <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4">
                   {dept.icon}
                 </div>
-                <h3 className="text-xl font-semibold mb-2">{dept.name}</h3>
-                <p className="text-gray-600 mb-4">{dept.description}</p>
-                <p className="text-blue-600 font-semibold">{dept.openings} open positions</p>
-              </div>
+                <TypographyH4>{dept?.name}</TypographyH4>
+                <TypographyMuted className='text-base mt-3'>{dept?.description}</TypographyMuted>
+                <TypographySmall className='pt-2 cursor-pointer text-blue-600'>
+                  {dept.openings} open positions
+                </TypographySmall>
+              </Card>
             ))}
           </div>
         </div>
 
         {/* Open Positions */}
         <div id="openings" className="mb-16">
-          <h2 className="text-2xl font-bold text-gray-800 mb-8 text-center">Open Positions</h2>
-          <div className="space-y-4">
-            {openPositions.map((position, index) => (
-              <div key={index} className="bg-white p-6 rounded-lg shadow-md">
-                <div className="flex flex-col md:flex-row md:items-center md:justify-between">
-                  <div>
-                    <h3 className="text-xl font-semibold mb-2">{position.title}</h3>
-                    <div className="flex flex-wrap gap-4 text-gray-600">
+          <TypographyH3 className="font-bold mb-6 text-center tracking-normal">Open Positions</TypographyH3>
+          <div className="grid grid-cols-2 gap-6 sm:grid-cols-4">
+            {openPositions?.map((position, index) => (
+              <Card key={index} className="h-full flex flex-col justify-between">
+                <div className="flex flex-col flex-1">
+                  <div className="grid gap-3 mb-4">
+                    <TypographyH4>{position?.title}</TypographyH4>
+                    <div className="flex flex-wrap gap-2 text-gray-600">
                       <span className="flex items-center">
                         <Briefcase size={16} className="mr-1" />
                         {position.department}
@@ -173,57 +219,33 @@ const CareersPage = () => {
                       </span>
                     </div>
                   </div>
-                  <button className="mt-4 md:mt-0 bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 transition-colors duration-300">
-                    Apply Now
-                  </button>
+                  <div className="mt-auto">
+                    <Button className="w-full">
+                      Apply Now
+                    </Button>
+                  </div>
                 </div>
-              </div>
+              </Card>
             ))}
           </div>
         </div>
 
-        {/* Benefits */}
-        <div className="bg-blue-50 rounded-lg p-8">
-          <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">Benefits & Perks</h2>
+
+        {/* Benefits & Perks */}
+        <Card className="bg-blue-50 p-8">
+          <TypographyH3 className="font-bold mb-6 text-center tracking-normal">Benefits & Perks</TypographyH3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="text-center">
-              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4 mx-auto">
-                <svg className="w-6 h-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
-              <h3 className="font-semibold mb-2">Competitive Salary</h3>
-              <p className="text-gray-600">Market-leading compensation packages</p>
-            </div>
-            <div className="text-center">
-              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4 mx-auto">
-                <svg className="w-6 h-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                </svg>
-              </div>
-              <h3 className="font-semibold mb-2">Health Insurance</h3>
-              <p className="text-gray-600">Comprehensive medical coverage</p>
-            </div>
-            <div className="text-center">
-              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4 mx-auto">
-                <svg className="w-6 h-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                </svg>
-              </div>
-              <h3 className="font-semibold mb-2">Flexible Work</h3>
-              <p className="text-gray-600">Remote work options available</p>
-            </div>
-            <div className="text-center">
-              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4 mx-auto">
-                <svg className="w-6 h-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                </svg>
-              </div>
-              <h3 className="font-semibold mb-2">Learning & Development</h3>
-              <p className="text-gray-600">Continuous learning opportunities</p>
-            </div>
+            {perks.map((perk, index) => (
+              <Card key={index} className="text-center">
+                <div className="w-12 h-12 mx-auto bg-blue-100 rounded-full flex items-center justify-center mb-4">
+                  {perk.icon}
+                </div>
+                <TypographyH4>{perk?.title}</TypographyH4>
+                <TypographyMuted className='text-base mt-3'>{perk?.description}</TypographyMuted>
+              </Card>
+            ))}
           </div>
-        </div>
+        </Card>
       </div>
     </div>
   );

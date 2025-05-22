@@ -32,7 +32,7 @@ export function TypographyH3({ children, className, ...props }) {
   return (
     <h3
       className={cn(
-        'scroll-m-20 sm:text-2xl text-lg font-semibold tracking-tight',
+        'scroll-m-20 sm:text-2xl text-gray-800 text-xl font-bold tracking-tight',
         className
       )}
       {...props}
@@ -70,7 +70,7 @@ export function TypographyP({ children, className, ...props }) {
 export function TypographyBlockquote({ children, className, ...props }) {
   return (
     <blockquote
-      className={cn('mt-6 border-l-2 pl-6 italic', className)}
+      className={cn('mt-6 border-l-2 pl-4 italic', className)}
       {...props}
     >
       {children}
@@ -118,7 +118,7 @@ export function TypographySmall({ children, className, ...props }) {
 
 export function TypographyMuted({ children, className, ...props }) {
   return (
-    <p className={cn('sm:text-base text-sm text-muted-foreground', className)} {...props}>
+    <p className={cn('text-sm text-muted-foreground', className)} {...props}>
       {children}
     </p>
   );
