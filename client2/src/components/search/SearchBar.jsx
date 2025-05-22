@@ -38,7 +38,7 @@ const SearchBar = ({ className = '', variant = 'light' }) => {
       <div className="flex mb-4">
         {TABS.map((tab, idx) => (
           <button
-            key={tab.key}
+            key={idx}
             className={`${baseTab} ${activeTab === tab.key ? activeTabStyle : inactiveTabStyle}
               ${idx === 0 ? 'rounded-tl-md rounded-bl-md' : ''}
               ${idx === TABS.length - 1 ? 'rounded-tr-md rounded-br-md' : ''}
@@ -85,9 +85,9 @@ const SearchBar = ({ className = '', variant = 'light' }) => {
               <ul>
                 {CITIES.filter(city =>
                   city.toLowerCase().includes(location.toLowerCase())
-                ).map((city) => (
+                ).map((city, index) => (
                   <li
-                    key={city}
+                    key={index}
                     className="px-4 py-2 cursor-pointer hover:bg-gray-100 flex items-center text-gray-700"
                     onMouseDown={() => {
                       setLocation(city);

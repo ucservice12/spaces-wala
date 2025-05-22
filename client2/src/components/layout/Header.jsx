@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { TypographyP, TypographySmall } from '@/custom/typography';
+import { TypographyP, TypographySmall } from '../../custom/Typography';
 
 const menuItems = [
   {
@@ -94,13 +94,13 @@ const Header = () => {
             {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center space-x-6">
               {menuItems.map((menu) => (
-                <div key={menu.label} className="relative group">
+                <div key={menu?.label} className="relative group">
                   <button
                     className={`flex items-center ${isScrolled || !isHomePage ? 'text-black' : 'text-white'
                       } font-medium`}
                   >
                     <TypographySmall className="flex items-center font-semibold tracking-wide gap-1 mb-0">
-                      {menu.label}
+                      {menu?.label}
                       <ChevronDown className="ml-1 h-4 w-4" />
                     </TypographySmall>
                   </button>
@@ -108,7 +108,7 @@ const Header = () => {
                     {menu.links.map((link) => (
                       <Link key={link.to} to={link.to}>
                         <TypographyP className="block py-1 hover:text-blue-600 mb-0">
-                          {link.label}
+                          {link?.label}
                         </TypographyP>
                       </Link>
                     ))}
@@ -129,7 +129,7 @@ const Header = () => {
 
             {/* Mobile Menu Toggle */}
             <button className="md:hidden bg-primary rounded-md p-1 text-white z-50" onClick={toggleMobileMenu}>
-              {isMobileMenuOpen ? <X  className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
           </div>
         </div>

@@ -4,7 +4,7 @@ import {
   TypographyH1,
   TypographyH4,
   TypographyMuted
-} from '@/custom/typography';
+} from '../../custom/Typography';
 
 const Hero = () => {
   return (
