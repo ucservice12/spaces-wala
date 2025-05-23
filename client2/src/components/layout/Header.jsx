@@ -88,7 +88,7 @@ const Header = () => {
           <div className="flex justify-between items-center">
             {/* Logo */}
             <Link to="/" className="relative top-0" onClick={closeMobileMenu}>
-              <img src="/logo.png" alt="logo" className="h-24" />
+              <img src="/logo.png" alt="logo" className="sm:h-24 h-20" />
             </Link>
 
             {/* Desktop Navigation */}

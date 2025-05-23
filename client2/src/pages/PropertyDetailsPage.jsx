@@ -40,7 +40,7 @@ const PropertyDetailsPage = () => {
   const tabs = ['overview', 'details', 'amenities', 'location'];
 
   return (
-    <div className="pt-16 pb-12 bg-gray-50 mt-5">
+    <div className="pt-20 pb-12 bg-gray-50 mt-5">
       {/* Breadcrumbs */}
       <div className="bg-white border-b">
         <div className="max-w-7xl mx-auto px-4 py-3">
@@ -139,7 +139,7 @@ const PropertyDetailsPage = () => {
 
             {/* Tabs Navigation */}
             <Card className="mb-6">
-              <div className="flex border-b">
+              <div className="flex border-b overflow-x-auto whitespace-nowrap scrollbar-hide">
                 {tabs?.map((tab) => (
                   <button
                     key={tab}

@@ -105,9 +105,9 @@ const Footer = () => {
 
         {/* Bottom Footer */}
         <div className="mt-12 border-t border-gray-800">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <img src="/logo.png" alt="logo" className='h-20' loading='lazy' />
-            <div className="text-gray-400 text-sm">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            <img src="/logo.png" alt="logo" className="h-20" loading="lazy" />
+            <div className="text-gray-400 text-sm text-center md:text-left break-words max-w-xs">
               &copy; {new Date().getFullYear()} Umbakrar Tech(India) Pvt Ltd. All rights reserved.
             </div>
           </div>
