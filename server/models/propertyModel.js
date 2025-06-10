@@ -1,133 +1,23 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
-const propertySchema = mongoose.Schema(
+const reviewSchema = mongoose.Schema(
   {
-    owner: {
+    user: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
       ref: 'User',
     },
-    title: {
-      type: String,
-      required: [true, 'Please add a title'],
-      trim: true,
-      maxlength: [100, 'Title cannot be more than 100 characters'],
-    },
-    description: {
-      type: String,
-      required: [true, 'Please add a description'],
-      maxlength: [2000, 'Description cannot be more than 2000 characters'],
-    },
-    propertyType: {
-      type: String,
-      required: [true, 'Please specify property type'],
-      enum: ['apartment', 'house', 'villa', 'plot', 'commercial'],
-    },
-    status: {
+    name: {
       type: String,
       required: true,
-      enum: ['for-sale', 'for-rent'],
-      default: 'for-sale',
     },
-    price: {
+    rating: {
       type: Number,
-      required: [true, 'Please add a price'],
+      required: true,
     },
-    priceUnit: {
+    comment: {
       type: String,
-      enum: ['total', 'per-sqft'],
-      default: 'total',
-    },
-    size: {
-      type: Number,
-      required: [true, 'Please add property size'],
-    },
-    sizeUnit: {
-      type: String,
-      enum: ['sqft', 'sqm', 'acres'],
-      default: 'sqft',
-    },
-    bedrooms: {
-      type: Number,
-      required: function() {
-        return ['apartment', 'house', 'villa'].includes(this.propertyType);
-      },
-    },
-    bathrooms: {
-      type: Number,
-      required: function() {
-        return ['apartment', 'house', 'villa'].includes(this.propertyType);
-      },
-    },
-    furnishing: {
-      type: String,
-      enum: ['unfurnished', 'semi-furnished', 'fully-furnished'],
-      default: 'unfurnished',
-    },
-    location: {
-      address: {
-        type: String,
-        required: [true, 'Please add an address'],
-      },
-      city: {
-        type: String,
-        required: [true, 'Please add a city'],
-      },
-      state: {
-        type: String,
-        required: [true, 'Please add a state'],
-      },
-      country: {
-        type: String,
-        required: [true, 'Please add a country'],
-        default: 'India',
-      },
-      pincode: {
-        type: String,
-        required: [true, 'Please add a pincode'],
-      },
-      coordinates: {
-        type: {
-          type: String,
-          enum: ['Point'],
-          default: 'Point',
-        },
-        coordinates: {
-          type: [Number],
-          required: true,
-          index: '2dsphere',
-        },
-      },
-    },
-    amenities: [{
-      type: String,
-      enum: [
-        'parking', 'lift', 'security', 'garden', 'swimming-pool',
-        'gym', 'power-backup', 'gas-pipeline', 'club-house',
-        'children-play-area', 'sports-facility'
-      ],
-    }],
-    images: [{
-      public_id: {
-        type: String,
-        required: true,
-      },
-      url: {
-        type: String,
-        required: true,
-      },
-    }],
-    isVerified: {
-      type: Boolean,
-      default: false,
-    },
-    isFeatured: {
-      type: Boolean,
-      default: false,
-    },
-    availableFrom: {
-      type: Date,
-      default: Date.now,
+      required: true,
     },
   },
   {
@@ -135,14 +25,103 @@ const propertySchema = mongoose.Schema(
   }
 );
 
-// Index for text search
-propertySchema.index({
-  title: 'text',
-  description: 'text',
-  'location.address': 'text',
-  'location.city': 'text',
-});
+const propertySchema = mongoose.Schema(
+  {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: 'User',
+    },
+    title: {
+      type: String,
+      required: true,
+    },
+    images: [
+      {
+        type: String,
+        required: true,
+      },
+    ],
+    category: {
+      type: String,
+      required: true,
+      enum: ['Apartment', 'House', 'Villa', 'Plot', 'Commercial'],
+    },
+    description: {
+      type: String,
+      required: true,
+    },
+    location: {
+      address: { type: String, required: true },
+      city: { type: String, required: true },
+      state: { type: String, required: true },
+      zipCode: { type: String, required: true },
+      coordinates: {
+        lat: { type: Number },
+        lng: { type: Number },
+      },
+    },
+    price: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
+    features: {
+      bedrooms: { type: Number, default: 0 },
+      bathrooms: { type: Number, default: 0 },
+      area: { type: Number, required: true }, // in sq.ft
+      furnished: { type: Boolean, default: false },
+      parking: { type: Boolean, default: false },
+      garden: { type: Boolean, default: false },
+      balcony: { type: Boolean, default: false },
+      securitySystem: { type: Boolean, default: false },
+    },
+    propertyType: {
+      type: String,
+      required: true,
+      enum: ['Rent', 'Sale'],
+    },
+    amenities: [
+      {
+        type: String,
+      },
+    ],
+    reviews: [reviewSchema],
+    rating: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
+    numReviews: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
+    isAvailable: {
+      type: Boolean,
+      required: true,
+      default: true,
+    },
+    isFeatured: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
+    dateAdded: {
+      type: Date,
+      default: Date.now,
+    },
+    isVerified: {
+      type: Boolean,
+      default: false,
+    },
+    status: {
+      type: String,
+      enum: ['Available', 'Sold', 'Rented', 'Pending'], 
+      default: 'Available',
+    },
+  });
 
 const Property = mongoose.model('Property', propertySchema);
 
-module.exports = Property;
+export default Property;

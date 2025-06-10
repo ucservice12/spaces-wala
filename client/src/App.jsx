@@ -1,70 +1,53 @@
-import { Route, Routes, useLocation } from "react-router-dom";
-import { useEffect } from "react";
-import Banner from "@/components/landing-page/Banner";
-import Footer from "@/components/Footer";
-import Home from "@/components/landing-page/Home";
-import Property from "@/components/landing-page/Property";
-import Projects from "@/components/landing-page/Projects";
-import Partner from "@/components/landing-page/Partner";
-import CommitmentAndVision from "@/components/landing-page/CommitmentAndVision";
-import Testimonial from "@/components/landing-page/Testimonial";
-import News from "@/components/landing-page/News";
-import Navbar2 from "@/components/Navbar-2";
-
-import AboutUs from "@/pages/AboutUs";
-import TermsCondition from "@/pages/Terms&Condition";
-import PrivacyPolicy from "@/pages/PrivacyPolicy";
-import NotFound from "@/pages/NotFound";
-import ContactUs from "@/pages/ContactUs";
-import RequestInfo from "@/pages/RequestInfo";
-import FeedBackSend from "@/pages/FeedBackSend";
-import AllTestimonials from "@/pages/AllTestimonials";
-import SafetyGuid from "@/pages/SafetyGuid";
-import AreaConverter from "@/pages/AreaConverter";
-
-const Layout = () => (
-  <>
-    {/* <Banner /> */}
-    <Home />
-    <div className="max-w-6xl mx-auto px-6 sm:px-0">
-      <Projects />
-      <Property />
-      <News />
-      <Partner />
-      <CommitmentAndVision />
-      <Testimonial />
-    </div>
-  </>
-);
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Header from './components/layout/Header';
+import Footer from './components/layout/Footer';
+import HomePage from './pages/HomePage';
+import PropertyDetailsPage from './pages/PropertyDetailsPage';
+import SearchResultsPage from './pages/SearchResultsPage';
+import LoginPage from './pages/LoginPage';
+import SignupPage from './pages/SignupPage';
+import ApartmentsPage from './pages/ApartmentsPage';
+import VillasPage from './pages/VillasPage';
+import PlotsPage from './pages/PlotsPage';
+import CommercialPage from './pages/CommercialPage';
+import PgCoLivingPage from './pages/PgCoLivingPage';
+import LuxuryHomesPage from './pages/LuxuryHomesPage';
+import AboutPage from './pages/AboutPage';
+import CareersPage from './pages/CareersPage';
+import ContactPage from './pages/ContactPage';
+import TermsPage from './pages/TermsPage';
+import PrivacyPage from './pages/PrivacyPage';
+import TestimonialsPage from './pages/TestimonialsPage';
 
 function App() {
-  const location = useLocation();
-
-  const isOnSpecialPage = location.pathname === "/";
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [location]);
-
   return (
-    <>
-      {!isOnSpecialPage && <Navbar2 />}
-
-      <Routes>
-        <Route path="/" element={<Layout />} />
-        <Route path="/about-us" element={<AboutUs />} />
-        <Route path="/contact-us" element={<ContactUs />} />
-        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-        <Route path="/terms-and-conditions" element={<TermsCondition />} />
-        <Route path="/request-info" element={<RequestInfo />} />
-        <Route path="/feedback" element={<FeedBackSend />} />
-        <Route path="/testimonials" element={<AllTestimonials />} />
-        <Route path="/safety-guide" element={<SafetyGuid />} />
-        <Route path="/area-converter" element={<AreaConverter />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-      <Footer />
-    </>
+    <Router>
+      <div className="flex flex-col min-h-screen">
+        <Header />
+        <main className="flex-grow">
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/property/:id" element={<PropertyDetailsPage />} />
+            <Route path="/search" element={<SearchResultsPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/signup" element={<SignupPage />} />
+            <Route path="/apartments" element={<ApartmentsPage />} />
+            <Route path="/villas" element={<VillasPage />} />
+            <Route path="/plots" element={<PlotsPage />} />
+            <Route path="/commercial" element={<CommercialPage />} />
+            <Route path="/pg-coliving" element={<PgCoLivingPage />} />
+            <Route path="/luxury-homes" element={<LuxuryHomesPage />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/careers" element={<CareersPage />} />
+            <Route path="/contact" element={<ContactPage />} />
+            <Route path="/terms" element={<TermsPage />} />
+            <Route path="/privacy" element={<PrivacyPage />} />
+            <Route path="/testimonials" element={<TestimonialsPage />} />
+          </Routes>
+        </main>
+        <Footer />
+      </div>
+    </Router>
   );
 }
 

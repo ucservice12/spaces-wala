@@ -1,213 +1,256 @@
-const Property = require('../models/propertyModel');
-const cloudinary = require('cloudinary').v2;
-require('dotenv').config();
+import asyncHandler from 'express-async-handler';
+import Property from '../models/propertyModel.js';
 
-// Configure Cloudinary
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
+// @desc    Fetch all properties
+// @route   GET /api/properties
+// @access  Public
+const getProperties = asyncHandler(async (req, res) => {
+  const pageSize = 12;
+  const page = Number(req.query.pageNumber) || 1;
+
+  const keyword = req.query.keyword
+    ? {
+      title: {
+        $regex: req.query.keyword,
+        $options: 'i',
+      },
+    }
+    : {};
+
+  const category = req.query.category ? { category: req.query.category } : {};
+  const propertyType = req.query.propertyType ? { propertyType: req.query.propertyType } : {};
+  const city = req.query.city ? { 'location.city': req.query.city } : {};
+
+  // Price range filter
+  const priceFilter = {};
+  if (req.query.minPrice) {
+    priceFilter.price = { ...priceFilter.price, $gte: Number(req.query.minPrice) };
+  }
+  if (req.query.maxPrice) {
+    priceFilter.price = { ...priceFilter.price, $lte: Number(req.query.maxPrice) };
+  }
+
+  // Features filter
+  const featuresFilter = {};
+  if (req.query.bedrooms) {
+    featuresFilter['features.bedrooms'] = { $gte: Number(req.query.bedrooms) };
+  }
+  if (req.query.bathrooms) {
+    featuresFilter['features.bathrooms'] = { $gte: Number(req.query.bathrooms) };
+  }
+  if (req.query.furnished === 'true') {
+    featuresFilter['features.furnished'] = true;
+  }
+
+  const count = await Property.countDocuments({
+    ...keyword,
+    ...category,
+    ...propertyType,
+    ...city,
+    ...priceFilter,
+    ...featuresFilter,
+  });
+
+  const properties = await Property.find({
+    ...keyword,
+    ...category,
+    ...propertyType,
+    ...city,
+    ...priceFilter,
+    ...featuresFilter,
+  })
+    .limit(pageSize)
+    .skip(pageSize * (page - 1))
+    .sort({ createdAt: -1 });
+
+  res.json({ properties, page, pages: Math.ceil(count / pageSize), total: count });
 });
 
-/**
- * @desc    Create a new property
- * @route   POST /api/properties
- * @access  Private
- */
-const createProperty = async (req, res) => {
-  try {
-    const property = new Property({
-      owner: req.user._id,
-      ...req.body,
-    });
+// @desc    Fetch single property
+// @route   GET /api/properties/:id
+// @access  Public
+const getPropertyById = asyncHandler(async (req, res) => {
+  const property = await Property.findById(req.params.id).populate('user', 'name email phone');
 
-    // Handle image uploads
-    if (req.files && req.files.length > 0) {
-      const uploadPromises = req.files.map(file =>
-        cloudinary.uploader.upload(file.path, { folder: 'properties' })
-      );
-      const results = await Promise.all(uploadPromises);
-      property.images = results.map(result => ({
-        public_id: result.public_id,
-        url: result.secure_url,
-      }));
+  if (property) {
+    res.json(property);
+  } else {
+    res.status(404);
+    throw new Error('Property not found');
+  }
+});
+
+// @desc    Create a property
+// @route   POST /api/properties
+// @access  Private/Admin/Agent
+const createProperty = asyncHandler(async (req, res) => {
+  const {
+    title,
+    images,
+    category,
+    description,
+    location,
+    price,
+    features,
+    propertyType,
+    amenities,
+    dateAdded,
+    isVerified,
+    status,
+  } = req.body;
+
+  const property = new Property({
+    user: req.user._id,
+    title,
+    images: images || ['https://via.placeholder.com/640x480.png?text=Property+Image'],
+    category,
+    description,
+    location,
+    price,
+    features,
+    propertyType,
+    amenities,
+    dateAdded,
+    isVerified,
+    status,
+    rating: 0,
+    numReviews: 0,
+    reviews: [],
+  });
+
+  const createdProperty = await property.save();
+  res.status(201).json(createdProperty);
+});
+
+// @desc    Update a property
+// @route   PUT /api/properties/:id
+// @access  Private/Admin/Agent
+const updateProperty = asyncHandler(async (req, res) => {
+  const {
+    title,
+    images,
+    category,
+    description,
+    location,
+    price,
+    features,
+    propertyType,
+    amenities,
+    isAvailable,
+    isFeatured,
+  } = req.body;
+
+  const property = await Property.findById(req.params.id);
+
+  if (property) {
+    if (property.user.toString() !== req.user._id.toString() && !req.user.isAdmin) {
+      res.status(401);
+      throw new Error('User not authorized to update this property');
     }
+
+    property.title = title || property.title;
+    property.images = images || property.images;
+    property.category = category || property.category;
+    property.description = description || property.description;
+    property.location = location || property.location;
+    property.price = price || property.price;
+    property.features = features || property.features;
+    property.propertyType = propertyType || property.propertyType;
+    property.amenities = amenities || property.amenities;
+    property.isAvailable = isAvailable !== undefined ? isAvailable : property.isAvailable;
+    property.isFeatured = isFeatured !== undefined ? isFeatured : property.isFeatured;
+
+    const updatedProperty = await property.save();
+    res.json(updatedProperty);
+  } else {
+    res.status(404);
+    throw new Error('Property not found');
+  }
+});
+
+// @desc    Delete a property
+// @route   DELETE /api/properties/:id
+// @access  Private/Admin/Agent
+const deleteProperty = asyncHandler(async (req, res) => {
+  const property = await Property.findById(req.params.id);
+
+  if (property) {
+    if (property.user.toString() !== req.user._id.toString() && !req.user.isAdmin) {
+      res.status(401);
+      throw new Error('User not authorized to delete this property');
+    }
+
+    await Property.deleteOne({ _id: req.params.id });
+    res.json({ message: 'Property removed' });
+  } else {
+    res.status(404);
+    throw new Error('Property not found');
+  }
+});
+
+// @desc    Create new review
+// @route   POST /api/properties/:id/reviews
+// @access  Private
+const createPropertyReview = asyncHandler(async (req, res) => {
+  const { rating, comment } = req.body;
+
+  const property = await Property.findById(req.params.id);
+
+  if (property) {
+    const alreadyReviewed = property.reviews.find(
+      (r) => r.user.toString() === req.user._id.toString()
+    );
+
+    if (alreadyReviewed) {
+      res.status(400);
+      throw new Error('Property already reviewed');
+    }
+
+    const review = {
+      name: req.user.name,
+      rating: Number(rating),
+      comment,
+      user: req.user._id,
+    };
+
+    property.reviews.push(review);
+    property.numReviews = property.reviews.length;
+    property.rating =
+      property.reviews.reduce((acc, item) => item.rating + acc, 0) / property.reviews.length;
 
     await property.save();
-    res.status(201).json(property);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(201).json({ message: 'Review added' });
+  } else {
+    res.status(404);
+    throw new Error('Property not found');
   }
-};
+});
 
-/**
- * @desc    Get all properties with filters
- * @route   GET /api/properties
- * @access  Public
- */
-const getProperties = async (req, res) => {
-  try {
-    const {
-      propertyType,
-      status,
-      minPrice,
-      maxPrice,
-      bedrooms,
-      city,
-      sort,
-      page = 1,
-      limit = 10,
-    } = req.query;
+// @desc    Get top rated properties
+// @route   GET /api/properties/top
+// @access  Public
+const getTopProperties = asyncHandler(async (req, res) => {
+  const properties = await Property.find({}).sort({ rating: -1 }).limit(4);
 
-    const query = {};
+  res.json(properties);
+});
 
-    if (propertyType) query.propertyType = propertyType;
-    if (status) query.status = status;
-    if (minPrice || maxPrice) {
-      query.price = {};
-      if (minPrice) query.price.$gte = Number(minPrice);
-      if (maxPrice) query.price.$lte = Number(maxPrice);
-    }
-    if (bedrooms) query.bedrooms = Number(bedrooms);
-    if (city) query['location.city'] = { $regex: city, $options: 'i' };
+// @desc    Get featured properties
+// @route   GET /api/properties/featured
+// @access  Public
+const getFeaturedProperties = asyncHandler(async (req, res) => {
+  const properties = await Property.find({ isFeatured: true }).limit(8);
 
-    let sortQuery = { createdAt: -1 }; // default
-    if (sort === 'price-asc') sortQuery = { price: 1 };
-    if (sort === 'price-desc') sortQuery = { price: -1 };
+  res.json(properties);
+});
 
-    const properties = await Property.find(query)
-      .populate('owner', 'name email')
-      .sort(sortQuery)
-      .limit(Number(limit))
-      .skip((Number(page) - 1) * Number(limit));
-
-    const count = await Property.countDocuments(query);
-
-    res.json({
-      properties,
-      totalPages: Math.ceil(count / limit),
-      currentPage: Number(page),
-      totalProperties: count,
-    });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
-
-/**
- * @desc    Get property by ID
- * @route   GET /api/properties/:id
- * @access  Public
- */
-const getPropertyById = async (req, res) => {
-  try {
-    const property = await Property.findById(req.params.id).populate('owner', 'name email');
-    if (!property) return res.status(404).json({ message: 'Property not found' });
-
-    res.json(property);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
-
-/**
- * @desc    Update property
- * @route   PUT /api/properties/:id
- * @access  Private
- */
-const updateProperty = async (req, res) => {
-  try {
-    let property = await Property.findById(req.params.id);
-    if (!property) return res.status(404).json({ message: 'Property not found' });
-
-    // Check ownership
-    if (property.owner.toString() !== req.user._id.toString() && !req.user.isAdmin) {
-      return res.status(401).json({ message: 'Not authorized' });
-    }
-
-    // Handle new image uploads
-    if (req.files && req.files.length > 0) {
-      const uploadPromises = req.files.map(file =>
-        cloudinary.uploader.upload(file.path, { folder: 'properties' })
-      );
-      const results = await Promise.all(uploadPromises);
-      const newImages = results.map(result => ({
-        public_id: result.public_id,
-        url: result.secure_url,
-      }));
-
-      req.body.images = [...property.images, ...newImages];
-    }
-
-    property = await Property.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-      runValidators: true,
-    });
-
-    res.json(property);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
-
-/**
- * @desc    Delete property
- * @route   DELETE /api/properties/:id
- * @access  Private
- */
-const deleteProperty = async (req, res) => {
-  try {
-    const property = await Property.findById(req.params.id);
-    if (!property) return res.status(404).json({ message: 'Property not found' });
-
-    // Check ownership
-    if (property.owner.toString() !== req.user._id.toString() && !req.user.isAdmin) {
-      return res.status(401).json({ message: 'Not authorized' });
-    }
-
-    // Delete Cloudinary images
-    if (property.images.length > 0) {
-      const deletePromises = property.images.map(img =>
-        cloudinary.uploader.destroy(img.public_id)
-      );
-      await Promise.all(deletePromises);
-    }
-
-    await property.deleteOne();
-    res.json({ message: 'Property removed' });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
-
-/**
- * @desc    Search properties
- * @route   GET /api/properties/search
- * @access  Public
- */
-const searchProperties = async (req, res) => {
-  try {
-    const { q } = req.query;
-    if (!q) return res.status(400).json({ message: 'Search query is required' });
-
-    const properties = await Property.find(
-      { $text: { $search: q } },
-      { score: { $meta: 'textScore' } }
-    )
-      .sort({ score: { $meta: 'textScore' } })
-      .limit(10);
-
-    res.json(properties);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
-
-module.exports = {
-  createProperty,
+export {
   getProperties,
   getPropertyById,
+  createProperty,
   updateProperty,
   deleteProperty,
-  searchProperties,
+  createPropertyReview,
+  getTopProperties,
+  getFeaturedProperties,
 };
