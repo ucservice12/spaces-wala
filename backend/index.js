@@ -20,7 +20,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 // CORS configuration
-const allowedOrigins = ['http://localhost:5173', 'http://localhost:3001'];
+const allowedOrigins = ['http://localhost:5173', 'http://localhost:3001', 'http://localhost:5174'];
 
 app.use(cors({
     origin: allowedOrigins,
@@ -34,5 +34,6 @@ app.get('/', (req, res) => {
 
 app.use("/api/user", userRouters);
 app.use("/api/auth", authRoutes);
+app.use("/api/property")
 // Start server
 app.listen(PORT, () => console.log(`Server running at http://localhost:${PORT}`));
