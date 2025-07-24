@@ -1,182 +1,194 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { Eye, EyeOff } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import React, { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Checkbox } from "@/components/ui/checkbox";
-import { loginUser } from "../machine/auth";
+import { Button } from "@/components/ui/button";
+import { sendOtp, verifyOtp } from "../machine/auth";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
+import { clearError } from "../redux/slice/authSlice";
 
 const LoginPage = () => {
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-    showPassword: false,
-  });
+  const [step, setStep] = useState(1);
+  const [mobile, setMobile] = useState("");
+  const [otp, setOtp] = useState("");
   const [error, setError] = useState("");
+  const [resendTimer, setResendTimer] = useState(0);
 
-  const Navigate = useNavigate();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: type === "checkbox" ? checked : value,
-    }));
-  };
+  const fullMobile = `+91${mobile}`;
+  const { loading, otpSent, isAuthenticated, user } = useSelector((state) => state.auth);
+  const from = location.state?.from?.pathname || "/";
 
-  const validate = () => {
-    if (!formData.email) {
-      setError("Email is required.");
-      return false;
+  // Countdown timer for resend OTP
+  useEffect(() => {
+    if (resendTimer > 0) {
+      const timer = setTimeout(() => setResendTimer(resendTimer - 1), 1000);
+      return () => clearTimeout(timer);
     }
-    // Simple email regex for validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(formData.email)) {
-      setError("Please enter a valid email address.");
-      return false;
-    }
-    if (!formData.password) {
-      setError("Password is required.");
-      return false;
-    }
-    if (formData.password.length < 6) {
-      setError("Password must be at least 6 characters.");
-      return false;
-    }
+  }, [resendTimer]);
+
+  // Clear error when step changes
+  useEffect(() => {
+    dispatch(clearError());
     setError("");
-    return true;
+  }, [step, dispatch]);
+
+  // Redirect after login
+  useEffect(() => {
+    if (isAuthenticated && user) {
+      navigate(from, { replace: true });
+    }
+  }, [isAuthenticated, user, from, navigate]);
+
+  const handleMobileSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+
+    if (!mobile || !/^\d{10}$/.test(mobile)) {
+      return setError("Please enter a valid 10-digit mobile number.");
+    }
+
+    try {
+      await dispatch(sendOtp(fullMobile)).unwrap();
+      setStep(2);
+      setResendTimer(60);
+    } catch (err) {
+      setError(err || "Failed to send OTP.");
+    }
   };
 
-  const handleSubmit = async (e) => {
+  const handleOtpSubmit = async (e) => {
     e.preventDefault();
-    if (!validate()) return;
-    await loginUser(formData, setError, Navigate);
+    setError("");
+
+    if (!otp || otp.length !== 6) {
+      return setError("Enter the 6-digit OTP sent to your mobile.");
+    }
+
+    try {
+      await dispatch(verifyOtp({ mobile: fullMobile, otp })).unwrap();
+      // Redirect will be handled in useEffect
+    } catch (err) {
+      setError(err || "Invalid OTP or login failed.");
+    }
+  };
+
+  const handleResendOtp = async () => {
+    if (resendTimer > 0) return;
+
+    try {
+      await dispatch(sendOtp(fullMobile)).unwrap();
+      setResendTimer(60);
+    } catch (err) {
+      setError("Failed to resend OTP.");
+    }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 sm:mt-14 mt-24 mb-3 sm:px-6 lg:px-8 bg-gray-50">
-      <div className="w-full max-w-md bg-white shadow-md rounded-2xl p-8 sm:p-10">
-        <div className="text-center mb-8 space-y-2">
-          <h1 className="text-2xl font-bold text-gray-900">
-            Welcome to SpacesWala.
-          </h1>
-          <p className="text-sm text-gray-600">
-            Don&apos;t have an account?{" "}
-            <Link to="/signup" className="text-blue-600 hover:underline">
-              Sign up
-            </Link>
-          </p>
-        </div>
+    <div className="min-h-screen flex items-center justify-center px-4 bg-gradient-to-br from-slate-100 to-slate-300">
+      <div className="w-full max-w-sm sm:max-w-md md:max-w-lg bg-white shadow-xl rounded-3xl p-6 sm:p-10">
+        <h2 className="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-6">
+          Login to <span className="text-blue-600">SpacesWala</span>
+        </h2>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="space-y-1">
-            <Label htmlFor="email">Email Address</Label>
-            <Input
-              id="email"
-              name="email"
-              type="email"
-              autoComplete="email"
-              required
-              value={formData.email}
-              onChange={handleChange}
-              placeholder="Enter your email"
-            />
-          </div>
+        <form
+          onSubmit={step === 1 ? handleMobileSubmit : handleOtpSubmit}
+          className="space-y-5"
+        >
+          {step === 1 ? (
+            <>
+              <div className="space-y-2">
+                <Label htmlFor="mobile" className="text-gray-700">
+                  Mobile Number
+                </Label>
+                <div className="flex items-center rounded-md overflow-hidden border border-gray-300 bg-white focus-within:ring-2 focus-within:ring-blue-500">
+                  <span className="px-3 py-2 bg-gray-100 text-gray-600 text-sm">
+                    +91
+                  </span>
+                  <Input
+                    id="mobile"
+                    name="mobile"
+                    type="tel"
+                    inputMode="numeric"
+                    pattern="[0-9]*"
+                    maxLength={10}
+                    value={mobile}
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      if (/^\d{0,10}$/.test(val)) setMobile(val);
+                    }}
+                    placeholder="Enter 10-digit mobile"
+                    className="rounded-none border-0 focus:ring-0"
+                  />
+                </div>
+              </div>
 
-          <div className="space-y-1 relative">
-            <Label htmlFor="password">Password</Label>
-            <Input
-              id="password"
-              name="password"
-              type={formData.showPassword ? "text" : "password"}
-              autoComplete="current-password"
-              required
-              value={formData.password}
-              onChange={handleChange}
-              placeholder="Enter your password"
-            />
-            <button
-              type="button"
-              className="absolute top-8 right-3"
-              onClick={() =>
-                setFormData((prev) => ({
-                  ...prev,
-                  showPassword: !prev.showPassword,
-                }))
-              }
-              tabIndex={-1}
-            >
-              {formData.showPassword ? (
-                <EyeOff className="h-5 w-5 text-gray-400" />
-              ) : (
-                <Eye className="h-5 w-5 text-gray-400" />
-              )}
-            </button>
-          </div>
+              <Button
+                type="submit"
+                className="w-full text-base font-semibold tracking-wide"
+                disabled={loading}
+              >
+                {loading ? "Sending OTP..." : "Send OTP"}
+              </Button>
+            </>
+          ) : (
+            <>
+              <div className="space-y-2">
+                <Label htmlFor="otp" className="text-gray-700">
+                  Enter OTP
+                </Label>
+                <Input
+                  id="otp"
+                  name="otp"
+                  type="text"
+                  maxLength={6}
+                  inputMode="numeric"
+                  value={otp}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    if (/^\d{0,6}$/.test(val)) setOtp(val);
+                  }}
+                  placeholder="6-digit OTP"
+                  className="border border-gray-300"
+                />
+              </div>
 
-          {error && <div className="text-red-600 text-sm">{error}</div>}
+              <Button
+                type="submit"
+                className="w-full text-base font-semibold tracking-wide"
+                disabled={loading}
+              >
+                {loading ? "Verifying..." : "Verify & Login"}
+              </Button>
 
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
-              <Checkbox id="terms" />
-              <label htmlFor="terms" className="text-sm text-gray-700">
-                Accept terms and conditions
-              </label>
-            </div>
-            <Link
-              to="/forgot-password"
-              className="text-sm text-blue-600 hover:underline"
-            >
-              Forgot password?
-            </Link>
-          </div>
+              <div className="text-sm text-center mt-3 text-gray-600">
+                Didn’t get the code?{" "}
+                <button
+                  type="button"
+                  onClick={handleResendOtp}
+                  disabled={resendTimer > 0}
+                  className={`font-medium ${resendTimer > 0
+                    ? "text-gray-400 cursor-not-allowed"
+                    : "text-blue-600 hover:underline"
+                    }`}
+                >
+                  Resend OTP {resendTimer > 0 ? `(${resendTimer}s)` : ""}
+                </button>
+              </div>
+            </>
+          )}
 
-          <Button type="submit" className="w-full">
-            Login
-          </Button>
+          {error && (
+            <div className="text-red-600 text-sm text-center mt-1">{error}</div>
+          )}
         </form>
 
-        <div className="mt-6">
-          <div className="relative text-center text-sm text-gray-500">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-200"></div>
-            </div>
-            <span className="relative bg-white px-2">Or</span>
-          </div>
-
-          <div className="mt-4 grid gap-4 sm:grid-cols-2">
-            <Button
-              variant="outline"
-              className="flex items-center justify-center gap-2 w-full"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-              >
-                <path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701" />
-              </svg>
-              Apple
-            </Button>
-            <Button
-              variant="outline"
-              className="flex items-center justify-center gap-2 w-full"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-              >
-                <path d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z" />
-              </svg>
-              Google
-            </Button>
-          </div>
+        <div className="mt-6 text-center text-sm text-gray-500">
+          Don’t have an account?{" "}
+          <span className="text-blue-600 font-medium">Just enter your mobile</span>
         </div>
       </div>
     </div>

@@ -383,7 +383,7 @@ export const featuredCities = [
   {
     id: '3',
     name: 'Bangalore',
-    image: 'https://unsplash.com/photos/a-view-of-a-bridge-from-between-two-buildings-4dTSbFjW74A',
+    image: 'https://live.staticflickr.com/641/32563777936_6b1a3639ee_h.jpg',
     propertyCount: 1482
   },
   {
@@ -401,7 +401,7 @@ export const featuredCities = [
   {
     id: '6',
     name: 'Pune',
-    image: 'https://images.pexels.com/photos/3198643/pexels-photo-3198643.jpeg',
+    image: 'https://i.ytimg.com/vi/-r8JimSYYWQ/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLANushP3CpdViqRnlMehsNywYeO5g',
     propertyCount: 678
   }
 ];

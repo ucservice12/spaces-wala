@@ -8,18 +8,9 @@ import {
 
 const Hero = () => {
   return (
-    <div className="relative min-h-[400px] sm:min-h-[550px] flex items-center">
+    <div className=" relative h-screen flex items-center bg-[url('https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg')] bg-cover bg-center overflow-hidden">
       {/* Background Image with Dark Overlay */}
-      <div className="absolute inset-0 z-0">
-        <img
-          loading='lazy'
-          src="https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg"
-          alt="Modern home exterior"
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-gray-900/80 to-gray-900/40"></div>
-      </div>
-
+      <div className="absolute inset-0 bg-gradient-to-r from-gray-900/80 to-gray-900/40"></div>
       {/* Foreground Content */}
       <div className="relative z-10 w-full sm:mt-0 mt-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-8 py-16 sm:py-32 flex flex-col items-start justify-center">
@@ -55,7 +46,7 @@ const Hero = () => {
           </div>
         </div>
       </div>
-    </div>
+    </div >
   );
 };
 

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ChevronDown } from 'lucide-react';
+import { Menu, X, ChevronDown, CircleUserRound } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { TypographyP, TypographySmall } from '../../custom/Typography';
+import { useSelector } from 'react-redux';
 
 const menuItems = [
   {
@@ -54,6 +55,7 @@ const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const { user } = useSelector((state) => state.auth);
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen((prev) => !prev);
     setActiveMobileDropdown(null);
@@ -119,12 +121,19 @@ const Header = () => {
 
             {/* Desktop Auth */}
             <div className="hidden md:flex items-center space-x-4">
-              <Link to="/login">
-                <Button variant="ghost">Login</Button>
-              </Link>
-              <Link to="/signup">
+              {user ?
+                <Link to="/dashboard/profile">
+
+                  <Button size="sm">User<CircleUserRound className='text-white ' strokeWidth={1} /></Button>
+                </Link>
+                :
+                <Link to="/login">
+                  <Button size="sm">Login</Button>
+                </Link>
+              }
+              {/* <Link to="/signup">
                 <Button size="sm">Sign Up</Button>
-              </Link>
+              </Link> */}
             </div>
 
             {/* Mobile Menu Toggle */}
@@ -166,17 +175,24 @@ const Header = () => {
 
               {/* Mobile Auth Buttons */}
               <div className="flex flex-col space-y-2 pt-2">
-                <Link to="/login" onClick={closeMobileMenu}>
-                  <Button className="w-full">
-                    <TypographyP className="mb-0">Login</TypographyP>
-                  </Button>
-                </Link>
-                <Link to="/signup" onClick={closeMobileMenu}>
+                {user ? (
+                  <Link to="/dashboard/profile" onClick={closeMobileMenu}>
+                    <Button size="sm" className="w-full flex justify-between items-center">
+                      User <CircleUserRound className="ml-2 text-white" strokeWidth={2} />
+                    </Button>
+                  </Link>
+                ) : (
+                  <Link to="/login" onClick={closeMobileMenu}>
+                    <Button size="sm" className="">Login</Button>
+                  </Link>
+                )}
+                {/* <Link to="/signup" onClick={closeMobileMenu}>
                   <Button variant="outline" className="w-full">
                     <TypographyP>Sign Up</TypographyP>
                   </Button>
-                </Link>
+                </Link> */}
               </div>
+
             </div>
           </div>
         )}

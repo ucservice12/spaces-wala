@@ -208,7 +208,7 @@ const HomePage = () => {
             <div className="md:w-1/3">
               <img
                 loading='lazy'
-                src="https://images.pexels.com/photos/6893562/pexels-photo-6893562.jpeg"
+                src="https://media.istockphoto.com/id/2154752387/photo/real-estate-concept-business-home-insurance-and-real-estate-protection-real-estate-investment.jpg?s=612x612&w=0&k=20&c=r6Tmn31ZHHr-8ZuWfZaYIYdqM9nD4dMc6NfDXxwsZeo="
                 alt="Mobile App"
                 className="rounded-lg shadow-lg"
               />
