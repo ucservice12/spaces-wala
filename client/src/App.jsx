@@ -22,7 +22,7 @@ import ContactPage from './pages/ContactPage';
 import TermsPage from './pages/TermsPage';
 import PrivacyPage from './pages/PrivacyPage';
 import TestimonialsPage from './pages/TestimonialsPage';
-import PostPropertyForm from './components/postproperty/PostPropertyForm';
+import PostPropertyForm from './pages/postproperty/PostPropertyForm';
 
 import ProfilePage from './pages/dashboardpages/ProfilePage';
 import MyPropertiesPage from './pages/dashboardpages/MyPropertiesPage';

@@ -6,11 +6,26 @@ import {
   TypographyMuted
 } from '../../custom/Typography';
 
+const backgroundImage =
+  'https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg';
+
 const Hero = () => {
   return (
-    <div className=" relative h-screen flex items-center bg-[url('https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg')] bg-cover bg-center overflow-hidden">
-      {/* Background Image with Dark Overlay */}
+    <div
+      className="relative h-screen flex items-center bg-cover bg-center overflow-hidden"
+      style={{ backgroundImage: `url('${backgroundImage}')` }}
+    >
+      {/* Preload Background Image */}
+      <img
+        src={backgroundImage}
+        alt="preload background"
+        className="hidden"
+        loading="eager"
+      />
+
+      {/* Dark Overlay */}
       <div className="absolute inset-0 bg-gradient-to-r from-gray-900/80 to-gray-900/40"></div>
+
       {/* Foreground Content */}
       <div className="relative z-10 w-full sm:mt-0 mt-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-8 py-16 sm:py-32 flex flex-col items-start justify-center">
@@ -23,7 +38,6 @@ const Hero = () => {
               Discover properties for buying, renting, or selling across India. Your dream home is just a search away.
             </TypographyP>
 
-            {/* Search Bar */}
             <SearchBar className="mt-4 w-full" />
 
             {/* Statistics */}
@@ -46,7 +60,7 @@ const Hero = () => {
           </div>
         </div>
       </div>
-    </div >
+    </div>
   );
 };
 

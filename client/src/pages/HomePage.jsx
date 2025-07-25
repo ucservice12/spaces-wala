@@ -48,19 +48,19 @@ const testimonials = [
     name: 'Rahul Sharma',
     location: 'Mumbai',
     image: 'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg',
-    text: 'SpacesWala.com made finding my dream apartment so easy. The filters are intuitive and the virtual tours saved me so much time!',
+    text: 'SpacesWala.com made finding my dream apartment so easy. The smart filters and instant map view saved me tons of time!',
   },
   {
     name: 'Priya Patel',
     location: 'Bangalore',
     image: 'https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg',
-    text: 'I sold my property within a month of listing it on SpacesWala.com. The process was smooth and the team was very supportive.',
+    text: 'I listed my property in minutes and got real inquiries within days. The team at SpacesWala was super helpful throughout the process!',
   },
   {
     name: 'Vikram Singh',
     location: 'Delhi',
     image: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg',
-    text: 'The loan calculator and EMI tools helped me plan my finances better. Thanks to SpacesWala.com, I\'m now a proud homeowner!',
+    text: 'The loan & EMI tools on SpacesWala.com gave me complete clarity. I bought my first home with confidence thanks to their features.',
   },
 ];
 
@@ -148,32 +148,41 @@ const HomePage = () => {
       </section>
 
       {/* Testimonials */}
-      <section className="py-12 bg-white">
+      <section className="py-16 bg-gradient-to-br from-blue-50 to-purple-100">
         <div className="max-w-7xl mx-auto px-4">
-          <TypographyH2 className="font-bold text-center mb-8">
-            What Our Customers Say
+          <TypographyH2 className="font-bold text-center text-gray-800 mb-12">
+            Trusted by Thousands of Happy Customers on <span className="text-blue-600">SpacesWala.com</span>
           </TypographyH2>
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {testimonials.map((review, idx) => (
-              <div key={idx} className="bg-gray-50 p-6 rounded-lg">
+              <div
+                key={idx}
+                className="bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition-all duration-300"
+              >
                 <div className="flex items-center mb-4">
                   <img
                     src={review.image}
                     alt={review.name}
-                    loading='lazy'
-                    className="w-12 h-12 rounded-full object-cover mr-4"
+                    loading="lazy"
+                    className="w-14 h-14 rounded-full object-cover mr-4 border border-blue-500"
                   />
                   <div>
-                    <TypographySmall>{review?.name}</TypographySmall>
+                    <TypographySmall className="font-semibold text-gray-900">
+                      {review?.name}
+                    </TypographySmall>
                     <TypographyMuted>{review?.location}</TypographyMuted>
                   </div>
                 </div>
-                <TypographyBlockquote className="text-muted-foreground">"{review?.text}"</TypographyBlockquote>
+                <TypographyBlockquote className="text-muted-foreground text-sm leading-relaxed">
+                  "{review?.text}"
+                </TypographyBlockquote>
               </div>
             ))}
           </div>
         </div>
       </section>
+
 
       {/* Download App */}
       <section className="py-12 bg-blue-600 text-white">

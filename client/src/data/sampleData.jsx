@@ -8,7 +8,7 @@ export const sampleProperties = [
     bedrooms: 3,
     bathrooms: 3,
     area: 1600,
-    image: 'https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg',
+    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRg1ZNns2A2zDK8A7S5B-D8TRhcnmoquIIdOQ&s',
     featured: true,
     date: '2023-05-15'
   },
@@ -21,7 +21,7 @@ export const sampleProperties = [
     bedrooms: 2,
     bathrooms: 2,
     area: 1200,
-    image: 'https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg',
+    image: 'https://storage.googleapis.com/bd-ae-01/buildings-v2/840x630/15021.jpg',
     featured: true,
     date: '2023-06-22'
   },
@@ -34,7 +34,7 @@ export const sampleProperties = [
     bedrooms: 4,
     bathrooms: 4.5,
     area: 3200,
-    image: 'https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg',
+    image: 'https://avatars.housearch.com/get-verba/937147/2a000001855e9e56b03d04dcd2be9b53f838/housearch_touch_gallery_500x356',
     date: '2023-07-05'
   },
   {
@@ -46,7 +46,7 @@ export const sampleProperties = [
     bedrooms: 1,
     bathrooms: 1,
     area: 650,
-    image: 'https://images.pexels.com/photos/1643383/pexels-photo-1643383.jpeg',
+    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvdx3B-sbKXm_ohv84ej3vgUJDuYqmTJYyhA&s',
     date: '2023-08-12'
   },
   {
@@ -58,7 +58,7 @@ export const sampleProperties = [
     bedrooms: 3,
     bathrooms: 3,
     area: 1800,
-    image: 'https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg',
+    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_OiXhrZSAPEvcBuBZvKUc_J2XqRo2hcHkNg&s',
     date: '2023-04-28'
   },
   {
@@ -70,7 +70,7 @@ export const sampleProperties = [
     bedrooms: 2,
     bathrooms: 2,
     area: 1100,
-    image: 'https://images.pexels.com/photos/1029599/pexels-photo-1029599.jpeg',
+    image: 'https://is1-2.housingcdn.com/4f2250e8/44160255f32417b37f3b0f705105d0cf/v0/fs/triyom_casa-abhva_1-surat-triyom_realty.jpeg',
     date: '2023-09-03'
   },
   {
@@ -82,7 +82,7 @@ export const sampleProperties = [
     bedrooms: 5,
     bathrooms: 5.5,
     area: 4500,
-    image: 'https://images.pexels.com/photos/1105754/pexels-photo-1105754.jpeg',
+    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXc_F6apv6Y-D03BQV1_5UVI6lyftxaWR6IQ&s',
     featured: true,
     date: '2023-03-19'
   },
@@ -95,7 +95,7 @@ export const sampleProperties = [
     bedrooms: 3,
     bathrooms: 3,
     area: 1750,
-    image: 'https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg',
+    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXSqz4klz6_ZcZJ5VplCIvRtE2rBSH3Nm_eg&s',
     date: '2023-10-17'
   },
   {
@@ -371,7 +371,7 @@ export const featuredCities = [
   {
     id: '1',
     name: 'Mumbai',
-    image: 'https://images.pexels.com/photos/2179602/pexels-photo-2179602.jpeg',
+    image: 'https://builtin.com/sites/www.builtin.com/files/2024-11/companies-mumbai.jpg',
     propertyCount: 1258
   },
   {
@@ -389,13 +389,13 @@ export const featuredCities = [
   {
     id: '4',
     name: 'Hyderabad',
-    image: 'https://images.pexels.com/photos/672916/pexels-photo-672916.jpeg',
+    image: 'https://cdn.builtin.com/cdn-cgi/image/f=auto,fit=cover,w=1200,h=635,q=80/https://builtin.com/sites/www.builtin.com/files/2024-11/companies-mumbai.jpg',
     propertyCount: 865
   },
   {
     id: '5',
     name: 'Chennai',
-    image: 'https://images.pexels.com/photos/2402956/pexels-photo-2402956.jpeg',
+    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSC2dDKlJjEMhNVm0TwxQyOz-EjfQbPoPWmPQ&s',
     propertyCount: 756
   },
   {

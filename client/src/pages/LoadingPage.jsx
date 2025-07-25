@@ -1,7 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 
-const LoadingPage = () => {
+const LoadingPage = ({ message = "Please wait while we load your experience..." }) => {
     return (
         <div className="h-screen w-full flex items-center justify-center bg-gradient-to-br from-blue-100 via-white to-blue-200 px-4">
             <motion.div
@@ -15,7 +15,7 @@ const LoadingPage = () => {
                     className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"
                     aria-label="Loading spinner"
                 />
-
+                {message}
                 {/* Text with animation */}
                 <motion.h1
                     className="text-xl sm:text-2xl md:text-3xl font-semibold text-gray-700 text-center"
@@ -23,7 +23,6 @@ const LoadingPage = () => {
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ delay: 0.3, duration: 0.6 }}
                 >
-                    Please wait while we load your experience...
                 </motion.h1>
             </motion.div>
         </div>

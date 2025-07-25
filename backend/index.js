@@ -4,6 +4,7 @@ import cookieParser from "cookie-parser";
 import cors from 'cors';
 import userRouters from "./routes/userRoutes.js";
 import authRoutes from "./routes/authRoutes.js"
+import propertyRoutes from "./routes/propertyRoutes.js"
 import { dbconnection } from './database/dbconnection.js';
 
 // Load env variables
@@ -34,6 +35,6 @@ app.get('/', (req, res) => {
 
 app.use("/api/user", userRouters);
 app.use("/api/auth", authRoutes);
-app.use("/api/property")
+app.use("/api/property", propertyRoutes)
 // Start server
 app.listen(PORT, () => console.log(`Server running at http://localhost:${PORT}`));

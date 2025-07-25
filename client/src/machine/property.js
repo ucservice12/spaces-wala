@@ -1,23 +1,30 @@
 import customAxios from "../customAxios/Customaxios";
 
-export const uploadproperty = async (formData) => {
-    console.log(formData)
+export const uploadproperty = async (formData, loading, setLoading) => {
+    setLoading(true);
     const propertyData = new FormData();
 
     for (const key in formData) {
         if (key === "images") {
-            formData.images.forEach((file) => form.append("images", file));
+            for (let file of formData.images) {
+                propertyData.append("images", file);
+            }
         } else {
             propertyData.append(key, formData[key]);
         }
     }
 
     try {
-        console.log(propertyData)
-        const res = await customAxios("/property/post", propertyData);
+        const res = await customAxios.post("/property/post", propertyData, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        });
+        setLoading(false)
         alert("Property uploaded successfully!");
         console.log(res.data);
     } catch (err) {
+        setLoading(false)
         console.error(err);
         alert("Error uploading property.");
     }
