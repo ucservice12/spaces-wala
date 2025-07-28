@@ -61,6 +61,7 @@ function App() {
         <Route path="/terms" element={<TermsPage />} />
         <Route path="/privacy" element={<PrivacyPage />} />
         <Route path="/testimonials" element={<TestimonialsPage />} />
+         <Route path="/seller/post-property" element={<PostPropertyForm />} />
 
         {/* Protected Routes */}
         <Route
@@ -71,7 +72,7 @@ function App() {
           }
         >
           {/* Seller Private Route */}
-          <Route path="/seller/post-property" element={<PostPropertyForm />} />
+          {/* <Route path="/seller/post-property" element={<PostPropertyForm />} /> */}
 
           {/* Dashboard Private Routes */}
           <Route path="/dashboard" element={<DashboardLayout />}>
