@@ -1,264 +1,276 @@
-"use client";
+// "use client";
 
-import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ChevronDown, CircleUserRound } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { TypographyP, TypographySmall } from '@/custom/Typography';
-import { useSelector } from 'react-redux';
-import {
-    Home,
-    Building2,
-    MapPin,
-    Bed,
-    DollarSign,
-    Newspaper,
-    BookOpen,
-    Tag
-} from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+// import React, { useState, useEffect } from 'react';
+// import { Link, useLocation } from 'react-router-dom';
+// import { Menu, X, ChevronDown, CircleUserRound } from 'lucide-react';
+// import { Button } from '@/components/ui/button';
+// import { TypographyP, TypographySmall } from '@/custom/Typography';
+// import { useSelector } from 'react-redux';
 
-const menuItems = [
-    {
-        label: 'Buy',
-        links: [
-            { to: '/search?type=buy&category=apartment', label: 'Apartments', icon: Building2 },
-            { to: '/search?type=buy&category=house', label: 'Houses', icon: Home },
-            { to: '/search?type=buy&category=plot', label: 'Plots', icon: MapPin },
-        ],
-    },
-    {
-        label: 'Rent',
-        links: [
-            { to: '/search?type=rent&category=apartment', label: 'Apartments', icon: Building2 },
-            { to: '/search?type=rent&category=house', label: 'Houses', icon: Home },
-            { to: '/search?type=rent&category=pg', label: 'PG/Co-living', icon: Bed },
-        ],
-    },
-    {
-        label: 'Sell',
-        links: [
-            { to: '/seller/post-property', label: 'Post Property', icon: Tag },
-            { to: '/sell/pricing', label: 'Pricing', icon: DollarSign },
-            { to: '/sell/services', label: 'Services', icon: Bed },
-        ],
-    },
-    {
-        label: 'Resources',
-        links: [
-            { to: '/resources/home-loans', label: 'Home Loans', icon: DollarSign },
-            { to: '/resources/property-news', label: 'Property News', icon: Newspaper },
-            { to: '/resources/guides', label: "Buyer's Guide", icon: BookOpen },
-        ],
-    },
-];
+// import {
+//   Home,
+//   Building2,
+//   MapPin,
+//   Bed,
+//   DollarSign,
+//   Newspaper,
+//   BookOpen,
+//   Tag
+// } from 'lucide-react';
+
+// const categoryImages = {
+//   apartment: "https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=500&auto=format&fit=crop",
+//   house: "https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?w=500&auto=format&fit=crop",
+//   plot: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=500&auto=format&fit=crop",
+//   pg: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=500&auto=format&fit=crop",
+//   "post-property": "https://images.unsplash.com/photo-1605276374104-dee2a0ed3cd6?w=500&auto=format&fit=crop",
+//   pricing: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=500&auto=format&fit=crop",
+//   services: "https://images.unsplash.com/photo-1558002038-1055907df827?w=500&auto=format&fit=crop",
+//   "home-loans": "https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=500&auto=format&fit=crop",
+//   "property-news": "https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=500&auto=format&fit=crop",
+//   guides: "https://images.unsplash.com/photo-1501504905252-473c47e087f8?w=500&auto=format&fit=crop"
+// };
+
+// const menuItems = [
+//   {
+//     label: 'Buy',
+//     links: [
+//       { to: '/search?type=buy&category=apartment', label: 'Apartments', icon: Building2, image: categoryImages.apartment },
+//       { to: '/search?type=buy&category=house', label: 'Houses', icon: Home, image: categoryImages.house },
+//       { to: '/search?type=buy&category=plot', label: 'Plots', icon: MapPin, image: categoryImages.plot },
+//     ],
+//   },
+//   {
+//     label: 'Rent',
+//     links: [
+//       { to: '/search?type=rent&category=apartment', label: 'Apartments', icon: Building2, image: categoryImages.apartment },
+//       { to: '/search?type=rent&category=house', label: 'Houses', icon: Home, image: categoryImages.house },
+//       { to: '/search?type=rent&category=pg', label: 'PG/Co-living', icon: Bed, image: categoryImages.pg },
+//     ],
+//   },
+//   {
+//     label: 'Sell',
+//     links: [
+//       { to: '/seller/post-property', label: 'Post Property', icon: Tag, image: categoryImages["post-property"] },
+//       { to: '/sell/pricing', label: 'Pricing', icon: DollarSign, image: categoryImages.pricing },
+//       { to: '/sell/services', label: 'Services', icon: Bed, image: categoryImages.services },
+//     ],
+//   },
+//   {
+//     label: 'Resources',
+//     links: [
+//       { to: '/resources/home-loans', label: 'Home Loans', icon: DollarSign, image: categoryImages["home-loans"] },
+//       { to: '/resources/property-news', label: 'Property News', icon: Newspaper, image: categoryImages["property-news"] },
+//       { to: '/resources/guides', label: "Buyer's Guide", icon: BookOpen, image: categoryImages.guides },
+//     ],
+//   },
+// ];
+
+// const DesktopNavbar = ({ isScrolled, hoveredIndex, setHoveredIndex, user }) => {
+//   const location = useLocation();
+//   const isHomePage = location.pathname === '/';
+
+//   return (
+//     <>
+//       <div className="hidden md:flex items-center space-x-8">
+//         {menuItems.map((menu, index) => (
+//           <div
+//             key={menu.label}
+//             className="relative"
+//             onMouseEnter={() => setHoveredIndex(index)}
+//             onMouseLeave={() => setHoveredIndex(null)}
+//           >
+//             <button className="flex items-center font-medium">
+//               <TypographyP className={`flex items-center gap-2 text-lg ${isScrolled || !isHomePage ? 'text-black' : 'text-white'}`}>
+//                 {menu.label}
+//                 <ChevronDown />
+//               </TypographyP>
+//             </button>
+
+//             {hoveredIndex === index && (
+//               <div className="absolute top-full left-full w-fullg-white shadow-lg border-t z-50">
+//                 <div className="max-w-6xl mx-auto px-8 py-10 grid grid-cols-3 gap-8">
+//                   {menu.links.map((link) => (
+//                     <Link key={link.to} to={link.to} className="group p-4 rounded-lg hover:bg-blue-50">
+//                       <div className="flex gap-4 items-start">
+//                         <link.icon className="w-6 h-6 text-gray-700 mt-1" />
+//                         <div>
+//                           <TypographySmall className="font-semibold text-gray-800 mb-1">{link.label}</TypographySmall>
+//                           <p className="text-sm text-gray-500">Explore {link.label.toLowerCase()} options</p>
+//                         </div>
+//                       </div>
+//                       {link.image && (
+//                         <img src={link.image} alt={link.label} className="w-full h-32 object-cover rounded-lg mt-4" />
+//                       )}
+//                     </Link>
+//                   ))}
+//                 </div>
+//               </div>
+//             )}
+//           </div>
+//         ))}
+//       </div>
+
+//       <div className="hidden md:flex items-center space-x-4">
+//         {user ? (
+//           <Link to="/dashboard/profile">
+//             <Button size="sm" className="flex items-center gap-2">
+//               <CircleUserRound className="h-4 w-4" />
+//               Profile
+//             </Button>
+//           </Link>
+//         ) : (
+//           <Link to="/login">
+//             <Button size="sm">Login</Button>
+//           </Link>
+//         )}
+//       </div>
+//     </>
+//   );
+// };
+
+// const MobileNavbar = ({ isMobileMenuOpen, toggleMobileMenu, activeMobileDropdown, toggleMobileDropdown, user }) => (
+//   <>
+//     {isMobileMenuOpen && (
+//       <div className="md:hidden fixed top-20 left-0 right-0 z-50 bg-white shadow-lg p-4">
+//         <div className="flex flex-col space-y-4">
+//           {menuItems.map((menu) => (
+//             <div key={menu.label}>
+//               <button
+//                 onClick={() => toggleMobileDropdown(menu.label)}
+//                 className="flex justify-between w-full py-3 px-2 font-medium text-gray-800 items-center"
+//               >
+//                 <TypographyP className="mb-0">{menu.label}</TypographyP>
+//                 <ChevronDown className={`h-5 w-5 transition-transform ${activeMobileDropdown === menu.label ? 'rotate-180' : ''}`} />
+//               </button>
+//               {activeMobileDropdown === menu.label && (
+//                 <div className="pl-4 mt-1 space-y-2 border-l-2 border-blue-200">
+//                   {menu.links.map((link) => (
+//                     <Link
+//                       key={link.to}
+//                       to={link.to}
+//                       onClick={toggleMobileMenu}
+//                       className="block py-2 px-3 hover:bg-blue-50 rounded"
+//                     >
+//                       <div className="flex items-center gap-3">
+//                         <link.icon className="w-5 h-5 text-gray-600" />
+//                         <TypographySmall>{link.label}</TypographySmall>
+//                       </div>
+//                       {link.image && (
+//                         <div className="mt-2 ml-8">
+//                           <img src={link.image} alt={link.label} className="w-full h-24 object-cover rounded-lg" />
+//                         </div>
+//                       )}
+//                     </Link>
+//                   ))}
+//                 </div>
+//               )}
+//             </div>
+//           ))}
+
+//           <div className="pt-4">
+//             {user ? (
+//               <Link to="/dashboard/profile" onClick={toggleMobileMenu}>
+//                 <Button className="w-full flex items-center gap-2">
+//                   <CircleUserRound className="h-4 w-4" />
+//                   Profile
+//                 </Button>
+//               </Link>
+//             ) : (
+//               <Link to="/login" onClick={toggleMobileMenu}>
+//                 <Button className="w-full">Login</Button>
+//               </Link>
+//             )}
+//           </div>
+//         </div>
+//       </div>
+//     )}
+//   </>
+// );
+
+// const Navbar = () => {
+//   const [isScrolled, setIsScrolled] = useState(false);
+//   const [hoveredIndex, setHoveredIndex] = useState(null);
+//   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+//   const [activeMobileDropdown, setActiveMobileDropdown] = useState(null);
+//   const location = useLocation();
+//   const isHomePage = location.pathname === '/';
+//   const { user } = useSelector((state) => state.auth);
+
+//   useEffect(() => {
+//     const handleScroll = () => {
+//       setIsScrolled(window.scrollY > 50);
+//     };
+//     window.addEventListener('scroll', handleScroll);
+//     return () => window.removeEventListener('scroll', handleScroll);
+//   }, []);
+
+//   const toggleMobileMenu = () => {
+//     setIsMobileMenuOpen(!isMobileMenuOpen);
+//     if (isMobileMenuOpen) setActiveMobileDropdown(null);
+//   };
+
+//   const toggleMobileDropdown = (label) => {
+//     setActiveMobileDropdown(activeMobileDropdown === label ? null : label);
+//   };
+
+//   return (
+//     <>
+//       {isMobileMenuOpen && (
+//         <div className="fixed inset-0 z-40 bg-black/50 md:hidden" onClick={toggleMobileMenu} />
+//       )}
+//       <div className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled || !isHomePage || hoveredIndex !== null ? 'bg-white' : 'bg-transparent sm:py-4'}`}>
+//         <div className="max-w-7xl mx-auto px-4">
+//           <div className="flex justify-between items-center py-4">
+//             <Link to="/">
+//               <img src="/logo.png" alt="logo" className="sm:h-24 h-20" />
+//             </Link>
+
+//             <DesktopNavbar
+//               isScrolled={isScrolled}
+//               hoveredIndex={hoveredIndex}
+//               setHoveredIndex={setHoveredIndex}
+//               user={user}
+//             />
+
+//             <button className="md:hidden p-2" onClick={toggleMobileMenu}>
+//               {isMobileMenuOpen ? <X className="h-8 w-8" /> : <Menu className="h-6 w-6" />}
+//             </button>
+//           </div>
+//         </div>
+
+//         <MobileNavbar
+//           isMobileMenuOpen={isMobileMenuOpen}
+//           toggleMobileMenu={toggleMobileMenu}
+//           activeMobileDropdown={activeMobileDropdown}
+//           toggleMobileDropdown={toggleMobileDropdown}
+//           user={user}
+//         />
+//       </div>
+//     </>
+//   );
+// };
+
+// export default Navbar;
+
+
+import NavbarDesktop from "./NavbarDesktop";
+import NavbarMobile from "./NavbarMobile";
 
 const Navbar = () => {
-    const [isScrolled, setIsScrolled] = useState(false);
-    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-    const [activeMobileDropdown, setActiveMobileDropdown] = useState(null);
-    const [hoveredIndex, setHoveredIndex] = useState(null);
 
-    const [hoveredMenu, setHoveredMenu] = useState(null);
-    const location = useLocation();
-    const isHomePage = location.pathname === '/';
-
-
-    useEffect(() => {
-        const handleScroll = () => {
-            setIsScrolled(window.scrollY > 50);
-        };
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
-
-    const { user } = useSelector((state) => state.auth);
-    const toggleMobileMenu = () => {
-        setIsMobileMenuOpen((prev) => !prev);
-        setActiveMobileDropdown(null);
-    };
-
-    const closeMobileMenu = () => {
-        setIsMobileMenuOpen(false);
-        setActiveMobileDropdown(null);
-    };
-
-    const toggleDropdown = (label) => {
-        setActiveMobileDropdown((prev) => (prev === label ? null : label));
-    };
-
-    return (
-        <>
-            {/* Black backdrop when mobile menu is open */}
-            {isMobileMenuOpen && (
-                <div
-                    onClick={closeMobileMenu}
-                    className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm md:hidden"
-                />
-            )}
-
-            <div
-                className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled || !isHomePage
-                    ? 'bg-white/90 backdrop-blur-md shadow-md'
-                    : 'bg-transparent sm:py-4'
-                    }`}
-            >
-                <div className="max-w-7xl mx-auto px-4">
-                    <div className="flex justify-between items-center">
-                        {/* Logo */}
-                        <Link to="/" className="relative top-0" onClick={closeMobileMenu}>
-                            <img src="/logo.png" alt="logo" className="sm:h-24 h-20" />
-                        </Link>
-
-                        {/* Desktop Navigation */}
-                        <nav className="hidden md:flex items-center space-x-6">
-                            {menuItems.map((menu, index) => (
-                                <div
-                                    key={menu?.label}
-                                    className="relative"
-                                    onMouseEnter={() => setHoveredIndex(index)}
-                                    onMouseLeave={() => setHoveredIndex(null)}
-                                >
-                                    <button
-                                        className={`flex items-center ${isScrolled || !isHomePage ? 'text-black' : 'text-white'
-                                            } font-medium group`}
-                                    >
-                                        <TypographySmall className="flex items-center font-semibold tracking-wide gap-1 mb-0 transition-colors duration-200 group-hover:text-white">
-                                            {menu?.label}
-                                            <ChevronDown className={`ml-1 h-4 w-4 transition-transform duration-200 ${hoveredMenu === menu.label ? 'rotate-180' : ''}`} />
-                                        </TypographySmall>
-                                    </button>
-
-
-                                </div>
-                            ))}
-                        </nav>
-
-                        {/* Desktop Auth */}
-                        <div className="hidden md:flex items-center space-x-4">
-                            {user ?
-                                <Link to="/dashboard/profile">
-                                    <Button size="sm" className="flex items-center gap-1">
-                                        User
-                                        <CircleUserRound className='text-white' strokeWidth={1} />
-                                    </Button>
-                                </Link>
-                                :
-                                <Link to="/login">
-                                    <Button size="sm">Login</Button>
-                                </Link>
-                            }
-                        </div>
-
-                        {/* Mobile Menu Toggle */}
-                        <button className="md:hidden bg-primary rounded-md p-1 text-white z-50" onClick={toggleMobileMenu}>
-                            {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-                        </button>
-                    </div>
-                </div>
-
-                <AnimatePresence>
-                    {hoveredIndex !== null &&
-                        (menuItems[hoveredIndex].links) && (
-
-                            <motion.div
-                                key="dropdown"
-                                initial={{ opacity: 0, y: -10 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                exit={{ opacity: 0, y: -10 }}
-                                transition={{ duration: 0.2, ease: 'easeOut' }}
-                                onMouseEnter={() => setHoveredIndex(hoveredIndex)}
-                                onMouseLeave={() => setHoveredIndex(null)}
-                                className="hidden md:block fixed top-[90px] left-0 w-full z-40 bg-white border-t shadow-lg"
-
-                            >
-                                <div className="flex flex-wrap justify-evenly max-w-[1440px] mx-auto px-8 py-8 gap-8">
-                                    {menuItems[hoveredIndex].links.map((link) => (
-                                        <Link
-                                            key={link.to}
-                                            to={link.to}
-                                            className="flex items-center gap-3 py-2 px-2 text-sm text-gray-700 hover:text-primary hover:bg-gray-50 rounded-md transition-all duration-200"
-                                        >
-                                            <link.icon className="w-5 h-5 text-gray-500" />
-                                            <TypographyP className="mb-0">{link.label}</TypographyP>
-                                        </Link>
-                                    ))}
-                                </div>
-                            </motion.div>
-                        )}
-                </AnimatePresence>
-                {/* Mobile Menu */}
-                {isMobileMenuOpen && (
-                    <motion.div
-                        initial={{ opacity: 0, y: -20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -20 }}
-                        transition={{ duration: 0.2 }}
-                        className="fixed top-20 left-0 right-0 z-50 md:hidden bg-white shadow-lg p-4"
-                    >
-                        <div className="flex flex-col space-y-4">
-                            {menuItems.map((menu) => (
-                                <div key={menu.label}>
-                                    <button
-                                        onClick={() => toggleDropdown(menu.label)}
-                                        className="flex justify-between w-full py-2 font-medium text-gray-800 items-center"
-                                    >
-                                        <TypographyP className="mb-0">{menu.label}</TypographyP>
-                                        <ChevronDown
-                                            className={`h-4 w-4 transition-transform duration-300 ${activeMobileDropdown === menu.label ? 'rotate-180' : ''
-                                                }`}
-                                        />
-                                    </button>
-                                    <AnimatePresence>
-                                        {activeMobileDropdown === menu.label && (
-                                            <motion.div
-                                                initial={{ opacity: 0, height: 0 }}
-                                                animate={{ opacity: 1, height: 'auto' }}
-                                                exit={{ opacity: 0, height: 0 }}
-                                                transition={{ duration: 0.2 }}
-                                                className="overflow-hidden"
-                                            >
-                                                <div className="pl-4 mt-1 space-y-2 border-l-2 border-primary/20">
-                                                    {menu.links.map((link) => (
-                                                        <Link
-                                                            key={link.to}
-                                                            to={link.to}
-                                                            onClick={closeMobileMenu}
-                                                            className="block py-1.5 hover:bg-gray-50 rounded px-2 transition-colors"
-                                                        >
-                                                            <TypographyP className="mb-0 text-gray-700 flex items-center gap-2">
-                                                                <link.icon className="w-4 h-4 text-gray-500" />
-                                                                {link.label}
-                                                            </TypographyP>
-                                                        </Link>
-                                                    ))}
-                                                </div>
-                                            </motion.div>
-                                        )}
-                                    </AnimatePresence>
-                                </div>
-                            ))}
-
-                            {/* Mobile Auth Buttons */}
-                            <div className="flex flex-col space-y-2 pt-2">
-                                {user ? (
-                                    <Link to="/dashboard/profile" onClick={closeMobileMenu}>
-                                        <Button size="sm" className="w-full flex justify-between items-center">
-                                            User <CircleUserRound className="ml-2 text-white" strokeWidth={2} />
-                                        </Button>
-                                    </Link>
-                                ) : (
-                                    <Link to="/login" onClick={closeMobileMenu}>
-                                        <Button size="sm" className="w-full">Login</Button>
-                                    </Link>
-                                )}
-                            </div>
-                        </div>
-                    </motion.div>
-                )}
-            </div>
-        </>
-    );
+  return (
+    <>
+      <div className="flex md:hidden">
+        <NavbarMobile
+        />
+      </div>
+      <div className="hidden md:block">
+        <NavbarDesktop
+        />
+      </div>
+    </>
+  )
 };
 
-export default Navbar;
+export default Navbar;
