@@ -42,9 +42,10 @@ const Hero = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, ease: "easeOut" }}
             >
-              <TypographyH1 className="text-white text-xl sm:text-4xl font-bold leading-tight">
-                Find Your Perfect Home with <span className="text-primary">spaceswala</span>
-              </TypographyH1>
+             <TypographyH1 className="text-white text-xl sm:text-4xl font-bold leading-tight">
+          <span className="block sm:inline">Find Your Perfect Home with</span>{" "}
+           <span className="text-primary block sm:inline">spaceswala</span>
+           </TypographyH1>
             </motion.div>
 
             <motion.div

@@ -6,6 +6,44 @@ import { sendOtp, verifyOtp } from "../machine/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { clearError } from "../redux/slice/authSlice";
+import { motion } from "framer-motion";
+
+// Bubble generator (simple animated floating effect)
+const BubblesBackground = () => {
+  const bubbles = Array.from({ length: 10 }, (_, i) => ({
+    id: i,
+    size: Math.random() * 40 + 20,
+    left: `${Math.random() * 100}%`,
+    delay: Math.random() * 5,
+    duration: Math.random() * 10 + 5,
+  }));
+
+  return (
+    <div className="absolute inset-0 overflow-hidden z-0">
+      {bubbles.map((bubble) => (
+        <motion.div
+          key={bubble.id}
+          className="absolute bottom-[-60px] bg-white/20 rounded-full"
+          style={{
+            width: bubble.size,
+            height: bubble.size,
+            left: bubble.left,
+          }}
+          animate={{
+            y: -800,
+            opacity: [0.4, 0.8, 0],
+          }}
+          transition={{
+            duration: bubble.duration,
+            delay: bubble.delay,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+      ))}
+    </div>
+  );
+};
 
 const LoginPage = () => {
   const [step, setStep] = useState(1);
@@ -22,7 +60,6 @@ const LoginPage = () => {
   const { loading, otpSent, isAuthenticated, user } = useSelector((state) => state.auth);
   const from = location.state?.from?.pathname || "/";
 
-  // Countdown timer for resend OTP
   useEffect(() => {
     if (resendTimer > 0) {
       const timer = setTimeout(() => setResendTimer(resendTimer - 1), 1000);
@@ -30,13 +67,11 @@ const LoginPage = () => {
     }
   }, [resendTimer]);
 
-  // Clear error when step changes
   useEffect(() => {
     dispatch(clearError());
     setError("");
   }, [step, dispatch]);
 
-  // Redirect after login
   useEffect(() => {
     if (isAuthenticated && user) {
       navigate(from, { replace: true });
@@ -70,7 +105,6 @@ const LoginPage = () => {
 
     try {
       await dispatch(verifyOtp({ mobile: fullMobile, otp })).unwrap();
-      // Redirect will be handled in useEffect
     } catch (err) {
       setError(err || "Invalid OTP or login failed.");
     }
@@ -88,11 +122,23 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 bg-gradient-to-br from-slate-100 to-slate-300">
-      <div className="w-full max-w-sm sm:max-w-md md:max-w-lg bg-white shadow-xl rounded-3xl p-6 sm:p-10">
-        <h2 className="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-6">
+    <div className="min-h-screen relative flex items-center justify-center px-4 bg-[#b6cade]">
+      <BubblesBackground />
+
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        className="relative z-10 w-full max-w-sm sm:max-w-md md:max-w-lg bg-white shadow-lg rounded-3xl p-6 sm:p-10"
+      >
+        <motion.h2
+          className="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-6"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+        >
           Login to <span className="text-blue-600">SpacesWala</span>
-        </h2>
+        </motion.h2>
 
         <form
           onSubmit={step === 1 ? handleMobileSubmit : handleOtpSubmit}
@@ -100,14 +146,17 @@ const LoginPage = () => {
         >
           {step === 1 ? (
             <>
-              <div className="space-y-2">
+              <motion.div
+                className="space-y-2"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.3 }}
+              >
                 <Label htmlFor="mobile" className="text-gray-700">
                   Mobile Number
                 </Label>
                 <div className="flex items-center rounded-md overflow-hidden border border-gray-300 bg-white focus-within:ring-2 focus-within:ring-blue-500">
-                  <span className="px-3 py-2 bg-gray-100 text-gray-600 text-sm">
-                    +91
-                  </span>
+                  <span className="px-3 py-2 bg-gray-100 text-gray-600 text-sm">+91</span>
                   <Input
                     id="mobile"
                     name="mobile"
@@ -124,7 +173,7 @@ const LoginPage = () => {
                     className="rounded-none border-0 focus:ring-0"
                   />
                 </div>
-              </div>
+              </motion.div>
 
               <Button
                 type="submit"
@@ -136,7 +185,12 @@ const LoginPage = () => {
             </>
           ) : (
             <>
-              <div className="space-y-2">
+              <motion.div
+                className="space-y-2"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.2 }}
+              >
                 <Label htmlFor="otp" className="text-gray-700">
                   Enter OTP
                 </Label>
@@ -154,7 +208,7 @@ const LoginPage = () => {
                   placeholder="6-digit OTP"
                   className="border border-gray-300"
                 />
-              </div>
+              </motion.div>
 
               <Button
                 type="submit"
@@ -182,15 +236,26 @@ const LoginPage = () => {
           )}
 
           {error && (
-            <div className="text-red-600 text-sm text-center mt-1">{error}</div>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="text-red-600 text-sm text-center mt-1"
+            >
+              {error}
+            </motion.div>
           )}
         </form>
 
-        <div className="mt-6 text-center text-sm text-gray-500">
+        <motion.div
+          className="mt-6 text-center text-sm text-gray-500"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5 }}
+        >
           Don’t have an account?{" "}
           <span className="text-blue-600 font-medium">Just enter your mobile</span>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </div>
   );
 };

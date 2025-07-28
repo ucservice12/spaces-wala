@@ -169,7 +169,7 @@ const Navbar = () => {
                                 transition={{ duration: 0.2, ease: 'easeOut' }}
                                 onMouseEnter={() => setHoveredIndex(hoveredIndex)}
                                 onMouseLeave={() => setHoveredIndex(null)}
-                                className="hidden md:block fixed top-[100px] left-0 w-full z-40 bg-white border-t shadow-lg"
+                                className="hidden md:block fixed top-[90px] left-0 w-full z-40 bg-white border-t shadow-lg"
 
                             >
                                 <div className="flex flex-wrap justify-evenly max-w-[1440px] mx-auto px-8 py-8 gap-8">
