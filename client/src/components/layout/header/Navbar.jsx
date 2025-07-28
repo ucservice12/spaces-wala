@@ -7,59 +7,62 @@ import { Button } from '@/components/ui/button';
 import { TypographyP, TypographySmall } from '@/custom/Typography';
 import { useSelector } from 'react-redux';
 import {
-  Home,
-  Building2,
-  MapPin,
-  Bed,
-  DollarSign,
-  Newspaper,
-  BookOpen,
-  Tag
+    Home,
+    Building2,
+    MapPin,
+    Bed,
+    DollarSign,
+    Newspaper,
+    BookOpen,
+    Tag
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const menuItems = [
-  {
-    label: 'Buy',
-    links: [
-      { to: '/search?type=buy&category=apartment', label: 'Apartments', icon: Building2 },
-      { to: '/search?type=buy&category=house', label: 'Houses', icon: Home },
-      { to: '/search?type=buy&category=plot', label: 'Plots', icon: MapPin },
-    ],
-  },
-  {
-    label: 'Rent',
-    links: [
-      { to: '/search?type=rent&category=apartment', label: 'Apartments', icon: Building2 },
-      { to: '/search?type=rent&category=house', label: 'Houses', icon: Home },
-      { to: '/search?type=rent&category=pg', label: 'PG/Co-living', icon: Bed },
-    ],
-  },
-  {
-    label: 'Sell',
-    links: [
-      { to: '/seller/post-property', label: 'Post Property', icon: Tag },
-      { to: '/sell/pricing', label: 'Pricing', icon: DollarSign },
-      { to: '/sell/services', label: 'Services', icon: Bed },
-    ],
-  },
-  {
-    label: 'Resources',
-    links: [
-      { to: '/resources/home-loans', label: 'Home Loans', icon: DollarSign },
-      { to: '/resources/property-news', label: 'Property News', icon: Newspaper },
-      { to: '/resources/guides', label: "Buyer's Guide", icon: BookOpen },
-    ],
-  },
+    {
+        label: 'Buy',
+        links: [
+            { to: '/search?type=buy&category=apartment', label: 'Apartments', icon: Building2 },
+            { to: '/search?type=buy&category=house', label: 'Houses', icon: Home },
+            { to: '/search?type=buy&category=plot', label: 'Plots', icon: MapPin },
+        ],
+    },
+    {
+        label: 'Rent',
+        links: [
+            { to: '/search?type=rent&category=apartment', label: 'Apartments', icon: Building2 },
+            { to: '/search?type=rent&category=house', label: 'Houses', icon: Home },
+            { to: '/search?type=rent&category=pg', label: 'PG/Co-living', icon: Bed },
+        ],
+    },
+    {
+        label: 'Sell',
+        links: [
+            { to: '/seller/post-property', label: 'Post Property', icon: Tag },
+            { to: '/sell/pricing', label: 'Pricing', icon: DollarSign },
+            { to: '/sell/services', label: 'Services', icon: Bed },
+        ],
+    },
+    {
+        label: 'Resources',
+        links: [
+            { to: '/resources/home-loans', label: 'Home Loans', icon: DollarSign },
+            { to: '/resources/property-news', label: 'Property News', icon: Newspaper },
+            { to: '/resources/guides', label: "Buyer's Guide", icon: BookOpen },
+        ],
+    },
 ];
 
 const Navbar = () => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [activeMobileDropdown, setActiveMobileDropdown] = useState(null);
+    const [hoveredIndex, setHoveredIndex] = useState(null);
+
     const [hoveredMenu, setHoveredMenu] = useState(null);
     const location = useLocation();
     const isHomePage = location.pathname === '/';
+
 
     useEffect(() => {
         const handleScroll = () => {
@@ -94,7 +97,7 @@ const Navbar = () => {
                 />
             )}
 
-            <header
+            <div
                 className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled || !isHomePage
                     ? 'bg-white/90 backdrop-blur-md shadow-md'
                     : 'bg-transparent sm:py-4'
@@ -109,12 +112,12 @@ const Navbar = () => {
 
                         {/* Desktop Navigation */}
                         <nav className="hidden md:flex items-center space-x-6">
-                            {menuItems.map((menu) => (
-                                <div 
-                                    key={menu?.label} 
+                            {menuItems.map((menu, index) => (
+                                <div
+                                    key={menu?.label}
                                     className="relative"
-                                    onMouseEnter={() => setHoveredMenu(menu.label)}
-                                    onMouseLeave={() => setHoveredMenu(null)}
+                                    onMouseEnter={() => setHoveredIndex(index)}
+                                    onMouseLeave={() => setHoveredIndex(null)}
                                 >
                                     <button
                                         className={`flex items-center ${isScrolled || !isHomePage ? 'text-black' : 'text-white'
@@ -125,31 +128,8 @@ const Navbar = () => {
                                             <ChevronDown className={`ml-1 h-4 w-4 transition-transform duration-200 ${hoveredMenu === menu.label ? 'rotate-180' : ''}`} />
                                         </TypographySmall>
                                     </button>
-                                    
-                                    <AnimatePresence>
-                                        {hoveredMenu === menu.label && (
-                                            <motion.div
-                                                initial={{ opacity: 0, y: 10 }}
-                                                animate={{ opacity: 1, y: 0 }}
-                                                exit={{ opacity: 0, y: 10 }}
-                                                transition={{ duration: 0.2, ease: "easeOut" }}
-                                                className="absolute left-0 top-full pt-2"
-                                            >
-                                                <div className="bg-white shadow-lg rounded-lg py-3 px-4 w-[1000px] border border-gray-100">
-                                                    {menu.links.map((link) => (
-                                                        <Link
-                                                            key={link.to}
-                                                            to={link.to}
-                                                            className="flex items-center gap-3 py-2 px-2 text-sm text-gray-700 hover:text-primary hover:bg-gray-50 rounded-md transition-all duration-200"
-                                                        >
-                                                            <link.icon className="w-5 h-5 text-gray-500" />
-                                                            <TypographyP className="mb-0">{link.label}</TypographyP>
-                                                        </Link>
-                                                    ))}
-                                                </div>
-                                            </motion.div>
-                                        )}
-                                    </AnimatePresence>
+
+
                                 </div>
                             ))}
                         </nav>
@@ -177,9 +157,39 @@ const Navbar = () => {
                     </div>
                 </div>
 
+                <AnimatePresence>
+                    {hoveredIndex !== null &&
+                        (menuItems[hoveredIndex].links) && (
+
+                            <motion.div
+                                key="dropdown"
+                                initial={{ opacity: 0, y: -10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: -10 }}
+                                transition={{ duration: 0.2, ease: 'easeOut' }}
+                                onMouseEnter={() => setHoveredIndex(hoveredIndex)}
+                                onMouseLeave={() => setHoveredIndex(null)}
+                                className="hidden md:block fixed top-[100px] left-0 w-full z-40 bg-white border-t shadow-lg"
+
+                            >
+                                <div className="flex flex-wrap justify-evenly max-w-[1440px] mx-auto px-8 py-8 gap-8">
+                                    {menuItems[hoveredIndex].links.map((link) => (
+                                        <Link
+                                            key={link.to}
+                                            to={link.to}
+                                            className="flex items-center gap-3 py-2 px-2 text-sm text-gray-700 hover:text-primary hover:bg-gray-50 rounded-md transition-all duration-200"
+                                        >
+                                            <link.icon className="w-5 h-5 text-gray-500" />
+                                            <TypographyP className="mb-0">{link.label}</TypographyP>
+                                        </Link>
+                                    ))}
+                                </div>
+                            </motion.div>
+                        )}
+                </AnimatePresence>
                 {/* Mobile Menu */}
                 {isMobileMenuOpen && (
-                    <motion.div 
+                    <motion.div
                         initial={{ opacity: 0, y: -20 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -20 }}
@@ -210,9 +220,9 @@ const Navbar = () => {
                                             >
                                                 <div className="pl-4 mt-1 space-y-2 border-l-2 border-primary/20">
                                                     {menu.links.map((link) => (
-                                                        <Link 
-                                                            key={link.to} 
-                                                            to={link.to} 
+                                                        <Link
+                                                            key={link.to}
+                                                            to={link.to}
                                                             onClick={closeMobileMenu}
                                                             className="block py-1.5 hover:bg-gray-50 rounded px-2 transition-colors"
                                                         >
@@ -246,7 +256,7 @@ const Navbar = () => {
                         </div>
                     </motion.div>
                 )}
-            </header>
+            </div>
         </>
     );
 };
