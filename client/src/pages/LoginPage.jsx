@@ -8,43 +8,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { clearError } from "../redux/slice/authSlice";
 import { motion } from "framer-motion";
 
-// Bubble generator (simple animated floating effect)
-const BubblesBackground = () => {
-  const bubbles = Array.from({ length: 10 }, (_, i) => ({
-    id: i,
-    size: Math.random() * 40 + 20,
-    left: `${Math.random() * 100}%`,
-    delay: Math.random() * 5,
-    duration: Math.random() * 10 + 5,
-  }));
-
-  return (
-    <div className="absolute inset-0 overflow-hidden z-0">
-      {bubbles.map((bubble) => (
-        <motion.div
-          key={bubble.id}
-          className="absolute bottom-[-60px] bg-white/20 rounded-full"
-          style={{
-            width: bubble.size,
-            height: bubble.size,
-            left: bubble.left,
-          }}
-          animate={{
-            y: -800,
-            opacity: [0.4, 0.8, 0],
-          }}
-          transition={{
-            duration: bubble.duration,
-            delay: bubble.delay,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
-      ))}
-    </div>
-  );
-};
-
 const LoginPage = () => {
   const [step, setStep] = useState(1);
   const [mobile, setMobile] = useState("");
@@ -122,139 +85,151 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen relative flex items-center justify-center px-4 bg-[#b6cade]">
-      <BubblesBackground />
-
+    <div className="min-h-screen flex items-center justify-center p-4" style={{ backgroundColor: '#f5f5f5' }}>
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
-        className="relative z-10 w-full max-w-sm sm:max-w-md md:max-w-lg bg-white shadow-lg rounded-3xl p-6 sm:p-10"
+        className="w-full max-w-4xl bg-white rounded-xl shadow-md overflow-hidden flex flex-col md:flex-row"
       >
-        <motion.h2
-          className="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-6"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-        >
-          Login to <span className="text-blue-600">SpacesWala</span>
-        </motion.h2>
+        {/* Image Section */}
+        <div className="hidden md:block md:w-1/2 bg-gray-50 flex items-center justify-center p-8">
+          <img
+            src="https://static.vecteezy.com/system/resources/previews/003/689/228/non_2x/online-registration-or-sign-up-login-for-account-on-smartphone-app-user-interface-with-secure-password-mobile-application-for-ui-web-banner-access-cartoon-people-illustration-vector.jpg"
+            alt="Login Illustration"
+            className="w-full h-auto object-contain"
+            style={{ maxHeight: '500px' }}
+          />
+        </div>
 
-        <form
-          onSubmit={step === 1 ? handleMobileSubmit : handleOtpSubmit}
-          className="space-y-5"
-        >
-          {step === 1 ? (
-            <>
-              <motion.div
-                className="space-y-2"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.3 }}
-              >
-                <Label htmlFor="mobile" className="text-gray-700">
-                  Mobile Number
-                </Label>
-                <div className="flex items-center rounded-md overflow-hidden border border-gray-300 bg-white focus-within:ring-2 focus-within:ring-blue-500">
-                  <span className="px-3 py-2 bg-gray-100 text-gray-600 text-sm">+91</span>
+        {/* Form Section */}
+        <div className="w-full md:w-1/2 p-8 md:p-10">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2 }}
+            className="text-center mb-8"
+          >
+            <h1 className="text-3xl font-bold text-gray-800 mb-2">Login to SpacesWala</h1>
+          </motion.div>
+
+          <form
+            onSubmit={step === 1 ? handleMobileSubmit : handleOtpSubmit}
+            className="space-y-6"
+          >
+            {step === 1 ? (
+              <>
+                <motion.div
+                  className="space-y-2"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.3 }}
+                >
+                  <Label htmlFor="mobile" className="block text-sm font-medium text-gray-700">
+                    Mobile Number
+                  </Label>
+                  <div className="flex items-center rounded-lg overflow-hidden border border-gray-300 bg-white focus-within:ring-2 focus-within:ring-blue-500">
+                    <span className="px-4 py-3 bg-gray-100 text-gray-600">+91</span>
+                    <Input
+                      id="mobile"
+                      name="mobile"
+                      type="tel"
+                      inputMode="numeric"
+                      pattern="[0-9]*"
+                      maxLength={10}
+                      value={mobile}
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        if (/^\d{0,10}$/.test(val)) setMobile(val);
+                      }}
+                      placeholder="Enter 10-digit mobile"
+                      className="rounded-none border-0 focus:ring-0 py-3 text-base"
+                    />
+                  </div>
+                  <p className="text-xs text-gray-500 mt-1">*Enter 10-digit mobile number</p>
+                </motion.div>
+
+                <Button
+                  type="submit"
+                  className="w-full py-3 text-base font-semibold tracking-wide"
+                  disabled={loading}
+                >
+                  {loading ? "Sending OTP..." : "Send OTP"}
+                </Button>
+              </>
+            ) : (
+              <>
+                <motion.div
+                  className="space-y-2"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.2 }}
+                >
+                  <Label htmlFor="otp" className="block text-sm font-medium text-gray-700">
+                    Enter OTP
+                  </Label>
                   <Input
-                    id="mobile"
-                    name="mobile"
-                    type="tel"
+                    id="otp"
+                    name="otp"
+                    type="text"
+                    maxLength={6}
                     inputMode="numeric"
-                    pattern="[0-9]*"
-                    maxLength={10}
-                    value={mobile}
+                    value={otp}
                     onChange={(e) => {
                       const val = e.target.value;
-                      if (/^\d{0,10}$/.test(val)) setMobile(val);
+                      if (/^\d{0,6}$/.test(val)) setOtp(val);
                     }}
-                    placeholder="Enter 10-digit mobile"
-                    className="rounded-none border-0 focus:ring-0"
+                    placeholder="6-digit OTP"
+                    className="py-3 text-base border border-gray-300 rounded-lg"
                   />
-                </div>
-              </motion.div>
+                </motion.div>
 
-              <Button
-                type="submit"
-                className="w-full text-base font-semibold tracking-wide"
-                disabled={loading}
-              >
-                {loading ? "Sending OTP..." : "Send OTP"}
-              </Button>
-            </>
-          ) : (
-            <>
+                <Button
+                  type="submit"
+                  className="w-full py-3 text-base font-semibold tracking-wide"
+                  disabled={loading}
+                >
+                  {loading ? "Verifying..." : "Verify & Login"}
+                </Button>
+
+                <div className="text-sm text-center mt-3 text-gray-600">
+                  Didn't get the code?{" "}
+                  <button
+                    type="button"
+                    onClick={handleResendOtp}
+                    disabled={resendTimer > 0}
+                    className={`font-medium ${resendTimer > 0
+                      ? "text-gray-400 cursor-not-allowed"
+                      : "text-blue-600 hover:underline"
+                      }`}
+                  >
+                    Resend OTP {resendTimer > 0 ? `(${resendTimer}s)` : ""}
+                  </button>
+                </div>
+              </>
+            )}
+
+            {error && (
               <motion.div
-                className="space-y-2"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ delay: 0.2 }}
+                className="text-red-600 text-sm text-center mt-1"
               >
-                <Label htmlFor="otp" className="text-gray-700">
-                  Enter OTP
-                </Label>
-                <Input
-                  id="otp"
-                  name="otp"
-                  type="text"
-                  maxLength={6}
-                  inputMode="numeric"
-                  value={otp}
-                  onChange={(e) => {
-                    const val = e.target.value;
-                    if (/^\d{0,6}$/.test(val)) setOtp(val);
-                  }}
-                  placeholder="6-digit OTP"
-                  className="border border-gray-300"
-                />
+                {error}
               </motion.div>
+            )}
+          </form>
 
-              <Button
-                type="submit"
-                className="w-full text-base font-semibold tracking-wide"
-                disabled={loading}
-              >
-                {loading ? "Verifying..." : "Verify & Login"}
-              </Button>
-
-              <div className="text-sm text-center mt-3 text-gray-600">
-                Didn’t get the code?{" "}
-                <button
-                  type="button"
-                  onClick={handleResendOtp}
-                  disabled={resendTimer > 0}
-                  className={`font-medium ${resendTimer > 0
-                    ? "text-gray-400 cursor-not-allowed"
-                    : "text-blue-600 hover:underline"
-                    }`}
-                >
-                  Resend OTP {resendTimer > 0 ? `(${resendTimer}s)` : ""}
-                </button>
-              </div>
-            </>
-          )}
-
-          {error && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="text-red-600 text-sm text-center mt-1"
-            >
-              {error}
-            </motion.div>
-          )}
-        </form>
-
-        <motion.div
-          className="mt-6 text-center text-sm text-gray-500"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5 }}
-        >
-          Don’t have an account?{" "}
-          <span className="text-blue-600 font-medium">Just enter your mobile</span>
-        </motion.div>
+          <motion.div
+            className="mt-8 text-center text-sm text-gray-500"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5 }}
+          >
+            Don't have an account?{" "}
+            <span className="text-blue-600 font-medium">Just enter your mobile</span>
+          </motion.div>
+        </div>
       </motion.div>
     </div>
   );

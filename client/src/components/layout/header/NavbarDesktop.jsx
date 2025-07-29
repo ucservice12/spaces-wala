@@ -43,7 +43,7 @@ const NavbarDesktop = () => {
 
     return (
         <motion.div
-            className={`w-full fixed top-0 z-40 h-26 shadow transition-colors duration-300 ${isHomePage && !scrolled ? "bg-transparent" : "bg-white"
+            className={`w-full fixed top-0 z-40 h-26  transition-colors duration-300 ${isHomePage && !scrolled ? "bg-transparent" : "bg-white"
                 }`}
             initial={{ y: -100 }}
             animate={{ y: 0 }}
@@ -62,7 +62,7 @@ const NavbarDesktop = () => {
                 </Link>
 
                 {/* Nav Menu */}
-                <nav className="flex items-center gap-4 sm:gap-8 relative">
+                <nav className="flex items-center  gap-4 sm:gap-8 relative " >
                     {menuItems.map((item, index) => (
                         <motion.div
                             key={index}
@@ -72,7 +72,7 @@ const NavbarDesktop = () => {
                             whileHover={{ scale: 1.05 }}
                         >
                             <TypographySmall
-                                className={`cursor-pointer pb-1 uppercase text-md font-bold flex items-center gap-1 transition-all duration-200 ${getTextColorClass(index)}`}
+                                className={`cursor-pointer pb-1  uppercase text-md-50 font-bold flex items-center gap-2 transition-all duration-200 ${getTextColorClass(index)}`}
                             >
                                 {item.label}
                                 <motion.span
@@ -82,7 +82,7 @@ const NavbarDesktop = () => {
                                     }}
                                     transition={{ duration: 0.2 }}
                                 >
-                                    <ChevronDown className="h-4 w-4" />
+                                    <ChevronDown className="h-5 w-5" />
                                 </motion.span>
                             </TypographySmall>
                         </motion.div>
@@ -119,8 +119,8 @@ const NavbarDesktop = () => {
                         exit={{ opacity: 0, y: -10 }}
                         transition={{ duration: 0.3, ease: "easeOut" }}
                     >
-                        <div className="w-full max-w-7xl mx-auto px-4 sm:px-8 py-6">
-                            <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                        <div className="w-full max-w-7xl mx-auto px-6 sm:px-8 py-6">
+                            <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-items-center ">
                                 {chunkArray(
                                     menuItems[hoveredIndex].links,
                                     Math.ceil(menuItems[hoveredIndex].links.length / 4)

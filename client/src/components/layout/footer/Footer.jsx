@@ -22,7 +22,7 @@ const footerLinks = [
       { label: 'Plots', to: '/search?type=plot' },
       { label: 'Commercial Properties', to: '/search?type=commercial' },
       { label: 'PG & Co-living', to: '/search?type=pg' },
-      { label: 'Luxury Homes', to: '/search?type=villa' }, // reuse or separate path if needed
+      { label: 'Luxury Homes', to: '/search?type=villa' },
     ],
   },
   {
@@ -48,43 +48,82 @@ const socialLinks = [
 
 const Footer = () => {
   return (
-    <footer className="bg-[#213448] text-white pt-12 pb-8">
+    <footer className="bg-black text-white pt-12 pb-8">
       <div className="container max-w-7xl mx-auto px-4">
-        {/* Main Footer Content */}
+        {/* Logo Top Left */}
+        <div className="mb-10">
+          <img
+            src="/logo.png"
+            alt="SpacesWala Logo"
+            className="h-20 w-auto"
+            loading="lazy"
+          />
+        </div>
+
+        {/* Main Footer Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {/* Dynamic Link Sections */}
-          {footerLinks.map((section) => (
-            <div key={section.title}>
-              <TypographyLarge>
-                {section?.title}
-              </TypographyLarge>
-              <ul className="space-y-2 mt-4">
-                {section.links.map((link) => (
-                  <li key={link.to}>
-                    <Link
-                      to={link.to}
-                      className="text-gray-300 hover:text-white transition-colors duration-300"
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+          {/* Company */}
+          <div>
+            <TypographyLarge>Company</TypographyLarge>
+            <ul className="space-y-2 mt-4">
+              {footerLinks[0].links.map((link) => (
+                <li key={link.to}>
+                  <Link
+                    to={link.to}
+                    className="text-gray-300 hover:text-white transition-colors duration-300"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Property Types */}
+          <div>
+            <TypographyLarge>Property Types</TypographyLarge>
+            <ul className="space-y-2 mt-4">
+              {footerLinks[1].links.map((link) => (
+                <li key={link.to}>
+                  <Link
+                    to={link.to}
+                    className="text-gray-300 hover:text-white transition-colors duration-300"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Top Cities */}
+          <div>
+            <TypographyLarge>Top Cities</TypographyLarge>
+            <ul className="space-y-2 mt-4">
+              {footerLinks[2].links.map((link) => (
+                <li key={link.to}>
+                  <Link
+                    to={link.to}
+                    className="text-gray-300 hover:text-white transition-colors duration-300"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
 
           {/* Contact Section */}
           <div>
-            <TypographyLarge>
-              Contact Us
-            </TypographyLarge>
+            <TypographyLarge>Contact Us</TypographyLarge>
             <p className="text-gray-300 my-4">
-              UC Services Pvt Ltd.
-              Office. 02&15, Saiplaza,
-              Zeroboys Chowk Nehrunagar, Pimpri Chinchwad Pune.411018.
+              UC Services Pvt Ltd. Office. 02&15, Saiplaza, Zeroboys Chowk
+              <br />
+              Nehrunagar, Pimpri Chinchwad Pune.411018.
             </p>
             <p className="text-gray-300 mb-4">
-              <strong>Phone:</strong> 1800 41 99099<br />
+              <strong>Phone:</strong> 1800 41 99099
+              <br />
               <strong>Email:</strong> support@spaceswala.com
             </p>
             <div className="flex space-x-4 mt-4">
@@ -104,10 +143,9 @@ const Footer = () => {
         </div>
 
         {/* Bottom Footer */}
-        <div className="mt-12 border-t border-gray-800">
+        <div className="mt-12 border-t border-gray-800 pt-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <img src="/logo.png" alt="logo" className="h-20" loading="lazy" />
-            <div className="text-gray-400 text-sm text-center md:text-left break-words max-w-xs">
+            <div className="text-gray-400 text-sm text-center md:text-left break-words">
               &copy; {new Date().getFullYear()} Umbakrar Tech(India) Pvt Ltd. All rights reserved.
             </div>
           </div>

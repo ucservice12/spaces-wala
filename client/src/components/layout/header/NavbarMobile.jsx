@@ -24,8 +24,10 @@ const NavbarMobile = () => {
         const term = searchTerm.toLowerCase();
         return (
             section.label.toLowerCase().includes(term) ||
-            section.links?.some((item) =>
-                item.label.toLowerCase().includes(term) || item.description?.toLowerCase().includes(term)
+            section.links?.some(
+                (item) =>
+                    item.label.toLowerCase().includes(term) ||
+                    item.description?.toLowerCase().includes(term)
             )
         );
     };
@@ -40,11 +42,9 @@ const NavbarMobile = () => {
 
                 <div className="flex items-center space-x-6">
                     <Link to="/login" className="flex items-center gap-2 sm:gap-3">
-                        <Button size="sm">
-                            Login
-                        </Button>
+                        <Button size="sm">Login</Button>
                     </Link>
-                    <Button size='sm' onClick={() => setOpen((prev) => !prev)}>
+                    <Button size="sm" onClick={() => setOpen((prev) => !prev)}>
                         <IconRenderer name={open ? "X" : "AlignJustify"} size={22} />
                     </Button>
                 </div>
@@ -52,7 +52,7 @@ const NavbarMobile = () => {
 
             {/* Dropdown Panel */}
             {open && (
-                <div className="fixed top-[90px] left-0 w-full h-[calc(100vh-60px)] px-2 bg-card flex flex-col">
+                <div className="fixed top-[90px] left-0 w-full h-[calc(100vh-60px)] px-2 bg-card flex flex-col z-40">
                     <div className="flex-1 overflow-y-auto px-3 pt-3 pb-24">
                         <Input
                             className="border-none bg-muted mb-3 text-sm outline-none px-2"
@@ -62,30 +62,46 @@ const NavbarMobile = () => {
                         />
 
                         {menuItems.filter(filterItems).length === 0 && (
-                            <p className="text-muted-foreground px-3 py-2 text-sm">No results found.</p>
+                            <p className="text-muted-foreground px-3 py-2 text-sm">
+                                No results found.
+                            </p>
                         )}
 
                         {menuItems.filter(filterItems).map((section, idx) => {
                             const isOpen = openMenuIndex === idx || searchTerm;
-                            const sectionMatch = section.label.toLowerCase().includes(searchTerm.toLowerCase());
+                            const sectionMatch = section.label
+                                .toLowerCase()
+                                .includes(searchTerm.toLowerCase());
 
                             const filteredLinks = section.links?.filter(
                                 (link) =>
-                                    link.label.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                                    link.description?.toLowerCase().includes(searchTerm.toLowerCase())
+                                    link.label
+                                        .toLowerCase()
+                                        .includes(searchTerm.toLowerCase()) ||
+                                    link.description
+                                        ?.toLowerCase()
+                                        .includes(searchTerm.toLowerCase())
                             );
 
                             return (
                                 <div key={idx} className="mb-2">
                                     <button
-                                        onClick={() => setOpenMenuIndex((prev) => (prev === idx ? null : idx))}
-                                        className={`flex w-full items-center justify-between px-3 py-2 text-sm font-medium rounded-md ${sectionMatch || isOpen
-                                            ? "bg-blue-100 text-blue-800"
-                                            : "text-muted-foreground"
-                                            }`}
+                                        onClick={() =>
+                                            setOpenMenuIndex((prev) =>
+                                                prev === idx ? null : idx
+                                            )
+                                        }
+                                        className={`flex w-full items-center justify-between px-3 py-2 text-sm font-medium rounded-md ${
+                                            sectionMatch || isOpen
+                                                ? "bg-blue-100 text-blue-800"
+                                                : "text-muted-foreground"
+                                        }`}
                                     >
                                         <span>{section.label}</span>
-                                        <IconRenderer name={isOpen ? "ChevronDown" : "ChevronRight"} size={16} />
+                                        <IconRenderer
+                                            name={isOpen ? "ChevronDown" : "ChevronRight"}
+                                            size={16}
+                                        />
                                     </button>
 
                                     {isOpen && filteredLinks?.length > 0 && (
@@ -98,19 +114,33 @@ const NavbarMobile = () => {
                                                             setOpen(false);
                                                             setSelectedLink(item.to);
                                                         }}
-                                                        className={`px-3 py-2 flex flex-col rounded-md ${selectedLink === item.to
-                                                            ? "bg-blue-100 text-blue-800 font-medium"
-                                                            : "text-muted-foreground hover:text-primary hover:bg-accent"
-                                                            }`}
+                                                        className={`px-3 py-3 flex flex-col rounded-md gap-2 ${
+                                                            selectedLink === item.to
+                                                                ? "bg-blue-100 text-blue-800 font-medium"
+                                                                : "text-muted-foreground hover:text-primary hover:bg-accent"
+                                                        }`}
                                                     >
-                                                        <div className="flex items-center gap-2 mb-0.5">
-                                                            {item.icon && <item.icon className="h-4 w-4" />}
-                                                            <span className="text-sm font-medium">{item.label}</span>
+                                                        <div className="flex items-center gap-2">
+                                                            {item.icon && (
+                                                                <item.icon className="h-4 w-4" />
+                                                            )}
+                                                            <span className="text-sm font-medium">
+                                                                {item.label}
+                                                            </span>
                                                         </div>
+
                                                         {item.description && (
-                                                            <TypographyMuted className="text-xs pl-5 pr-2 leading-snug">
+                                                            <TypographyMuted className="text-xs pl-6 pr-2 leading-snug">
                                                                 {item.description}
                                                             </TypographyMuted>
+                                                        )}
+
+                                                        {item.image && (
+                                                            <img
+                                                                src={item.image}
+                                                                alt={item.label}
+                                                                className="w-full h-32 object-cover rounded-md"
+                                                            />
                                                         )}
                                                     </Link>
                                                 </FadeInWhenVisible>
