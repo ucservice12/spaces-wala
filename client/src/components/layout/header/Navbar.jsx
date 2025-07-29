@@ -4,18 +4,18 @@ import NavbarMobile from "./NavbarMobile";
 
 const Navbar = () => {
 
-  return (
-    <>
-      <div className="flex md:hidden">
-        <NavbarMobile
-        />
-      </div>
-      <div className="hidden md:block">
-        <NavbarDesktop
-        />
-      </div>
-    </>
-  )
+    return (
+        <>
+            <div className="flex md:hidden">
+                <NavbarMobile
+                />
+            </div>
+            <div className="hidden md:block">
+                <NavbarDesktop
+                />
+            </div>
+        </>
+    )
 };
 
-export default Navbar;
+export default Navbar;

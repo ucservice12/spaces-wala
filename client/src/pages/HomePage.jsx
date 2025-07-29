@@ -298,12 +298,12 @@ const HomePage = () => {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="md:w-1/3"
             >
-             <img
-  loading="lazy"
-  src="https://images.pexels.com/photos/3183197/pexels-photo-3183197.jpeg?auto=compress&cs=tinysrgb&w=640"
-  alt="Mobile App"
-  className="rounded-lg shadow-lg"
-/>
+              <img
+                loading="lazy"
+                src="https://images.pexels.com/photos/3183197/pexels-photo-3183197.jpeg?auto=compress&cs=tinysrgb&w=640"
+                alt="Mobile App"
+                className="rounded-lg shadow-lg"
+              />
 
             </motion.div>
           </div>
