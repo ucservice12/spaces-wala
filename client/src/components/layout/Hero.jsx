@@ -3,7 +3,6 @@
 import SearchBar from '@/components/search/SearchBar';
 import {
   TypographyP,
-  TypographyH1,
   TypographyH4,
   TypographyMuted,
 } from '../../custom/Typography';
@@ -19,7 +18,7 @@ const backgroundImage =
 const Hero = () => {
   return (
     <div
-      className="relative h-screen flex items-center bg-cover bg-center overflow-hidden"
+      className="relative min-h-screen flex items-center bg-cover bg-center overflow-hidden"
       style={{ backgroundImage: `url('${backgroundImage}')` }}
     >
       {/* Preload Background Image */}
@@ -34,30 +33,34 @@ const Hero = () => {
       <div className="absolute inset-0 bg-gradient-to-r from-gray-900/80 to-gray-900/40" />
 
       {/* Foreground Content */}
-      <div className="relative z-10 w-full sm:mt-0 mt-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-8 py-20 sm:py-40 flex flex-col items-start justify-center">
-         <div className="w-full lg:max-w-2xl space-y-6 sm:space-y-8 mt-10 sm:mt-16">
-            <motion.div
+      <div className="relative z-10 w-full mt-16 sm:mt-0">
+        <div className="max-w-7xl mx-auto px-4 sm:px-8 pt-12 sm:pt-40 pb-20 flex flex-col items-start justify-center">
+          <div className="w-full lg:max-w-2xl space-y-6 sm:space-y-8 mt-10 sm:mt-16">
+
+            {/* Heading */}
+            <motion.h1
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, ease: "easeOut" }}
+              className="text-white font-bold leading-tight text-[clamp(1.5rem,6vw,3rem)]"
             >
-             <TypographyH1 className="text-white text-xl sm:text-4xl font-bold leading-tight">
-          <span className="block sm:inline">Find Your Perfect Home with</span>{" "}
-           <span className="text-primary block sm:inline">spaceswala</span>
-           </TypographyH1>
-            </motion.div>
+              <span className="block">Find Your Perfect Home with</span>
+              <span className="text-primary block">spaceswala</span>
+            </motion.h1>
 
+            {/* Description */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, ease: "easeOut", delay: 0.15 }}
             >
-              <TypographyP className="text-white text-base sm:text-lg">
-                Discover properties for buying, renting, or selling across India. Your dream home is just a search away.
+              <TypographyP className="text-white text-[clamp(1rem,2.5vw,1.25rem)]">
+                Discover properties for buying, renting, or selling across India.
+                Your dream home is just a search away.
               </TypographyP>
             </motion.div>
 
+            {/* Search Bar */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -81,11 +84,15 @@ const Hero = () => {
               ].map((item, i) => (
                 <div
                   key={i}
-                  className="bg-white/10 backdrop-blur-sm px-6 py-6 sm:px-5 sm:py-3 space-y-1 rounded-xl text-white text-center min-w-[120px] sm:min-w-[140px] group hover:shadow-xl transition-all duration-300"
+                  className="min-w-0 bg-white/10 backdrop-blur-sm px-4 py-5 sm:px-5 sm:py-3 space-y-1 rounded-xl text-white text-center group hover:shadow-xl transition-all duration-300"
                 >
                   {item.icon}
-                  <TypographyH4 className="text-xl sm:text-2xl">{item.value}</TypographyH4>
-                  <TypographyMuted className="text-accent">{item.label}</TypographyMuted>
+                  <TypographyH4 className="text-[clamp(1.1rem,1.8vw,1.5rem)]">
+                    {item.value}
+                  </TypographyH4>
+                  <TypographyMuted className="text-accent text-[clamp(0.8rem,1.5vw,1rem)]">
+                    {item.label}
+                  </TypographyMuted>
                 </div>
               ))}
             </motion.div>
