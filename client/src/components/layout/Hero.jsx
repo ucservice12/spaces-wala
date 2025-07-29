@@ -34,7 +34,7 @@ const Hero = () => {
 
       {/* Foreground Content */}
       <div className="relative z-10 w-full mt-16 sm:mt-0">
-        <div className="max-w-7xl mx-auto px-4 sm:px-8 pt-12 sm:pt-40 pb-20 flex flex-col items-start justify-center">
+        <div className="max-w-7xl mx-auto px-4 sm:px-8 pt-12 sm:pt-30 pb-20 flex flex-col items-start justify-center">
           <div className="w-full lg:max-w-2xl space-y-6 sm:space-y-8 mt-10 sm:mt-16">
 
             {/* Heading */}

@@ -3,37 +3,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { motion, AnimatePresence } from "framer-motion";
 import { Home, Building2, FileImage, ChevronLeft, ChevronRight } from "lucide-react";
 import { useSelector } from "react-redux";
 import { uploadproperty } from "../../machine/property";
 import LoadingPage from '../LoadingPage';
-// Bubble component
-const Bubble = ({ size, left, delay, duration }) => {
-  return (
-    <motion.div
-      className="absolute rounded-full bg-white/20 backdrop-blur-sm"
-      style={{
-        width: size,
-        height: size,
-        left: `${left}%`,
-        bottom: '-10%',
-      }}
-      initial={{ y: 0, opacity: 0 }}
-      animate={{ 
-        y: '-110vh', 
-        opacity: [0, 0.5, 0],
-        scale: [1, 1.1, 1]
-      }}
-      transition={{
-        duration: duration,
-        delay: delay,
-        repeat: Infinity,
-        ease: "linear"
-      }}
-    />
-  );
-};
 
 const PostPropertyForm = () => {
     const [step, setStep] = useState(1);
@@ -139,546 +112,355 @@ const PostPropertyForm = () => {
         { title: "Price & Media", icon: <FileImage className="w-5 h-5" /> },
     ];
 
-    // Animation variants
-    const containerVariants = {
-        hidden: { opacity: 0 },
-        visible: {
-            opacity: 1,
-            transition: {
-                staggerChildren: 0.1,
-                delayChildren: 0.2,
-            },
-        },
-    };
-
-    const itemVariants = {
-        hidden: { y: 20, opacity: 0 },
-        visible: {
-            y: 0,
-            opacity: 1,
-            transition: { type: "spring", stiffness: 100 },
-        },
-    };
-
-    const buttonHover = {
-        scale: 1.03,
-        transition: { type: "spring", stiffness: 400, damping: 10 },
-    };
-
     return (
         <>
             {loading && <LoadingPage message="Posting Your Property..." />}
-            <div className="min-h-screen pt-40 px-4 bg-[#b6cade] from-blue-50 via-white to-purple-100 flex items-start justify-center">
-                 {/* Bubble Background */}
-                <div className="absolute inset-0 overflow-hidden">
-                  {[...Array(15)].map((_, i) => (
-                    <Bubble
-                      key={i}
-                      size={`${Math.random() * 100 + 50}px`}
-                      left={Math.random() * 100}
-                      delay={Math.random() * 5}
-                      duration={Math.random() * 10 + 10}
-                    />
-                  ))}
-                </div>
-                <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, ease: "easeOut" }}
-                    className="w-full max-w-6xl rounded-2xl bg-white/80 backdrop-blur-lg shadow-xl border border-gray-200/80 p-4 md:p-8 flex flex-col md:flex-row gap-6"
-                >
-                    {/* Vertical Stepper (Desktop) */}
-                    <motion.div
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.2 }}
-                        className="hidden md:flex flex-col gap-4 pt-4 w-1/4 border-r pr-4"
-                    >
+            <div className="min-h-screen pt-40 px-6 bg-[#b6cade] from-blue-50 via-white to-purple-100 flex items-start justify-center">
+                <div className="w-full max-w-4xl rounded-xl bg-white/80 backdrop-blur-lg shadow-md border border-gray-200/80 
+  p-3 md:p-6 flex flex-col md:flex-row gap-4 
+  max-h-[80vh] overflow-y-auto">
+
+                    {/* Vertical Stepper (Desktop) - Darker version */}
+                    <div className="hidden md:flex flex-col gap-4 pt-4 w-1/4 border-r pr-4">
                         {steps.map((s, index) => (
-                            <motion.div
+                            <div
                                 key={index}
-                                whileHover={{ scale: 1.02 }}
-                                whileTap={{ scale: 0.98 }}
-                                className={`flex items-center gap-3 text-sm px-3 py-3 rounded-lg cursor-default transition-all duration-300 ${
-                                    step === index + 1
-                                        ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg"
-                                        : "text-gray-600 hover:bg-gray-100/50"
-                                }`}
+                                className={`flex items-center gap-3 text-sm px-3 py-3 rounded-lg cursor-default transition-all duration-300 ${step === index + 1
+                                        ? "bg-gray-800 text-white shadow-lg"
+                                        : "text-gray-600 hover:bg-gray-200"
+                                    }`}
                             >
-                                <motion.span
-                                    animate={{ rotate: step === index + 1 ? [0, 10, -5, 0] : 0 }}
-                                    transition={{ duration: 0.5 }}
-                                >
-                                    {s.icon}
-                                </motion.span>
+                                {s.icon}
                                 {s.title}
-                            </motion.div>
+                            </div>
                         ))}
-                    </motion.div>
+                    </div>
 
                     {/* Horizontal Stepper (Mobile) */}
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        className="md:hidden flex justify-center mb-6"
-                    >
+                    <div className="md:hidden flex justify-center mb-6">
                         <div className="flex items-center gap-2 bg-gray-100/50 rounded-full p-1">
                             {steps.map((_, index) => (
-                                <motion.div
+                                <div
                                     key={index}
                                     onClick={() => setStep(index + 1)}
-                                    className={`w-3 h-3 rounded-full cursor-pointer ${
-                                        step === index + 1 ? "bg-blue-600" : "bg-gray-300"
-                                    }`}
-                                    whileHover={{ scale: 1.2 }}
-                                    whileTap={{ scale: 0.9 }}
+                                    className={`w-3 h-3 rounded-full cursor-pointer ${step === index + 1 ? "bg-gray-800" : "bg-gray-300"
+                                        }`}
                                 />
                             ))}
                         </div>
-                    </motion.div>
+                    </div>
 
                     {/* Form Content */}
                     <form
-                        className="flex-1 overflow-y-auto max-h-[calc(100vh-10rem)] px-1 md:px-4"
+                        className="flex-1 overflow-y-auto overflow-x-hidden max-h-[calc(100vh-10rem)] px-1 md:px-4"
                         onSubmit={handleSubmit}
                     >
-                        <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            className="text-center mb-8"
-                        >
-                            <motion.h2
-                                initial={{ y: -20 }}
-                                animate={{ y: 0 }}
-                                transition={{ type: "spring", stiffness: 100 }}
-                                className="text-2xl md:text-3xl font-bold text-gray-800 mb-2"
-                            >
-                                Post Your Property on{" "}
-                                <motion.span
-                                    className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600"
-                                    animate={{
-                                        backgroundPosition: ["0% 50%", "100% 50%"],
-                                    }}
-                                    transition={{
-                                        repeat: Infinity,
-                                        repeatType: "reverse",
-                                        duration: 3,
-                                    }}
-                                >
-                                    SpacesWala
-                                </motion.span>
-                            </motion.h2>
-                            <motion.p
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                transition={{ delay: 0.3 }}
-                                className="text-gray-500"
-                            >
+                        <div className="text-center mb-8">
+                            <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-2">
+                                Post Your Property on <span className="text-gray-800">SpacesWala</span>
+                            </h2>
+                            <p className="text-gray-500">
                                 {steps[step - 1].title}
-                            </motion.p>
-                        </motion.div>
+                            </p>
+                        </div>
 
-                        <AnimatePresence mode="wait">
-                            <motion.div
-                                key={step}
-                                initial={{ opacity: 0, x: step > 1 ? 50 : -50 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                exit={{ opacity: 0, x: step > 1 ? -50 : 50 }}
-                                transition={{ duration: 0.3, ease: "easeInOut" }}
-                                variants={containerVariants}
-                                className="space-y-6"
-                            >
-                                {/* Step 1 */}
-                                {step === 1 && (
-                                    <motion.div
-                                        variants={containerVariants}
-                                        initial="hidden"
-                                        animate="visible"
-                                        className="grid grid-cols-1 md:grid-cols-2 gap-6"
-                                    >
-                                        <motion.div variants={itemVariants} className="col-span-2">
-                                            <Label>Property Category</Label>
-                                            <motion.div className="flex flex-wrap gap-3 mt-2">
-                                                {["Residential", "Commercial"].map((cat) => (
-                                                    <motion.div
-                                                        key={cat}
-                                                        whileHover={buttonHover}
-                                                        whileTap={{ scale: 0.95 }}
+                        <div className="space-y-6">
+                            {/* Step 1 */}
+                            {step === 1 && (
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div className="col-span-2">
+                                        <Label>Property Category</Label>
+                                        <div className="flex flex-wrap gap-3 mt-2">
+                                            {["Residential", "Commercial"].map((cat) => (
+                                                <div key={cat}>
+                                                    <Button
+                                                        type="button"
+                                                        variant={
+                                                            formData.propertyCategory === cat
+                                                                ? "default"
+                                                                : "outline"
+                                                        }
+                                                        className="min-w-[120px]"
+                                                        onClick={() =>
+                                                            setFormData({
+                                                                ...formData,
+                                                                propertyCategory: cat,
+                                                            })
+                                                        }
                                                     >
-                                                        <Button
-                                                            type="button"
-                                                            variant={
-                                                                formData.propertyCategory === cat
-                                                                    ? "default"
-                                                                    : "outline"
-                                                            }
-                                                            className="min-w-[120px]"
-                                                            onClick={() =>
-                                                                setFormData({
-                                                                    ...formData,
-                                                                    propertyCategory: cat,
-                                                                })
-                                                            }
-                                                        >
-                                                            {cat}
-                                                        </Button>
-                                                    </motion.div>
-                                                ))}
-                                            </motion.div>
-                                            {errors.propertyCategory && (
-                                                <motion.p
-                                                    initial={{ opacity: 0, y: -10 }}
-                                                    animate={{ opacity: 1, y: 0 }}
-                                                    className="text-sm text-red-600 mt-1"
-                                                >
-                                                    {errors.propertyCategory}
-                                                </motion.p>
-                                            )}
-                                        </motion.div>
-
-                                        <motion.div variants={itemVariants} className="col-span-2">
-                                            <Label>Looking To</Label>
-                                            <motion.div className="flex flex-wrap gap-3 mt-2">
-                                                {["Rent", "Sell", "PG/Co-living"].map((type) => (
-                                                    <motion.div
-                                                        key={type}
-                                                        whileHover={buttonHover}
-                                                        whileTap={{ scale: 0.95 }}
-                                                    >
-                                                        <Button
-                                                            type="button"
-                                                            variant={
-                                                                formData.listingType === type
-                                                                    ? "default"
-                                                                    : "outline"
-                                                            }
-                                                            className="min-w-[100px]"
-                                                            onClick={() =>
-                                                                setFormData({
-                                                                    ...formData,
-                                                                    listingType: type,
-                                                                })
-                                                            }
-                                                        >
-                                                            {type}
-                                                        </Button>
-                                                    </motion.div>
-                                                ))}
-                                            </motion.div>
-                                            {errors.listingType && (
-                                                <motion.p
-                                                    initial={{ opacity: 0, y: -10 }}
-                                                    animate={{ opacity: 1, y: 0 }}
-                                                    className="text-sm text-red-600 mt-1"
-                                                >
-                                                    {errors.listingType}
-                                                </motion.p>
-                                            )}
-                                        </motion.div>
-
-                                        <motion.div variants={itemVariants} className="col-span-2">
-                                            <Label>City</Label>
-                                            <Input
-                                                name="city"
-                                                placeholder="e.g. Mumbai, Pune"
-                                                value={formData.city}
-                                                onChange={handleChange}
-                                            />
-                                            {errors.city && (
-                                                <motion.p
-                                                    initial={{ opacity: 0, y: -10 }}
-                                                    animate={{ opacity: 1, y: 0 }}
-                                                    className="text-sm text-red-600 mt-1"
-                                                >
-                                                    {errors.city}
-                                                </motion.p>
-                                            )}
-                                        </motion.div>
-                                    </motion.div>
-                                )}
-
-                                {/* Step 2 */}
-                                {step === 2 && (
-                                    <motion.div
-                                        variants={containerVariants}
-                                        initial="hidden"
-                                        animate="visible"
-                                        className="grid grid-cols-1 md:grid-cols-2 gap-6"
-                                    >
-                                        <motion.div variants={itemVariants}>
-                                            <Label>Property Type</Label>
-                                            <Input
-                                                name="propertyType"
-                                                value={formData.propertyType}
-                                                onChange={handleChange}
-                                                placeholder="e.g. Apartment, Villa"
-                                            />
-                                            {errors.propertyType && (
-                                                <motion.p
-                                                    initial={{ opacity: 0, y: -10 }}
-                                                    animate={{ opacity: 1, y: 0 }}
-                                                    className="text-sm text-red-600 mt-1"
-                                                >
-                                                    {errors.propertyType}
-                                                </motion.p>
-                                            )}
-                                        </motion.div>
-
-                                        <motion.div variants={itemVariants}>
-                                            <Label>Title</Label>
-                                            <Input
-                                                name="title"
-                                                value={formData.title}
-                                                onChange={handleChange}
-                                                placeholder="Listing title"
-                                            />
-                                            {errors.title && (
-                                                <motion.p
-                                                    initial={{ opacity: 0, y: -10 }}
-                                                    animate={{ opacity: 1, y: 0 }}
-                                                    className="text-sm text-red-600 mt-1"
-                                                >
-                                                    {errors.title}
-                                                </motion.p>
-                                            )}
-                                        </motion.div>
-
-                                        <motion.div variants={itemVariants} className="col-span-2">
-                                            <Label>Description</Label>
-                                            <Textarea
-                                                name="description"
-                                                value={formData.description}
-                                                onChange={handleChange}
-                                                placeholder="Describe your property"
-                                                rows={4}
-                                            />
-                                            {errors.description && (
-                                                <motion.p
-                                                    initial={{ opacity: 0, y: -10 }}
-                                                    animate={{ opacity: 1, y: 0 }}
-                                                    className="text-sm text-red-600 mt-1"
-                                                >
-                                                    {errors.description}
-                                                </motion.p>
-                                            )}
-                                        </motion.div>
-
-                                        <motion.div variants={itemVariants}>
-                                            <Label>Bedrooms</Label>
-                                            <Input
-                                                type="number"
-                                                name="bedrooms"
-                                                value={formData.bedrooms}
-                                                onChange={handleChange}
-                                                min="0"
-                                            />
-                                            {errors.bedrooms && (
-                                                <motion.p
-                                                    initial={{ opacity: 0, y: -10 }}
-                                                    animate={{ opacity: 1, y: 0 }}
-                                                    className="text-sm text-red-600 mt-1"
-                                                >
-                                                    {errors.bedrooms}
-                                                </motion.p>
-                                            )}
-                                        </motion.div>
-
-                                        <motion.div variants={itemVariants}>
-                                            <Label>Bathrooms</Label>
-                                            <Input
-                                                type="number"
-                                                name="bathrooms"
-                                                value={formData.bathrooms}
-                                                onChange={handleChange}
-                                                min="0"
-                                            />
-                                            {errors.bathrooms && (
-                                                <motion.p
-                                                    initial={{ opacity: 0, y: -10 }}
-                                                    animate={{ opacity: 1, y: 0 }}
-                                                    className="text-sm text-red-600 mt-1"
-                                                >
-                                                    {errors.bathrooms}
-                                                </motion.p>
-                                            )}
-                                        </motion.div>
-
-                                        <motion.div variants={itemVariants}>
-                                            <Label>Furnishing</Label>
-                                            <Input
-                                                name="furnishing"
-                                                value={formData.furnishing}
-                                                onChange={handleChange}
-                                                placeholder="Furnished / Semi / Unfurnished"
-                                            />
-                                            {errors.furnishing && (
-                                                <motion.p
-                                                    initial={{ opacity: 0, y: -10 }}
-                                                    animate={{ opacity: 1, y: 0 }}
-                                                    className="text-sm text-red-600 mt-1"
-                                                >
-                                                    {errors.furnishing}
-                                                </motion.p>
-                                            )}
-                                        </motion.div>
-
-                                        <motion.div variants={itemVariants}>
-                                            <Label>Area (sq. ft)</Label>
-                                            <Input
-                                                type="number"
-                                                name="area"
-                                                value={formData.area}
-                                                onChange={handleChange}
-                                                placeholder="e.g. 1200"
-                                                min="0"
-                                            />
-                                            {errors.area && (
-                                                <motion.p
-                                                    initial={{ opacity: 0, y: -10 }}
-                                                    animate={{ opacity: 1, y: 0 }}
-                                                    className="text-sm text-red-600 mt-1"
-                                                >
-                                                    {errors.area}
-                                                </motion.p>
-                                            )}
-                                        </motion.div>
-                                    </motion.div>
-                                )}
-
-                                {/* Step 3 */}
-                                {step === 3 && (
-                                    <motion.div
-                                        variants={containerVariants}
-                                        initial="hidden"
-                                        animate="visible"
-                                        className="grid grid-cols-1 md:grid-cols-2 gap-6"
-                                    >
-                                        <motion.div variants={itemVariants}>
-                                            <Label>Price (₹)</Label>
-                                            <Input
-                                                type="number"
-                                                name="price"
-                                                value={formData.price}
-                                                onChange={handleChange}
-                                                placeholder="Enter price"
-                                                min="0"
-                                            />
-                                            {errors.price && (
-                                                <motion.p
-                                                    initial={{ opacity: 0, y: -10 }}
-                                                    animate={{ opacity: 1, y: 0 }}
-                                                    className="text-sm text-red-600 mt-1"
-                                                >
-                                                    {errors.price}
-                                                </motion.p>
-                                            )}
-                                        </motion.div>
-
-                                        <motion.div
-                                            variants={itemVariants}
-                                            className="flex items-center gap-2 mt-2"
-                                        >
-                                            <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
-                                                <input
-                                                    type="checkbox"
-                                                    id="negotiable"
-                                                    name="negotiable"
-                                                    checked={formData.negotiable}
-                                                    onChange={handleChange}
-                                                    className="w-4 h-4 accent-blue-600"
-                                                />
-                                            </motion.div>
-                                            <Label htmlFor="negotiable" className="cursor-pointer">
-                                                Negotiable Price
-                                            </Label>
-                                        </motion.div>
-
-                                        <motion.div variants={itemVariants} className="col-span-2">
-                                            <Label>Upload Images (Max 6)</Label>
-                                            <motion.div
-                                                whileHover={{ scale: 1.01 }}
-                                                className="relative border-2 border-dashed border-gray-300 rounded-lg p-6 text-center"
-                                            >
-                                                <Input
-                                                    type="file"
-                                                    name="images"
-                                                    accept="image/*"
-                                                    multiple
-                                                    onChange={handleImageChange}
-                                                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-                                                />
-                                                <div className="flex flex-col items-center justify-center gap-2">
-                                                    <FileImage className="w-8 h-8 text-gray-400" />
-                                                    <p className="text-sm text-gray-500">
-                                                        Click to upload or drag and drop
-                                                    </p>
-                                                    <p className="text-xs text-gray-400">
-                                                        JPEG, PNG (Max 6 images)
-                                                    </p>
+                                                        {cat}
+                                                    </Button>
                                                 </div>
-                                            </motion.div>
-                                            {errors.images && (
-                                                <motion.p
-                                                    initial={{ opacity: 0, y: -10 }}
-                                                    animate={{ opacity: 1, y: 0 }}
-                                                    className="text-sm text-red-600 mt-1"
-                                                >
-                                                    {errors.images}
-                                                </motion.p>
-                                            )}
+                                            ))}
+                                        </div>
+                                        {errors.propertyCategory && (
+                                            <p className="text-sm text-red-600 mt-1">
+                                                {errors.propertyCategory}
+                                            </p>
+                                        )}
+                                    </div>
 
-                                            {/* Image Preview */}
-                                            {formData.images.length > 0 && (
-                                                <motion.div
-                                                    initial={{ opacity: 0 }}
-                                                    animate={{ opacity: 1 }}
-                                                    className="mt-4"
-                                                >
-                                                    <Label>Selected Images ({formData.images.length}/6)</Label>
-                                                    <motion.div className="flex flex-wrap mt-2 gap-3">
-                                                        {formData.images.map((file, index) => (
-                                                            <motion.div
-                                                                key={index}
-                                                                initial={{ scale: 0.8, opacity: 0 }}
-                                                                animate={{ scale: 1, opacity: 1 }}
-                                                                exit={{ scale: 0.8, opacity: 0 }}
-                                                                transition={{ duration: 0.2 }}
-                                                                className="relative w-20 h-20 rounded-lg border overflow-hidden shadow-sm"
+                                    <div className="col-span-2">
+                                        <Label>Looking To</Label>
+                                        <div className="flex flex-wrap gap-3 mt-2">
+                                            {["Rent", "Sell", "PG/Co-living"].map((type) => (
+                                                <div key={type}>
+                                                    <Button
+                                                        type="button"
+                                                        variant={
+                                                            formData.listingType === type
+                                                                ? "default"
+                                                                : "outline"
+                                                        }
+                                                        className="min-w-[100px]"
+                                                        onClick={() =>
+                                                            setFormData({
+                                                                ...formData,
+                                                                listingType: type,
+                                                            })
+                                                        }
+                                                    >
+                                                        {type}
+                                                    </Button>
+                                                </div>
+                                            ))}
+                                        </div>
+                                        {errors.listingType && (
+                                            <p className="text-sm text-red-600 mt-1">
+                                                {errors.listingType}
+                                            </p>
+                                        )}
+                                    </div>
+
+                                    <div className="col-span-2">
+                                        <Label>City</Label>
+                                        <Input
+                                            name="city"
+                                            placeholder="e.g. Mumbai, Pune"
+                                            value={formData.city}
+                                            onChange={handleChange}
+                                        />
+                                        {errors.city && (
+                                            <p className="text-sm text-red-600 mt-1">
+                                                {errors.city}
+                                            </p>
+                                        )}
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* Step 2 */}
+                            {step === 2 && (
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div>
+                                        <Label>Property Type</Label>
+                                        <Input
+                                            name="propertyType"
+                                            value={formData.propertyType}
+                                            onChange={handleChange}
+                                            placeholder="e.g. Apartment, Villa"
+                                        />
+                                        {errors.propertyType && (
+                                            <p className="text-sm text-red-600 mt-1">
+                                                {errors.propertyType}
+                                            </p>
+                                        )}
+                                    </div>
+
+                                    <div>
+                                        <Label>Title</Label>
+                                        <Input
+                                            name="title"
+                                            value={formData.title}
+                                            onChange={handleChange}
+                                            placeholder="Listing title"
+                                        />
+                                        {errors.title && (
+                                            <p className="text-sm text-red-600 mt-1">
+                                                {errors.title}
+                                            </p>
+                                        )}
+                                    </div>
+
+                                    <div className="col-span-2">
+                                        <Label>Description</Label>
+                                        <Textarea
+                                            name="description"
+                                            value={formData.description}
+                                            onChange={handleChange}
+                                            placeholder="Describe your property"
+                                            rows={4}
+                                        />
+                                        {errors.description && (
+                                            <p className="text-sm text-red-600 mt-1">
+                                                {errors.description}
+                                            </p>
+                                        )}
+                                    </div>
+
+                                    <div>
+                                        <Label>Bedrooms</Label>
+                                        <Input
+                                            type="number"
+                                            name="bedrooms"
+                                            value={formData.bedrooms}
+                                            onChange={handleChange}
+                                            min="0"
+                                        />
+                                        {errors.bedrooms && (
+                                            <p className="text-sm text-red-600 mt-1">
+                                                {errors.bedrooms}
+                                            </p>
+                                        )}
+                                    </div>
+
+                                    <div>
+                                        <Label>Bathrooms</Label>
+                                        <Input
+                                            type="number"
+                                            name="bathrooms"
+                                            value={formData.bathrooms}
+                                            onChange={handleChange}
+                                            min="0"
+                                        />
+                                        {errors.bathrooms && (
+                                            <p className="text-sm text-red-600 mt-1">
+                                                {errors.bathrooms}
+                                            </p>
+                                        )}
+                                    </div>
+
+                                    <div>
+                                        <Label>Furnishing</Label>
+                                        <Input
+                                            name="furnishing"
+                                            value={formData.furnishing}
+                                            onChange={handleChange}
+                                            placeholder="Furnished / Semi / Unfurnished"
+                                        />
+                                        {errors.furnishing && (
+                                            <p className="text-sm text-red-600 mt-1">
+                                                {errors.furnishing}
+                                            </p>
+                                        )}
+                                    </div>
+
+                                    <div>
+                                        <Label>Area (sq. ft)</Label>
+                                        <Input
+                                            type="number"
+                                            name="area"
+                                            value={formData.area}
+                                            onChange={handleChange}
+                                            placeholder="e.g. 1200"
+                                            min="0"
+                                        />
+                                        {errors.area && (
+                                            <p className="text-sm text-red-600 mt-1">
+                                                {errors.area}
+                                            </p>
+                                        )}
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* Step 3 */}
+                            {step === 3 && (
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div>
+                                        <Label>Price (₹)</Label>
+                                        <Input
+                                            type="number"
+                                            name="price"
+                                            value={formData.price}
+                                            onChange={handleChange}
+                                            placeholder="Enter price"
+                                            min="0"
+                                        />
+                                        {errors.price && (
+                                            <p className="text-sm text-red-600 mt-1">
+                                                {errors.price}
+                                            </p>
+                                        )}
+                                    </div>
+
+                                    <div className="flex items-center gap-2 mt-2">
+                                        <input
+                                            type="checkbox"
+                                            id="negotiable"
+                                            name="negotiable"
+                                            checked={formData.negotiable}
+                                            onChange={handleChange}
+                                            className="w-4 h-4 accent-blue-600"
+                                        />
+                                        <Label htmlFor="negotiable" className="cursor-pointer">
+                                            Negotiable Price
+                                        </Label>
+                                    </div>
+
+                                    <div className="col-span-2">
+                                        <Label>Upload Images (Max 6)</Label>
+                                        <div className="relative border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
+                                            <Input
+                                                type="file"
+                                                name="images"
+                                                accept="image/*"
+                                                multiple
+                                                onChange={handleImageChange}
+                                                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                                            />
+                                            <div className="flex flex-col items-center justify-center gap-2">
+                                                <FileImage className="w-8 h-8 text-gray-400" />
+                                                <p className="text-sm text-gray-500">
+                                                    Click to upload or drag and drop
+                                                </p>
+                                                <p className="text-xs text-gray-400">
+                                                    JPEG, PNG (Max 6 images)
+                                                </p>
+                                            </div>
+                                        </div>
+                                        {errors.images && (
+                                            <p className="text-sm text-red-600 mt-1">
+                                                {errors.images}
+                                            </p>
+                                        )}
+
+                                        {/* Image Preview */}
+                                        {formData.images.length > 0 && (
+                                            <div className="mt-4">
+                                                <Label>Selected Images ({formData.images.length}/6)</Label>
+                                                <div className="flex flex-wrap mt-2 gap-3">
+                                                    {formData.images.map((file, index) => (
+                                                        <div
+                                                            key={index}
+                                                            className="relative w-20 h-20 rounded-lg border overflow-hidden shadow-sm"
+                                                        >
+                                                            <img
+                                                                src={URL.createObjectURL(file)}
+                                                                alt={`preview-${index}`}
+                                                                className="object-cover w-full h-full"
+                                                            />
+                                                            <button
+                                                                type="button"
+                                                                className="absolute top-0 right-0 bg-red-600 text-white text-xs p-1 rounded-bl-lg"
+                                                                onClick={() => handleImageRemove(index)}
                                                             >
-                                                                <img
-                                                                    src={URL.createObjectURL(file)}
-                                                                    alt={`preview-${index}`}
-                                                                    className="object-cover w-full h-full"
-                                                                />
-                                                                <motion.button
-                                                                    type="button"
-                                                                    whileHover={{ scale: 1.1 }}
-                                                                    whileTap={{ scale: 0.9 }}
-                                                                    className="absolute top-0 right-0 bg-red-600 text-white text-xs p-1 rounded-bl-lg"
-                                                                    onClick={() => handleImageRemove(index)}
-                                                                >
-                                                                    ✕
-                                                                </motion.button>
-                                                            </motion.div>
-                                                        ))}
-                                                    </motion.div>
-                                                </motion.div>
-                                            )}
-                                        </motion.div>
-                                    </motion.div>
-                                )}
-                            </motion.div>
-                        </AnimatePresence>
+                                                                ✕
+                                                            </button>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            )}
+                        </div>
 
                         {/* Navigation Buttons */}
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.3 }}
-                            className="flex justify-between pt-8 mt-6 border-t border-gray-200"
-                        >
+                        <div className="flex justify-between pt-8 mt-6 border-t border-gray-200">
                             {step > 1 ? (
-                                <motion.div whileHover={buttonHover} whileTap={{ scale: 0.95 }}>
+                                <div>
                                     <Button
                                         variant="outline"
                                         type="button"
@@ -688,48 +470,36 @@ const PostPropertyForm = () => {
                                         <ChevronLeft className="w-4 h-4" />
                                         Previous
                                     </Button>
-                                </motion.div>
+                                </div>
                             ) : (
-                                <div /> // Empty div to maintain space
+                                <div />
                             )}
 
                             {step < 3 ? (
-                                <motion.div whileHover={buttonHover} whileTap={{ scale: 0.95 }}>
+                                <div>
                                     <Button
                                         type="button"
                                         onClick={next}
-                                        className="gap-1 bg-gradient-to-r from-blue-600 to-indigo-600"
+                                        className="gap-1 bg-gray-800 hover:bg-gray-700"
                                     >
                                         Next
                                         <ChevronRight className="w-4 h-4" />
                                     </Button>
-                                </motion.div>
+                                </div>
                             ) : (
-                                <motion.div
-                                    whileHover={{ scale: 1.03 }}
-                                    whileTap={{ scale: 0.97 }}
-                                >
+                                <div>
                                     <Button
                                         type="submit"
                                         disabled={isSubmitting}
-                                        className="px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 shadow-lg"
+                                        className="px-6 py-3 bg-gray-800 hover:bg-gray-700 shadow-lg"
                                     >
-                                        {isSubmitting ? (
-                                            <motion.span
-                                                animate={{ rotate: 360 }}
-                                                transition={{ duration: 1, repeat: Infinity }}
-                                            >
-                                                ⏳
-                                            </motion.span>
-                                        ) : (
-                                            "Post Property"
-                                        )}
+                                        {isSubmitting ? "Posting..." : "Post Property"}
                                     </Button>
-                                </motion.div>
+                                </div>
                             )}
-                        </motion.div>
+                        </div>
                     </form>
-                </motion.div>
+                </div>
             </div>
         </>
     );
