@@ -1,19 +1,43 @@
-import React, { useState } from 'react';
+// SearchBar.jsx
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Search, MapPin } from 'lucide-react';
+import { Search, MapPin, ChevronDown } from 'lucide-react';
 
 const TABS = [
   { key: 'buy', label: 'Buy' },
   { key: 'rent', label: 'Rent' },
   { key: 'sell', label: 'Sell' },
 ];
-const CITIES = ['Mumbai', 'Delhi', 'Bangalore', 'Hyderabad', 'Chennai', 'Pune', 'Kolkata'];
+
+const Cities = [
+  "Mumbai", "Bengaluru", "Hyderabad", "Pune", "Chennai", "Delhi", "Gurgaon", "Noida",
+  "Kolkata", "Ahmedabad", "Thane", "Navi Mumbai", "Ghaziabad", "Greater Noida",
+  "Faridabad", "Lucknow", "Jaipur", "Chandigarh", "Indore", "Nagpur", "Coimbatore",
+  "Vizag", "Vadodara", "Bhopal", "Mysuru", "Surat", "Patna", "Kanpur", "Rajkot",
+  "Vijayawada", "Ludhiana", "Nashik", "Varanasi", "Aurangabad", "Jodhpur", "Madurai",
+  "Agra", "Meerut", "Jabalpur", "Ranchi", "Amritsar", "Guwahati", "Jamshedpur",
+  "Raipur", "Dehradun", "Trivandrum", "Thrissur", "Salem", "Gwalior"
+];
+
+const popularByCity = {
+  Pune: ["Wakad", "Baner", "Kothrud", "Viman Nagar", "Hinjewadi"],
+  Bengaluru: ["Whitefield", "Electronic City", "JP Nagar", "KR Puram", "Devanahalli"],
+  Mumbai: ["Andheri West", "Borivali", "Dadar", "Mira Road East", "Chembur"],
+};
 
 const SearchBar = ({ className = '', variant = 'light' }) => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('buy');
   const [location, setLocation] = useState('');
-  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [city, setCity] = useState("");
+  const [query, setQuery] = useState("");
+  const [showCityDropdown, setShowCityDropdown] = useState(false);
+  const [filteredCities, setFilteredCities] = useState(Cities);
+  const [popularLocations, setPopularLocations] = useState([]);
+  const [suggestions, setSuggestions] = useState([]);
+
+  const cityInputRef = useRef(null);
+  const cityDropdownRef = useRef(null);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -22,27 +46,83 @@ const SearchBar = ({ className = '', variant = 'light' }) => {
     }
   };
 
-  const baseTab =
-    'flex-1 py-2 font-medium text-center transition-colors duration-300 focus:outline-none';
+  const handleCityInput = (value) => {
+    setCity(value);
+    setLocation(value);
+    const filtered = Cities.filter((c) =>
+      c.toLowerCase().includes(value.toLowerCase())
+    );
+    setFilteredCities(filtered);
+  };
+
+  const handleCitySelect = (value) => {
+    setCity(value);
+    setLocation(value);
+    setQuery("");
+    setShowCityDropdown(false);
+  };
+
+  useEffect(() => {
+    setPopularLocations(popularByCity[city] || []);
+  }, [city]);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        cityDropdownRef.current &&
+        !cityDropdownRef.current.contains(event.target) &&
+        cityInputRef.current &&
+        !cityInputRef.current.contains(event.target)
+      ) {
+        setShowCityDropdown(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  useEffect(() => {
+    if (query.length < 2) {
+      setSuggestions([]);
+      return;
+    }
+
+    const controller = new AbortController();
+    const delayDebounce = setTimeout(() => {
+      const fetchSuggestions = async () => {
+        try {
+          const response = await fetch(
+            `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${query}&types=geocode&components=country:in&key=YOUR_API_KEY`
+          );
+          const data = await response.json();
+          if (data.status === "OK") {
+            setSuggestions(data.predictions.map((p) => p.description));
+          }
+        } catch (error) {
+          console.error("Suggestion fetch failed", error);
+        }
+      };
+      fetchSuggestions();
+    }, 300);
+
+    return () => {
+      clearTimeout(delayDebounce);
+      controller.abort();
+    };
+  }, [query]);
+
+  const baseTab = 'flex-1 py-2 font-medium text-center transition-colors duration-300 focus:outline-none';
   const activeTabStyle = 'bg-blue-600 text-white';
-  const inactiveTabStyle =
-    variant === 'light'
-      ? 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-      : 'bg-gray-800 text-gray-300 hover:bg-gray-700';
+  const inactiveTabStyle = variant === 'light' ? 'bg-gray-100 text-gray-700 hover:bg-gray-200' : 'bg-gray-800 text-gray-300 hover:bg-gray-700';
 
   return (
-    <div
-      className={`rounded-lg shadow-lg p-4 ${variant === 'light' ? 'bg-white' : 'bg-gray-900'} ${className} max-w-2xl mx-auto w-full`}
-    >
+    <div className={`rounded-lg shadow-lg p-4 ${variant === 'light' ? 'bg-white' : 'bg-gray-900'} ${className} max-w-2xl mx-auto w-full`}>
       {/* Tabs */}
       <div className="flex mb-4">
         {TABS.map((tab, idx) => (
           <button
             key={idx}
-            className={`${baseTab} ${activeTab === tab.key ? activeTabStyle : inactiveTabStyle}
-              ${idx === 0 ? 'rounded-tl-md rounded-bl-md' : ''}
-              ${idx === TABS.length - 1 ? 'rounded-tr-md rounded-br-md' : ''}
-              text-sm sm:text-base`}
+            className={`${baseTab} ${activeTab === tab.key ? activeTabStyle : inactiveTabStyle} ${idx === 0 ? 'rounded-tl-md rounded-bl-md' : ''} ${idx === TABS.length - 1 ? 'rounded-tr-md rounded-br-md' : ''} text-sm sm:text-base`}
             onClick={() => setActiveTab(tab.key)}
             type="button"
           >
@@ -53,21 +133,33 @@ const SearchBar = ({ className = '', variant = 'light' }) => {
 
       {/* Search Form */}
       <form onSubmit={handleSearch}>
-        <div className="relative">
-          <div className="flex items-center border-2 border-gray-300 rounded-md focus-within:border-blue-500 bg-white">
-            <span className="pl-3 pr-2 text-gray-400">
-              <MapPin size={20} />
-            </span>
+        <div className="relative" ref={cityDropdownRef}>
+          <div className="flex items-center bg-white rounded-r-full rounded-tl-full px-4 py-2 shadow-sm border border-gray-300 mt-2">
+            {/* City input */}
             <input
               type="text"
-              placeholder="Search for a location..."
-              className="py-3 w-full outline-none text-gray-700 text-sm sm:text-base"
-              value={location}
-              onChange={(e) => setLocation(e.target.value)}
-              onFocus={() => setShowSuggestions(true)}
-              onBlur={() => setTimeout(() => setShowSuggestions(false), 150)}
-              autoComplete="off"
+              ref={cityInputRef}
+              className="w-[30%] md:w-[20%] px-2 py-2 text-sm text-gray-800 bg-transparent outline-none"
+              value={city}
+              onChange={(e) => handleCityInput(e.target.value)}
+              onFocus={() => setShowCityDropdown(true)}
+              placeholder="City"
             />
+            <ChevronDown className="h-4 w-4 text-gray-500 mr-4" />
+
+            {/* Divider */}
+            <div className="h-8 w-px bg-gray-300 mr-4" />
+
+            {/* Main input */}
+            <input
+              type="text"
+              className="flex-1 px-2 py-2 text-sm text-gray-700 bg-transparent outline-none"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Search for locality, landmark, project, or builder"
+            />
+
+            {/* Search button */}
             <button
               type="submit"
               className="bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-r-md transition-colors duration-300"
@@ -76,28 +168,69 @@ const SearchBar = ({ className = '', variant = 'light' }) => {
             </button>
           </div>
 
-          {/* Suggestions */}
-          {showSuggestions && (
-            <div className="absolute left-0 right-0 bg-white mt-1 border border-gray-200 rounded-md shadow-lg z-10 max-h-56 overflow-y-auto">
-              <div className="p-2 border-b border-gray-200">
-                <p className="text-xs text-gray-500">Popular Cities</p>
+          {/* City Dropdown */}
+          {showCityDropdown && (
+            <div className="absolute top-full left-0 bg-white border border-gray-300 rounded-md shadow-lg z-50 w-48">
+              <div className="p-3 border-b border-gray-200">
+                <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Top Cities</p>
               </div>
-              <ul>
-                {CITIES.filter(city =>
-                  city.toLowerCase().includes(location.toLowerCase())
-                ).map((city, index) => (
-                  <li
-                    key={index}
-                    className="px-4 py-2 cursor-pointer hover:bg-gray-100 flex items-center text-gray-700"
-                    onMouseDown={() => {
-                      setLocation(city);
-                      setShowSuggestions(false);
-                    }}
-                  >
-                    <MapPin size={16} className="mr-2 text-gray-400" /> {city}
-                  </li>
-                ))}
-              </ul>
+              <div className="max-h-60 overflow-y-auto custom-scroll">
+                {filteredCities.length > 0 ? (
+                  filteredCities.map((c, index) => (
+                    <div
+                      key={index}
+                      className="px-4 py-1 cursor-pointer hover:bg-gray-100 text-sm text-black flex items-center gap-2"
+                      onClick={() => handleCitySelect(c)}
+                    >
+                      <MapPin className="h-4 w-4 text-gray-500" />
+                      {c}
+                    </div>
+                  ))
+                ) : (
+                  <div className="px-4 py-2 text-gray-500 text-sm">No cities found</div>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* Popular Locations */}
+          {!query && popularLocations.length > 0 && (
+            <div className="absolute top-full left-1/4 bg-white border border-gray-300 rounded-md shadow-lg z-50 w-[70%] mt-2">
+              <div className="p-3 border-b border-gray-200 text-sm font-semibold text-gray-600">
+                Popular search in <span className="font-bold">{city}</span>:
+              </div>
+              {popularLocations.map((loc, i) => (
+                <div
+                  key={i}
+                  className="flex items-center gap-2 px-4 py-2 text-sm text-black hover:bg-gray-100 cursor-pointer"
+                  onClick={() => {
+                    setQuery(loc);
+                    setLocation(loc);
+                  }}
+                >
+                  <MapPin className="h-4 w-4 text-gray-500" />
+                  {loc}
+                  <span className="ml-auto text-[10px] text-gray-400 tracking-widest">LOCALITY</span>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Google Suggestions */}
+          {query && suggestions.length > 0 && (
+            <div className="absolute top-full left-1/4 bg-white border border-gray-300 rounded-md shadow-lg z-50 w-[70%] mt-2 max-h-60 overflow-y-auto">
+              {suggestions.map((s, i) => (
+                <div
+                  key={i}
+                  className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm text-black"
+                  onClick={() => {
+                    setQuery(s);
+                    setLocation(s);
+                  }}
+                >
+                  {s}
+                </div>
+              ))}
             </div>
           )}
         </div>

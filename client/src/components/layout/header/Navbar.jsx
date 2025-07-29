@@ -175,6 +175,7 @@ const Navbar = () => {
                                 <div className="flex flex-wrap justify-evenly max-w-[1440px] mx-auto px-8 py-8 gap-8">
                                     {menuItems[hoveredIndex].links.map((link) => (
                                         <Link
+                                            onClick={() => setHoveredIndex(null)}
                                             key={link.to}
                                             to={link.to}
                                             className="flex items-center gap-3 py-2 px-2 text-sm text-gray-700 hover:text-primary hover:bg-gray-50 rounded-md transition-all duration-200"
