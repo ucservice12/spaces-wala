@@ -1,7 +1,7 @@
-// SearchBar.jsx
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Search, MapPin, ChevronDown } from 'lucide-react';
+import { fetchSuggestions } from '../../machine/property';
 
 const TABS = [
   { key: 'buy', label: 'Buy' },
@@ -29,15 +29,17 @@ const SearchBar = ({ className = '', variant = 'light' }) => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('buy');
   const [location, setLocation] = useState('');
-  const [city, setCity] = useState("");
-  const [query, setQuery] = useState("");
+  const [city, setCity] = useState('');
+  const [query, setQuery] = useState('');
   const [showCityDropdown, setShowCityDropdown] = useState(false);
+  const [showPopularSearches, setShowPopularSearches] = useState(false);
   const [filteredCities, setFilteredCities] = useState(Cities);
   const [popularLocations, setPopularLocations] = useState([]);
   const [suggestions, setSuggestions] = useState([]);
 
   const cityInputRef = useRef(null);
   const cityDropdownRef = useRef(null);
+  const popularSearch = useRef(null);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -49,6 +51,7 @@ const SearchBar = ({ className = '', variant = 'light' }) => {
   const handleCityInput = (value) => {
     setCity(value);
     setLocation(value);
+    setQuery('');
     const filtered = Cities.filter((c) =>
       c.toLowerCase().includes(value.toLowerCase())
     );
@@ -58,8 +61,9 @@ const SearchBar = ({ className = '', variant = 'light' }) => {
   const handleCitySelect = (value) => {
     setCity(value);
     setLocation(value);
-    setQuery("");
+    setQuery('');
     setShowCityDropdown(false);
+    setShowPopularSearches(false);
   };
 
   useEffect(() => {
@@ -69,12 +73,12 @@ const SearchBar = ({ className = '', variant = 'light' }) => {
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
-        cityDropdownRef.current &&
-        !cityDropdownRef.current.contains(event.target) &&
-        cityInputRef.current &&
-        !cityInputRef.current.contains(event.target)
+        !cityDropdownRef.current?.contains(event.target) &&
+        !cityInputRef.current?.contains(event.target) &&
+        !popularSearch.current?.contains(event.target)
       ) {
         setShowCityDropdown(false);
+        setShowPopularSearches(false);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
@@ -82,34 +86,21 @@ const SearchBar = ({ className = '', variant = 'light' }) => {
   }, []);
 
   useEffect(() => {
-    if (query.length < 2) {
+    if (query.length < 2 || !city) {
       setSuggestions([]);
       return;
     }
 
     const controller = new AbortController();
     const delayDebounce = setTimeout(() => {
-      const fetchSuggestions = async () => {
-        try {
-          const response = await fetch(
-            `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${query}&types=geocode&components=country:in&key=YOUR_API_KEY`
-          );
-          const data = await response.json();
-          if (data.status === "OK") {
-            setSuggestions(data.predictions.map((p) => p.description));
-          }
-        } catch (error) {
-          console.error("Suggestion fetch failed", error);
-        }
-      };
-      fetchSuggestions();
+      fetchSuggestions(query, city, controller, setSuggestions); // for get locations in city
     }, 300);
 
     return () => {
       clearTimeout(delayDebounce);
       controller.abort();
     };
-  }, [query]);
+  }, [query, city]);
 
   const baseTab = 'flex-1 py-2 font-medium text-center transition-colors duration-300 focus:outline-none';
   const activeTabStyle = 'bg-blue-600 text-white';
@@ -134,6 +125,7 @@ const SearchBar = ({ className = '', variant = 'light' }) => {
       {/* Search Form */}
       <form onSubmit={handleSearch}>
         <div className="relative" ref={cityDropdownRef}>
+
           <div className="flex items-center bg-white rounded-r-full rounded-tl-full px-4 py-2 shadow-sm border border-gray-300 mt-2">
             {/* City input */}
             <input
@@ -142,7 +134,10 @@ const SearchBar = ({ className = '', variant = 'light' }) => {
               className="w-[30%] md:w-[20%] px-2 py-2 text-sm text-gray-800 bg-transparent outline-none"
               value={city}
               onChange={(e) => handleCityInput(e.target.value)}
-              onFocus={() => setShowCityDropdown(true)}
+              onFocus={() => {
+                setShowCityDropdown(true);
+                setShowPopularSearches(false);
+              }}
               placeholder="City"
             />
             <ChevronDown className="h-4 w-4 text-gray-500 mr-4" />
@@ -156,6 +151,11 @@ const SearchBar = ({ className = '', variant = 'light' }) => {
               className="flex-1 px-2 py-2 text-sm text-gray-700 bg-transparent outline-none"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
+              onFocus={() => {
+                if (popularLocations.length > 0 && !query) {
+                  setShowPopularSearches(true);
+                }
+              }}
               placeholder="Search for locality, landmark, project, or builder"
             />
 
@@ -170,7 +170,7 @@ const SearchBar = ({ className = '', variant = 'light' }) => {
 
           {/* City Dropdown */}
           {showCityDropdown && (
-            <div className="absolute top-full left-0 bg-white border border-gray-300 rounded-md shadow-lg z-50 w-48">
+            <div className="absolute top-full left-0 bg-white border border-gray-300 rounded-md shadow-lg z-50 w-44">
               <div className="p-3 border-b border-gray-200">
                 <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Top Cities</p>
               </div>
@@ -194,8 +194,11 @@ const SearchBar = ({ className = '', variant = 'light' }) => {
           )}
 
           {/* Popular Locations */}
-          {!query && popularLocations.length > 0 && (
-            <div className="absolute top-full left-1/4 bg-white border border-gray-300 rounded-md shadow-lg z-50 w-[70%] mt-2">
+          {showPopularSearches && !query && popularLocations?.length > 0 && (
+            <div
+              className="absolute top-full left-[26.5%] bg-white border border-gray-300 rounded-md shadow-lg z-50 w-[70%] mt-2"
+              ref={popularSearch}
+            >
               <div className="p-3 border-b border-gray-200 text-sm font-semibold text-gray-600">
                 Popular search in <span className="font-bold">{city}</span>:
               </div>
@@ -206,6 +209,7 @@ const SearchBar = ({ className = '', variant = 'light' }) => {
                   onClick={() => {
                     setQuery(loc);
                     setLocation(loc);
+                    setShowPopularSearches(false);
                   }}
                 >
                   <MapPin className="h-4 w-4 text-gray-500" />

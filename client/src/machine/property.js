@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import customAxios from "../customAxios/Customaxios";
 
 export const uploadproperty = async (formData, loading, setLoading) => {
@@ -27,5 +28,23 @@ export const uploadproperty = async (formData, loading, setLoading) => {
         setLoading(false)
         console.error(err);
         alert("Error uploading property.");
+    }
+};
+
+
+export const fetchSuggestions = async (query, city, controller, setSuggestions) => {
+    try {
+        const res = await customAxios.get(`/search/places?input=${query}&city=${city}`,
+            { signal: controller.signal })
+        const data = await res.json();
+        console.log(data)
+        if (data) {
+            setSuggestions([
+                ...data.cityMatches.map((s) => ({ label: s, type: "city" })),
+                ...data.otherMatches.map((s) => ({ label: s, type: "other" })),
+            ]);
+        }
+    } catch (err) {
+        console.error("Live suggestion fetch failed:", err);
     }
 };

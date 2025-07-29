@@ -7,9 +7,10 @@ import {
 } from "@/custom/Typography";
 import { Button } from "@/components/ui/button";
 import { menuItems } from "@/data/Navlinks";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, CircleUserRound } from "lucide-react";
 import { FadeInWhenVisible } from "@/custom/FadeInWhenVisible";
 import { motion, AnimatePresence } from "framer-motion";
+import { useSelector } from "react-redux";
 
 const chunkArray = (arr, size) => {
     const result = [];
@@ -23,7 +24,7 @@ const NavbarDesktop = () => {
     const [hoveredIndex, setHoveredIndex] = useState(null);
     const [scrolled, setScrolled] = useState(false);
     const location = useLocation();
-
+    const { user } = useSelector((state) => state.auth)
     const isHomePage = location.pathname === "/";
 
     useEffect(() => {
@@ -42,9 +43,8 @@ const NavbarDesktop = () => {
 
     return (
         <motion.div
-            className={`w-full fixed top-0 z-40 h-26 shadow transition-colors duration-300 ${
-                isHomePage && !scrolled ? "bg-transparent" : "bg-white"
-            }`}
+            className={`w-full fixed top-0 z-40 h-26 shadow transition-colors duration-300 ${isHomePage && !scrolled ? "bg-transparent" : "bg-white"
+                }`}
             initial={{ y: -100 }}
             animate={{ y: 0 }}
             transition={{ type: "spring", stiffness: 200, damping: 20 }}
@@ -88,15 +88,23 @@ const NavbarDesktop = () => {
                         </motion.div>
                     ))}
                 </nav>
-
-                {/* Right Panel */}
-                <Link to="/login" className="flex items-center gap-2 sm:gap-3">
-                    <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                        <Button size="xs" className="py-1 px-2">
-                            <span className="hidden sm:inline">Login</span>
+                {user ? (
+                    <Link to="/dashboard/profile">
+                        <Button className="w-full flex items-center gap-2">
+                            <CircleUserRound className="h-4 w-4" />
+                            Profile
                         </Button>
-                    </motion.div>
-                </Link>
+                    </Link>
+                ) : (
+                    <Link to="/login" className="flex items-center gap-2 sm:gap-3">
+                        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                            <Button size="xs" className="py-1 px-2">
+                                <span className="hidden sm:inline">Login</span>
+                            </Button>
+                        </motion.div>
+                    </Link>
+                )}
+
             </div>
 
             {/* Dropdown Panel */}
