@@ -126,8 +126,8 @@ const PostPropertyForm = () => {
                             <div
                                 key={index}
                                 className={`flex items-center gap-3 text-sm px-3 py-3 rounded-lg cursor-default transition-all duration-300 ${step === index + 1
-                                        ? "bg-gray-800 text-white shadow-lg"
-                                        : "text-gray-600 hover:bg-gray-200"
+                                    ? "bg-gray-800 text-white shadow-lg"
+                                    : "text-gray-600 hover:bg-gray-200"
                                     }`}
                             >
                                 {s.icon}
@@ -488,13 +488,13 @@ const PostPropertyForm = () => {
                                 </div>
                             ) : (
                                 <div>
-                                    <Button
+                                    <button
                                         type="submit"
-                                        disabled={isSubmitting}
-                                        className="px-6 py-3 bg-gray-800 hover:bg-gray-700 shadow-lg"
+                                        // disabled={isSubmitting}
+                                        className="p-2  bg-blue-600 hover:bg-blue-700 rounded-md shadow-lg"
                                     >
                                         {isSubmitting ? "Posting..." : "Post Property"}
-                                    </Button>
+                                    </button>
                                 </div>
                             )}
                         </div>

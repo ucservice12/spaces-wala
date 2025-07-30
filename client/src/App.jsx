@@ -62,7 +62,17 @@ function App() {
         <Route path="/terms" element={<TermsPage />} />
         <Route path="/privacy" element={<PrivacyPage />} />
         <Route path="/testimonials" element={<TestimonialsPage />} />
+        <Route path="/seller/post-property" element={<PostPropertyForm />} />
 
+        {/* Dashboard Private Routes */}
+        <Route path="/dashboard" element={<DashboardLayout />}>
+          <Route path="profile" element={<ProfilePage />} />
+          <Route path="my-properties" element={<MyPropertiesPage />} />
+          <Route path="saved" element={<SavedListingsPage />} />
+          <Route path="analytics" element={<AnalyticsPage />} />
+          <Route path="messages" element={<MessagesPage />} />
+          <Route path="settings" element={<SettingsPage />} />
+        </Route>
         {/* Protected Routes */}
         <Route
           element={
@@ -72,17 +82,7 @@ function App() {
           }
         >
           {/* Seller Private Route */}
-          <Route path="/seller/post-property" element={<PostPropertyForm />} />
 
-          {/* Dashboard Private Routes */}
-          <Route path="/dashboard" element={<DashboardLayout />}>
-            <Route path="profile" element={<ProfilePage />} />
-            <Route path="my-properties" element={<MyPropertiesPage />} />
-            <Route path="saved" element={<SavedListingsPage />} />
-            <Route path="analytics" element={<AnalyticsPage />} />
-            <Route path="messages" element={<MessagesPage />} />
-            <Route path="settings" element={<SettingsPage />} />
-          </Route>
         </Route>
       </Route>
     </Routes>

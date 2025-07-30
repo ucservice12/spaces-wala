@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import customAxios from "../customAxios/Customaxios";
 
-export const uploadproperty = async (formData, loading, setLoading) => {
+export const uploadproperty = async (formData, setLoading) => {
     setLoading(true);
     const propertyData = new FormData();
 

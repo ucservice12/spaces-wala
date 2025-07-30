@@ -9,12 +9,12 @@ const propertySchema = new mongoose.Schema(
         },
         propertyCategory: {
             type: String,
-            enum: ["Residential", "Commercial"],
+            // enum: ["Residential", "Commercial"],
             required: true,
         },
         listingType: {
             type: String,
-            enum: ["Rent", "Sell", "PG"],
+            // enum: ["Rent", "Sell", "PG"],
             required: true,
         },
         city: {
@@ -40,17 +40,17 @@ const propertySchema = new mongoose.Schema(
         },
         bedrooms: {
             type: String,
-            enum: ["1", "2", "3", "4", "5+", "Studio"],
+            // enum: ["1", "2", "3", "4", "5+", "Studio"],
             required: true,
         },
         bathrooms: {
             type: String,
-            enum: ["1", "2", "3", "4", "5+"],
+            // enum: ["1", "2", "3", "4", "5+"],
             required: true,
         },
         furnishing: {
             type: String,
-            enum: ["Unfurnished", "Semi-furnished", "Fully-furnished"],
+            // enum: ["Unfurnished", "Semi-furnished", "Fully-furnished"],
             required: true,
         },
         area: {
