@@ -29,7 +29,7 @@ const NavbarDesktop = () => {
 
     useEffect(() => {
         const handleScroll = () => {
-            setScrolled(window.scrollY > 10);
+            setScrolled(window.scrollY > 20);
         };
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
@@ -43,7 +43,7 @@ const NavbarDesktop = () => {
 
     return (
         <motion.div
-            className={`w-full fixed top-0 z-40 h-26  transition-colors duration-300 ${isHomePage && !scrolled ? "bg-transparent" : "bg-white"
+            className={`w-full fixed top-0 z-40 h-26  transition-colors duration-300 ${isHomePage && !scrolled ? "bg-transparent" : "bg-white rounded-b-2xl"
                 }`}
             initial={{ y: -100 }}
             animate={{ y: 0 }}

@@ -5,7 +5,7 @@ import {
   TypographyP,
   TypographyH4,
   TypographyMuted,
-} from '../../custom/Typography';
+} from '@/custom/Typography';
 import { Dice6 } from '@/components/icons/Dice6';
 import { User } from '@/components/icons/User';
 import { Grip } from '@/components/icons/Grip';
