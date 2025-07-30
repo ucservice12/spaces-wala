@@ -1,18 +1,15 @@
-import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Facebook, Twitter, Instagram, Linkedin, Youtube } from 'lucide-react';
-import { motion } from 'framer-motion'; // Import motion from framer-motion
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const Footer = () => {
   const [activeTab, setActiveTab] = useState('REAL ESTATE');
-  const footerRef = useRef(null);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    if (footerRef.current) {
-      // You can add logic here if needed, for example, to scroll to top
-      // or perform animations related to tab change.
-    }
-  }, [activeTab]);
+    setIsVisible(true);
+  }, []);
 
   const menuTabs = [
     'REAL ESTATE',
@@ -24,28 +21,23 @@ const Footer = () => {
 
   const tabContents = {
     'REAL ESTATE': [
-      { label: 'Flats in Mumbai', to: '/buy/mumbai' },
-      { label: 'Flats in Bengaluru', to: '/buy/bengaluru' },
-      { label: 'Flats in Hyderabad', to: '/buy/hyderabad' },
-      { label: 'Flats in Pune', to: '/buy/pune' },
-      { label: 'Flats in Chennai', to: '/buy/chennai' },
-      { label: 'Flats in Delhi', to: '/buy/delhi' },
-      { label: 'Flats in Gurgaon', to: '/buy/gurgaon' },
-      { label: 'Flats in Noida', to: '/buy/noida' },
-      { label: 'Flats in Kolkata', to: '/buy/kolkata' },
-      { label: 'Flats in Ahmedabad', to: '/buy/ahmedabad' },
-      { label: 'Flats in Thane', to: '/buy/thane' },
-      { label: 'Flats in Navi Mumbai', to: '/buy/navi-mumbai' },
-      { label: 'Flats in Faridabad', to: '/buy/faridabad' },
-      { label: 'Flats in Ghaziabad', to: '/buy/ghaziabad' },
-      { label: 'Flats in Coimbatore', to: '/buy/coimbatore' },
-      { label: 'Flats in India', to: '/buy/india' },
-      { label: 'Properties in India', to: '/buy/india' },
-      { label: 'Agricultural Lands in India', to: '/search?type=agricultural' },
-      { label: 'Plots in India', to: '/search?type=plot' },
       { label: 'Find Properties for Sale', to: '/buy' },
+      { label: 'Flats in Mumbai', to: '/buy/mumbai' },
+      { label: 'Flats in Delhi', to: '/buy/delhi' },
+      { label: 'Flats in Thane', to: '/buy/thane' },
+      { label: 'Properties in India', to: '/buy/india' },
+      { label: 'Flats in Bengaluru', to: '/buy/bengaluru' },
+      { label: 'Flats in Gurgaon', to: '/buy/gurgaon' },
+      { label: 'Flats in New Mumbai', to: '/buy/new-mumbai' },
+      { label: 'Agricultural Lands in India', to: '/search?type=agricultural' },
+      { label: 'Flats in Noida', to: '/buy/noida' },
+      { label: 'Flats in Faridabad', to: '/buy/faridabad' },
+      { label: 'Flats in Pune', to: '/buy/pune' },
+      { label: 'Flats in Kolkata', to: '/buy/kolkata' },
+      { label: 'Flats in Ghaziabad', to: '/buy/ghaziabad' },
+      { label: 'Flats in Chennai', to: '/buy/chennai' },
+      { label: 'Flats in Ahmedabad', to: '/buy/ahmedabad' },
     ],
-
     'RENTALS': [
       { label: 'Find Properties for Rent', to: '/rent' },
       { label: 'Plots for rent in Mumbai', to: '/rent/mumbai' },
@@ -100,9 +92,7 @@ const Footer = () => {
       { label: 'Research Ahmedabad', to: '/city-data/ahmedabad' },
       { label: 'Research Coimbatore', to: '/city-data/coimbatore' },
     ],
-
     'POPULAR SEARCHES': [
-      // Flats
       { label: 'Flats in India', to: '/buy/india' },
       { label: 'Properties in India', to: '/buy/india' },
       { label: 'Flats in Mumbai', to: '/buy/mumbai' },
@@ -118,41 +108,8 @@ const Footer = () => {
       { label: 'Flats in Ghaziabad', to: '/buy/ghaziabad' },
       { label: 'Flats in Faridabad', to: '/buy/faridabad' },
       { label: 'Flats in Thane', to: '/buy/thane' },
-      { label: 'Flats in Navi Mumbai', to: '/buy/navi-mumbai' },
-
-      // Conversion Tools
-      { label: 'Convert square meter to square feet', to: '/tools/convert/sqm-to-sqft' },
-      { label: 'Convert square feet to square meter', to: '/tools/convert/sqft-to-sqm' },
-      { label: 'Convert acre to square feet', to: '/tools/convert/acre-to-sqft' },
-      { label: 'Convert square feet to acre', to: '/tools/convert/sqft-to-acre' },
-      { label: 'Convert hectare to acre feet', to: '/tools/convert/hectare-to-acrefeet' },
-      { label: 'Convert hectare to square meter', to: '/tools/convert/hectare-to-sqm' },
-      { label: 'Convert acre to hectare', to: '/tools/convert/acre-to-hectare' },
-
-      // Pin Codes
-      { label: 'Mumbai pin code', to: '/pin-code/mumbai' },
-      { label: 'Bengaluru pin code', to: '/pin-code/bengaluru' },
-      { label: 'Hyderabad pin code', to: '/pin-code/hyderabad' },
-      { label: 'Pune pin code', to: '/pin-code/pune' },
-      { label: 'Chennai pin code', to: '/pin-code/chennai' },
-      { label: 'Delhi pin code', to: '/pin-code/delhi' },
-      { label: 'Gurgaon pin code', to: '/pin-code/gurgaon' },
-      { label: 'Noida pin code', to: '/pin-code/noida' },
-      { label: 'Kolkata pin code', to: '/pin-code/kolkata' },
-      { label: 'Ahmedabad pin code', to: '/pin-code/ahmedabad' },
-      { label: 'Thane pin code', to: '/pin-code/thane' },
-      { label: 'Navi Mumbai pin code', to: '/pin-code/navi-mumbai' },
-      { label: 'Faridabad pin code', to: '/pin-code/faridabad' },
-      { label: 'Ghaziabad pin code', to: '/pin-code/ghaziabad' },
-
-      // Discovery & Listings
-      { label: 'List of all residential cities', to: '/residential-cities' },
-      { label: 'List of all cities for rentals', to: '/rental-cities' },
-      { label: 'Explore localities by city', to: '/explore/localities' },
-      { label: 'Explore rental localities by city', to: '/explore/rentals' },
-      { label: 'Find projects by city', to: '/projects/cities' },
-      { label: 'Find rental societies by city', to: '/rentals/societies' },
-    ],
+      { label: 'Flats in New Mumbai', to: '/buy/new-mumbai' },
+    ]
   };
 
   const companyLinks = [
@@ -185,58 +142,119 @@ const Footer = () => {
     { icon: Linkedin, href: 'https://linkedin.com' },
     { icon: Youtube, href: 'https://youtube.com' },
   ];
-return (
-    <footer ref={footerRef} className="bg-black text-gray-300 px-4 md:px-16 py-10 mt-20">
-      <div className="flex flex-wrap justify-center gap-x-14 gap-y-4 border-b border-gray-700 pb-6 mb-8">
-        {menuTabs.map((tab) => (
-          <button
-            key={tab}
-            onClick={() => setActiveTab(tab)}
-            className={`pb-2 text-sm font-medium transition-colors ${activeTab === tab ? 'text-white border-b-2 border-white' : 'text-gray-400 hover:text-white'
-              }`}
-          >
-            {tab}
-          </button>
-        ))}
+
+  const tabVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: { duration: 0.5 }
+    }
+  };
+
+  const linkVariants = {
+    hover: {
+      scale: 1.05,
+      color: '#3b82f6', // blue-500
+      transition: { duration: 0.2 }
+    }
+  };
+
+  return (
+    <motion.footer 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: isVisible ? 1 : 0 }}
+      transition={{ duration: 0.5 }}
+      className="bg-gray-900 text-gray-200"
+    >
+      {/* Menu Bar Section */}
+      <div className="border-b border-gray-700">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-wrap justify-center md:justify-start">
+            {menuTabs.map((tab) => (
+              <motion.button
+                key={tab}
+                whileHover={{ color: '#3b82f6' }}
+                className={`px-4 py-3 font-medium text-sm uppercase ${activeTab === tab ? 'text-blue-400 border-b-2 border-blue-400' : 'text-gray-400 hover:text-blue-300'}`}
+                onClick={() => setActiveTab(tab)}
+              >
+                {tab}
+              </motion.button>
+            ))}
+          </div>
+        </div>
       </div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-x-4 gap-y-2 text-xs min-h-[150px] mb-12">
-        {tabContents[activeTab]?.map((item) => (
-          <Link key={item.label} to={item.to} className="hover:text-white py-1">
-            {item.label}
-          </Link>
-        ))}
+      {/* Tab Content Section */}
+      <div className="bg-gray-800 py-8">
+        <div className="container mx-auto px-4">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeTab}
+              variants={tabVariants}
+              initial="hidden"
+              animate="visible"
+              className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-6"
+            >
+              {tabContents[activeTab]?.map((item, index) => (
+                <motion.div
+                  key={index}
+                  whileHover="hover"
+                  variants={linkVariants}
+                >
+                  <Link
+                    to={item.to}
+                    className="text-gray-300 hover:text-blue-400 text-sm transition-colors duration-200 block"
+                  >
+                    {item.label}
+                  </Link>
+                </motion.div>
+              ))}
+            </motion.div>
+          </AnimatePresence>
+        </div>
       </div>
-       <div
-          className="border-t border-gray-700 pt-8 mt-8" // Removed duplicate border-t div and adjusted mt
-        ></div>
 
       {/* Main Footer Content */}
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-12">
           {/* Company Links */}
-          <div>
+          <motion.div 
+            initial={{ x: -20, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ delay: 0.2 }}
+          >
             <h3 className="text-lg font-semibold mb-6 text-white uppercase tracking-wider">Company</h3>
             <ul className="space-y-3">
               {companyLinks.map((link, index) => (
-                <li key={index}>
+                <motion.li 
+                  key={index}
+                  whileHover={{ x: 5 }}
+                >
                   <Link
                     to={link.to}
                     className="text-gray-400 hover:text-blue-400 text-sm transition-colors duration-200"
                   >
                     {link.label}
                   </Link>
-                </li>
+                </motion.li>
               ))}
             </ul>
-          </div>
+          </motion.div>
 
           {/* Partner Sites */}
-          <div>
+          <motion.div 
+            initial={{ x: -20, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ delay: 0.3 }}
+          >
             <h3 className="text-lg font-semibold mb-6 text-white uppercase tracking-wider">Partner Sites</h3>
             <ul className="space-y-3">
               {partnerSites.map((site, index) => (
-                <li key={index}>
+                <motion.li 
+                  key={index}
+                  whileHover={{ x: 5 }}
+                >
                   <a
                     href={site.href}
                     target="_blank"
@@ -245,91 +263,124 @@ return (
                   >
                     {site.label}
                   </a>
-                </li>
+                </motion.li>
               ))}
             </ul>
-          </div>
+          </motion.div>
 
           {/* Explore Links */}
-          <div>
+          <motion.div 
+            initial={{ x: -20, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ delay: 0.4 }}
+          >
             <h3 className="text-lg font-semibold mb-6 text-white uppercase tracking-wider">Explore</h3>
             <ul className="space-y-3">
               {exploreLinks.map((link, index) => (
-                <li key={index}>
+                <motion.li 
+                  key={index}
+                  whileHover={{ x: 5 }}
+                >
                   <Link
                     to={link.to}
                     className="text-gray-400 hover:text-blue-400 text-sm transition-colors duration-200"
                   >
                     {link.label}
                   </Link>
-                </li>
+                </motion.li>
               ))}
             </ul>
-          </div>
+          </motion.div>
 
-          {/* Connect With Us and Logo */}
-          <div className="lg:col-span-2 flex flex-col items-center md:items-start text-center md:text-left">
-            {/* Logo - Adjusted placement */}
-            <Link to="/" className="mb-6"> {/* Added margin-bottom for spacing */}
-              <img
-                src="/logo.png"
-                alt="logo"
-                className="sm:h-24 h-20"
-              />
-            </Link>
-
-            {/* Connect With Us */}
-            <div className="w-full"> {/* Ensures it takes full width within its grid column */}
-              <h3 className="text-lg font-semibold mb-6 text-white uppercase tracking-wider">Connect With Us</h3>
-              <div className="flex justify-center md:justify-start space-x-5"> {/* Center on small screens, left on md+ */}
-                {socialLinks.map(({ icon: Icon, href }, index) => (
-                  <a
-                    key={index}
-                    href={href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-gray-400 hover:text-blue-400 transition-colors duration-200"
-                  >
-                    <Icon size={24} />
-                  </a>
-                ))}
+          {/* Download App */}
+          <motion.div 
+            initial={{ x: -20, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ delay: 0.5 }}
+            className="lg:col-span-2"
+          >
+            <h3 className="text-lg font-semibold mb-6 text-white uppercase tracking-wider">Download App</h3>
+            <div className="space-y-4">
+              <motion.div whileHover={{ scale: 1.02 }}>
+                <a href="#" className="block">
+                  <svg className="w-36 h-12" viewBox="0 0 120 40" role="img" aria-label="App Store">
+                    <rect width="120" height="40" rx="5" fill="#1e293b"/>
+                    <text x="60" y="25" fontFamily="Arial" fontSize="12" fill="#3b82f6" textAnchor="middle">App Store</text>
+                  </svg>
+                </a>
+              </motion.div>
+              <motion.div whileHover={{ scale: 1.02 }}>
+                <a href="#" className="block">
+                  <svg className="w-36 h-12" viewBox="0 0 120 40" role="img" aria-label="Google Play">
+                    <rect width="120" height="40" rx="5" fill="#1e293b"/>
+                    <text x="60" y="25" fontFamily="Arial" fontSize="12" fill="#3b82f6" textAnchor="middle">Google Play</text>
+                  </svg>
+                </a>
+              </motion.div>
+              
+              <div className="pt-4">
+                <h4 className="text-sm font-semibold mb-3 text-gray-300 uppercase tracking-wider">Connect With Us</h4>
+                <div className="flex space-x-4">
+                  {socialLinks.map(({ icon: Icon, href }, index) => (
+                    <motion.a
+                      key={index}
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-gray-400 hover:text-blue-400 transition-colors duration-200"
+                      whileHover={{ 
+                        scale: 1.2,
+                        color: '#3b82f6'
+                      }}
+                      whileTap={{ scale: 0.9 }}
+                    >
+                      <Icon size={24} />
+                    </motion.a>
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
 
         {/* Copyright Section */}
-        <div
-          className="border-t border-gray-700 pt-8 mt-8" // Removed duplicate border-t div and adjusted mt
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.6 }}
+          className="border-t border-gray-700 pt-8"
         >
-          <div className="flex flex-col md:flex-row justify-between items-center text-center md:text-left">
+          <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="text-gray-500 text-sm mb-4 md:mb-0">
-              © {new Date().getFullYear()} Locom Solutions Pvt. Ltd. All rights reserved.
+              &copy; {new Date().getFullYear()} Locom Solutions Pvt. Ltd. All rights reserved.
             </div>
-            <div className="flex flex-wrap justify-center md:justify-end space-x-4 sm:space-x-6"> {/* Adjusted spacing and wrapping */}
-              <a
-                href="#"
-                className="text-gray-500 hover:text-blue-400 text-sm py-1"
+            <div className="flex space-x-6">
+              <motion.a 
+                href="#" 
+                className="text-gray-500 hover:text-blue-400 text-sm"
+                whileHover={{ scale: 1.05 }}
               >
                 Terms of Use
-              </a>
-              <a
-                href="#"
-                className="text-gray-500 hover:text-blue-400 text-sm py-1"
+              </motion.a>
+              <motion.a 
+                href="#" 
+                className="text-gray-500 hover:text-blue-400 text-sm"
+                whileHover={{ scale: 1.05 }}
               >
                 Privacy Policy
-              </a>
-              <a
-                href="#"
-                className="text-gray-500 hover:text-blue-400 text-sm py-1"
+              </motion.a>
+              <motion.a 
+                href="#" 
+                className="text-gray-500 hover:text-blue-400 text-sm"
+                whileHover={{ scale: 1.05 }}
               >
                 Sitemap
-              </a>
+              </motion.a>
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
-    </footer>
+    </motion.footer>
   );
 };
 

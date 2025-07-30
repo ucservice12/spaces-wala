@@ -33,7 +33,7 @@ const NavbarMobile = () => {
     };
 
     return (
-        <div className="md:hidden fixed top-0 left-0 z-50 w-full bg-background shadow-md overflow-hidden">
+        <div className="md:hidden fixed top-0 left-0 z-50 w-full bg-white shadow-md overflow-hidden ">
             {/* Top Bar */}
             <div className="flex items-center justify-between px-4 py-4 border-b">
                 <Link to="/">
