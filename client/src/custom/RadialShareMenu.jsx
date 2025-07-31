@@ -16,12 +16,12 @@ const socialIcons = [
         link: "https://instagram.com",
         color: "bg-pink-500",
     },
-    {
-        label: "Twitter",
-        icon: <FaTwitter />,
-        link: "https://twitter.com",
-        color: "bg-blue-400",
-    },
+    // {
+    //     label: "Twitter",
+    //     icon: <FaTwitter />,
+    //     link: "https://twitter.com",
+    //     color: "bg-blue-400",
+    // },
     {
         label: "WhatsApp",
         icon: <FaWhatsapp />,
