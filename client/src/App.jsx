@@ -23,6 +23,7 @@ import TermsPage from './pages/TermsPage';
 import PrivacyPage from './pages/PrivacyPage';
 import TestimonialsPage from './pages/TestimonialsPage';
 import PostPropertyForm from './pages/postproperty/PostPropertyForm';
+import RentPageMain from './components/RentPage/RentPageMain';
 
 import ProfilePage from './pages/dashboardpages/ProfilePage';
 import MyPropertiesPage from './pages/dashboardpages/MyPropertiesPage';
@@ -63,6 +64,7 @@ function App() {
         <Route path="/privacy" element={<PrivacyPage />} />
         <Route path="/testimonials" element={<TestimonialsPage />} />
         <Route path="/seller/post-property" element={<PostPropertyForm />} />
+        <Route path="/rent" element={<RentPageMain />} />
 
         {/* Dashboard Private Routes */}
         <Route path="/dashboard" element={<DashboardLayout />}>

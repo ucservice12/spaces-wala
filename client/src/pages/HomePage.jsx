@@ -117,6 +117,9 @@ const HomePage = () => {
             <TypographyH2 className="text-3xl sm:text-4xl font-bold text-center">
               Find Properties in Popular Cities
             </TypographyH2>
+            <p className="mt-3 text-xl text-black text-center">
+              Discover the perfect home for you with thousands of listings across the country.
+            </p>
           </motion.div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 justify-items-center">
@@ -167,8 +170,8 @@ const HomePage = () => {
           </div>
         </div>
       </motion.section>
-
-      <section className="py-16 bg-blue-100">
+      {/* Our Services Section */}
+      <section className="py-16 bg-gradient-to-br from-blue-50 to-indigo-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -177,57 +180,73 @@ const HomePage = () => {
             viewport={{ once: true, margin: '-50px' }}
             className="text-center mb-12"
           >
-            <TypographyH2 className="font-bold text-3xl md:text-4xl bg-clip-text text-black">
+            <TypographyH2 className="font-bold text-4xl md:text-4xl text-gray-900 drop-shadow-lg">
               Our Services
             </TypographyH2>
+            <p className="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">
+              Comprehensive real estate solutions tailored to your needs
+            </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-            {services.map((service, idx) => (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: idx * 0.1, type: 'spring', stiffness: 100 }}
-                viewport={{ once: true, margin: '-50px' }}
-                whileHover={{ y: -5, transition: { duration: 0.2 } }}
-              >
-                <Card className="h-full p-6 sm:p-8 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 border border-white overflow-hidden group">
-                  <motion.div
-                    className="w-16 h-16 rounded-xl flex items-center justify-center mb-6"
-                    style={{ background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(59, 130, 246, 0.2))' }}
-                    whileHover={{ scale: 1.05, rotate: 2 }}
-                  >
-                    {React.cloneElement(iconMap[service.icon], {
-                      className: 'w-8 h-8 text-blue-600',
-                      strokeWidth: 1.5,
-                    })}
-                  </motion.div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+            {services.map((service, idx) => {
+              // Real estate image URLs (buy/rent/sell)
+              const serviceImages = [
+                "https://images.unsplash.com/photo-1605276374104-dee2a0ed3cd6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8YnV5JTIwaG9tZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60", // Buy Home
+                "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cmVudCUyMGhvbWV8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60", // Rent Home
+                "https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8c2VsbCUyMGhvbWV8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60"  // Sell Home
+              ];
 
-                  <TypographyH4 className="mb-3 text-gray-900">{service?.title}</TypographyH4>
-                  <TypographyMuted className="mb-4">{service.desc}</TypographyMuted>
+              return (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: idx * 0.1, type: 'spring', stiffness: 100 }}
+                  viewport={{ once: true, margin: '-50px' }}
+                  whileHover={{ y: -5, transition: { duration: 0.2 } }}
+                >
+                  <Card className="h-full p-6 sm:p-8 bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 overflow-hidden group">
+                    <motion.div
+                      className="mb-6 h-48 overflow-hidden rounded-lg"
+                      whileHover={{ scale: 1.02 }}
+                    >
+                      {/* Clean image without text overlay */}
+                      <img
+                        src={serviceImages[idx]}
+                        alt={service.title}
+                        className="w-full h-full object-cover"
+                      />
+                    </motion.div>
 
-                  <motion.div whileHover={{ x: 2 }}>
-                    <Link to={service.link} className="inline-flex items-center text-blue-600 font-medium hover:text-blue-800">
-                      {service.linkText}
-                      <motion.span whileHover={{ x: 3 }} transition={{ type: 'spring', stiffness: 500 }}>
-                        <ArrowRight size={16} className="ml-1" />
-                      </motion.span>
-                    </Link>
-                  </motion.div>
-                </Card>
-              </motion.div>
-            ))}
+                    <TypographyH4 className="mb-3 text-gray-900">{service?.title}</TypographyH4>
+                    <TypographyMuted className="mb-4 text-gray-700 text-base">{service.desc}</TypographyMuted>
+
+                    <motion.div whileHover={{ x: 2 }}>
+                      <Link to={service.link} className="inline-flex items-center text-blue-600 font-medium hover:text-blue-800 group-hover:text-blue-700 transition-colors duration-200">
+                        {service.linkText}
+                        <motion.span whileHover={{ x: 3 }} transition={{ type: 'spring', stiffness: 500 }}>
+                          <ArrowRight size={18} className="ml-2" />
+                        </motion.span>
+                      </Link>
+                    </motion.div>
+                  </Card>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </section>
-
-      <section className="py-16 bg-blue-200 to-purple-100">
+      <div
+        className="border-t border-gray-700 pt-8 mt-8" // Removed duplicate border-t div and adjusted mt
+      ></div>
+      {/* Testimonials Section */}
+      <section className="py-16 bg-gradient-to-br from-indigo-50 to-purple-50">
         <div className="max-w-7xl mx-auto px-4">
-          <TypographyH2 className="font-bold text-center text-gray-800 mb-12">
+          <TypographyH2 className="font-bold text-center text-4xl md:text-5xl text-gray-800 mb-12">
             Trusted by Thousands of Happy Customers on <span className="text-blue-600">SpacesWala.com</span>
           </TypographyH2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {testimonials.map((review, idx) => (
               <motion.div
                 key={idx}
@@ -235,22 +254,22 @@ const HomePage = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: idx * 0.1 }}
                 viewport={{ once: true }}
-                whileHover={{ scale: 1.02, rotate: -1 }}
-                className="bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 relative"
+                whileHover={{ scale: 1.02, rotate: -0.5, boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)' }}
+                className="bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 relative border border-gray-100"
               >
                 <div className="flex items-center mb-4">
                   <img
                     src={review.image}
                     alt={review.name}
                     loading="lazy"
-                    className="w-14 h-14 rounded-full object-cover mr-4 border border-blue-500"
+                    className="w-16 h-16 rounded-full object-cover mr-4 border-2 border-blue-400 p-[2px]" // Added padding for border effect
                   />
                   <div>
-                    <TypographySmall className="font-semibold text-gray-900">{review?.name}</TypographySmall>
-                    <TypographyMuted>{review?.location}</TypographyMuted>
+                    <TypographySmall className="font-semibold text-lg text-gray-900">{review?.name}</TypographySmall>
+                    <TypographyMuted className="text-gray-500">{review?.location}</TypographyMuted>
                   </div>
                 </div>
-                <TypographyBlockquote className="text-muted-foreground text-sm leading-relaxed">
+                <TypographyBlockquote className="text-gray-700 text-base leading-relaxed">
                   "{review?.text}"
                 </TypographyBlockquote>
               </motion.div>
@@ -259,58 +278,60 @@ const HomePage = () => {
         </div>
       </section>
 
-      <section className="py-12 bg-blue-400 text-white">
+      {/* Download App Section */}
+      <section className="py-16 bg-gradient-to-br from-blue-600 to-teal-700 text-white"> {/* More vibrant and unique gradient */}
         <div className="max-w-7xl mx-auto px-4">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-12">
             <motion.div
               initial={{ x: -50, opacity: 0 }}
               whileInView={{ x: 0, opacity: 1 }}
               transition={{ duration: 0.6 }}
-              className="md:w-1/2 space-y-4"
+              className="md:w-1/2 space-y-6 text-center md:text-left"
             >
-              <TypographyH2>Download the spaceswala.com App</TypographyH2>
-              <TypographyP>
+              <TypographyH2 className="text-4xl md:text-5xl font-extrabold leading-tight">Download the <span className="text-white drop-shadow-md">SpacesWala.com</span> App</TypographyH2>
+              <TypographyP className="text-blue-100 text-xl leading-relaxed">
                 Get the full experience on the go. Search properties, connect with agents, and manage your favorite listings all from your phone.
               </TypographyP>
-              <div className="flex gap-4">
-                <a href="#">
+              <div className="flex justify-center md:justify-start gap-4 mt-6">
+                <a href="#" aria-label="Download on Google Play">
                   <img
                     loading="lazy"
                     src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg"
                     alt="Google Play"
-                    className="h-12"
+                    className="h-14 transition-transform duration-200 hover:scale-105"
                   />
                 </a>
-                <a href="#">
+                <a href="#" aria-label="Download on Apple App Store">
                   <img
                     loading="lazy"
                     src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg"
                     alt="App Store"
-                    className="h-12"
+                    className="h-14 transition-transform duration-200 hover:scale-105"
                   />
                 </a>
               </div>
             </motion.div>
 
             <motion.div
-              initial={{ scale: 0.95, opacity: 0 }}
+              initial={{ scale: 0.9, opacity: 0 }}
               whileInView={{ scale: 1, opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="md:w-1/3"
+              className="md:w-1/3 flex justify-center"
             >
               <img
                 loading="lazy"
-                src="https://images.pexels.com/photos/3183197/pexels-photo-3183197.jpeg?auto=compress&cs=tinysrgb&w=640"
+                src="https://i.ytimg.com/vi/F-PWkKt2mUU/maxresdefault.jpg"
                 alt="Mobile App"
-                className="rounded-lg shadow-lg"
+                className="rounded-xl shadow-2xl w-full max-w-sm md:max-w-none" // Responsive sizing
               />
-
             </motion.div>
           </div>
         </div>
       </section>
+
     </>
   );
 };
+
 
 export default HomePage;

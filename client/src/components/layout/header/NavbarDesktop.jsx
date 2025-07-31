@@ -169,12 +169,14 @@ const NavbarDesktop = () => {
 
                     {/* Right Side Buttons */}
                     <div className="flex items-center gap-3">
-                        <Button variant="ghost" className="text-white/90 hover:text-white hover:bg-purple-600 font-medium">
-                            Pay Rent
-                        </Button>
+                        <Link to="/rent">
+                            <Button variant="ghost" className="text-white/90 hover:text-white hover:bg-purple-600 font-medium">
+                                Pay Rent
+                            </Button>
+                        </Link>
                         
                        
-                        
+
                         {user ? (
                             <Link to="/dashboard/profile">
                                 <Button className="flex items-center gap-2 bg-white text-purple-800 hover:bg-gray-100 shadow-md">
