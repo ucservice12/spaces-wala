@@ -1,19 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Facebook, Twitter, Instagram, Linkedin, Youtube } from 'lucide-react';
-import { motion } from 'framer-motion'; // Import motion from framer-motion
+import { motion } from 'framer-motion';
 
 const Footer = () => {
   const [activeTab, setActiveTab] = useState('REAL ESTATE');
-  const footerRef = useRef(null);
-
-  useEffect(() => {
-    if (footerRef.current) {
-      // You can add logic here if needed, for example, to scroll to top
-      // or perform animations related to tab change.
-    }
-  }, [activeTab]);
-
+  const footerRef = useRef(null)
   const menuTabs = [
     'REAL ESTATE',
     'RENTALS',
@@ -186,8 +178,8 @@ const Footer = () => {
     { icon: Youtube, href: 'https://youtube.com' },
   ];
 return (
-    <footer ref={footerRef} className="bg-black text-gray-300 px-4 md:px-16 py-10 mt-20">
-      <div className="flex flex-wrap justify-center gap-x-14 gap-y-4 border-b border-gray-700 pb-6 mb-8">
+    <footer ref={footerRef} className="bg-black text-gray-300 px-4 md:px-16 py-10 mt-">
+      <div className="flex flex-wrap justify-center gap-x-40 gap-y-4 border-b border-gray-700 pb-6 mb-8">
         {menuTabs.map((tab) => (
           <button
             key={tab}

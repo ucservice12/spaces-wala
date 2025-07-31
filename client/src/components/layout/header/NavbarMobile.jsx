@@ -62,6 +62,9 @@ const NavbarMobile = () => {
                     <Link to="/login" className="flex items-center gap-2 sm:gap-3">
                         <Button size="sm">Login</Button>
                     </Link>
+                    <Link to="/rent" className="flex items-center gap-2 sm:gap-3">
+                        <Button size="sm">Pay Rent</Button>
+                    </Link>
                     <Button size="sm" onClick={() => setOpen((prev) => !prev)}>
                         <IconRenderer name={open ? "X" : "AlignJustify"} size={22} />
                     </Button>
