@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ChevronDown, CircleUserRound } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { TypographyP, TypographySmall } from '../../custom/Typography';
+import { TypographyP, TypographySmall } from '@/custom/Typography';
 import { useSelector } from 'react-redux';
 
 const menuItems = [
