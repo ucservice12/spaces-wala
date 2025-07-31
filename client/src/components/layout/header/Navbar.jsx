@@ -6,14 +6,15 @@ const Navbar = () => {
 
     return (
         <>
-            <div className="flex md:hidden">
-                <NavbarMobile
-                />
+            <div className="block md:hidden">
+                <NavbarMobile />
             </div>
+
             <div className="hidden md:block">
-                <NavbarDesktop
-                />
+                <NavbarDesktop />
             </div>
+
+
         </>
     )
 };
