@@ -14,10 +14,8 @@ const MainLayout = () => {
 
             <Footer />
 
-            {/* 📌 Share menu stays fixed on screen */}
-            {/* <div className="fixed bottom-6 left-6 z-50"> */}
+            {/*  Share menu stays fixed on screen */}
             <RadialShareMenu />
-            {/* </div> */}
         </div>
     );
 };

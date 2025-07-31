@@ -1,6 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import { FaInstagram, FaTwitter, FaWhatsapp, FaShareAlt, FaTelegram, FaLinkedin } from "react-icons/fa";
+import {
+    FaInstagram,
+    FaTwitter,
+    FaWhatsapp,
+    FaShareAlt,
+    FaTelegram,
+    FaLinkedin,
+} from "react-icons/fa";
 
 const socialIcons = [
     {
@@ -38,11 +45,27 @@ const socialIcons = [
 const RadialShareMenu = () => {
     const [open, setOpen] = useState(false);
     const radius = 80;
+    const menuRef = useRef(null);
+
+    // Close on outside click
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (menuRef.current && !menuRef.current.contains(event.target)) {
+                setOpen(false);
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, []);
 
     return (
-        <div className="fixed bottom-6 right-0 z-50 w-[120px] h-[200px] flex items-center justify-center">
+        <div
+            className="fixed bottom-6 right-0 z-50 w-[120px] h-[180px] flex items-center justify-center"
+            ref={menuRef}
+        >
             {socialIcons.map((item, index) => {
-                const angle = -Math.PI / 2 - (index / (socialIcons.length - 1)) * Math.PI; // From -90° to -270°
+                const angle = -Math.PI / 2 - (index / (socialIcons.length - 1)) * Math.PI;
                 const x = radius * Math.cos(angle);
                 const y = radius * Math.sin(angle);
 
@@ -74,7 +97,7 @@ const RadialShareMenu = () => {
 
             <button
                 onClick={() => setOpen((prev) => !prev)}
-                className="z-10 w-12 h-12 bg-white/10 backdrop-blur-2xl text-white border border-white/20 rounded-full shadow-2xl flex items-center justify-center hover:bg-white/20 transition-colors duration-300"
+                className="z-10 w-12 h-12 md:bg-blue-400 backdrop-blur-2xl bg-white/30 text-white border border-white/20 rounded-full shadow-2xl flex items-center justify-center md:hover:bg-white/20 transition-colors duration-300"
                 aria-label="Toggle Share Menu"
             >
                 <FaShareAlt size={22} />
