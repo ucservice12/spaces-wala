@@ -31,9 +31,10 @@ import SavedListingsPage from './pages/dashboardpages/SavedListingsPage';
 import AnalyticsPage from './pages/dashboardpages/AnalyticsPage';
 import MessagesPage from './pages/dashboardpages/MessagesPage';
 import SettingsPage from './pages/dashboardpages/SettingsPage';
-
-
+import MyActivity from './pages/dashboardpages/MyActivity';
+import MyReviewsPage from './pages/dashboardpages/MyReviewsPage';
 import { isauthrize } from './machine/auth';
+
 
 function App() {
   const dispatch = useDispatch();
@@ -76,6 +77,8 @@ function App() {
           <Route path="analytics" element={<AnalyticsPage />} />
           <Route path="messages" element={<MessagesPage />} />
           <Route path="settings" element={<SettingsPage />} />
+          <Route path="my-activity" element={<MyActivity />} />
+          <Route path="my-reviews" element={<MyReviewsPage />} />
         </Route>
         {/* Protected Routes */}
         <Route
