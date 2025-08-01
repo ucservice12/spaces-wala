@@ -105,12 +105,14 @@ const NavbarDesktop = () => {
                     </nav> */}
                     <div className="flex items-center gap-4 text-white text-sm">
                         {/* Pay Rent */}
-                        <Button
-                            variant="ghost"
-                            className="bg-white/10 hover:bg-white/40 px-5  rounded-xl backdrop-blur-lg transition text-white"
-                        >
-                            Pay Rent
-                        </Button>
+                        <Link to="/payrent">
+                            <Button
+                                variant="ghost"
+                                className="bg-white/10 hover:bg-white/40 px-5  rounded-xl backdrop-blur-lg transition text-white"
+                            >
+                                Pay Rent
+                            </Button>
+                        </Link>
 
                         {/* Download App */}
                         {/* <div className="flex items-center gap-1 cursor-pointer hover:text-white/80">

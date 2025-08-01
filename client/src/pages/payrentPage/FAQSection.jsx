@@ -62,7 +62,7 @@ const FAQSection = () => {
               viewport={{ once: true }}
             >
               <motion.button
-                className="w-full bg-gray-900/50 backdrop-blur-sm border border-gray-700/50 rounded-lg p-6 text-left hover:bg-gray-800/80 transition-all duration-300 group" // These are already good for a dark theme
+                className="w-full bg-gray-900/50 backdrop-blur-sm border border-gray-700/50 rounded-lg p-8 text-left hover:bg-gray-800/80 transition-all duration-300 group" // These are already good for a dark theme
                 onClick={() => toggleFAQ(index)}
                 whileHover={{ scale: 1.01 }}
                 whileTap={{ scale: 0.99 }}

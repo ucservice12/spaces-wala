@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import Header from './Header';
+
 import HeroSection from './HeroSection';
 import FeaturesSection from './FeaturesSection';
 import RewardsSection from './RewardsSection';
@@ -8,6 +8,7 @@ import HowItWorksSection from './HowItWorksSection';
 import TestimonialsSection from './TestimonialsSection';
 import FAQSection from './FAQSection';
 import CTASection from './CTASection';
+import Hero from '@/components/layout/Hero';
 
 function RentPageMain() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -52,7 +53,7 @@ function RentPageMain() {
         }}
       />
 
-      <Header />
+      {/* <Header /> */}
       <main>
         <HeroSection />
         <FeaturesSection />
@@ -109,18 +110,7 @@ function RentPageMain() {
       </div>
 
       {/* Scroll Progress Indicator */}
-      <motion.div
-        className="fixed top-0 left-0 right-0 h-1 bg-primary/30 z-50 origin-left" // Already good for dark background
-        style={{
-          scaleX: 0
-        }}
-        whileInView={{
-          scaleX: 1
-        }}
-        transition={{
-          duration: 0.3
-        }}
-      />
+    
     </div>
   );
 }

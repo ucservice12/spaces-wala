@@ -192,9 +192,9 @@ const HomePage = () => {
             {services.map((service, idx) => {
               // Real estate image URLs (buy/rent/sell)
               const serviceImages = [
-                "https://images.unsplash.com/photo-1605276374104-dee2a0ed3cd6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8YnV5JTIwaG9tZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60", // Buy Home
-                "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cmVudCUyMGhvbWV8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60", // Rent Home
-                "https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8c2VsbCUyMGhvbWV8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60"  // Sell Home
+                "https://i.pinimg.com/736x/5c/97/72/5c9772a5c0fac313ee66cd4410f89699.jpg", // Buy Home
+                "https://i.pinimg.com/1200x/40/c4/cd/40c4cd938994f60d723b07e6ecd4f010.jpg", // Rent Home
+                "https://i.pinimg.com/736x/c3/52/9d/c3529d726c3974cd23f9aabd0441bbd0.jpg"  // Sell Home
               ];
 
               return (
