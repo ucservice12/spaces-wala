@@ -97,7 +97,7 @@ const NavbarDesktop = () => {
                         </div>
 
                         {/* 👇 ADD DARK/LIGHT TOGGLE BUTTON HERE */}
-                        <ModeToggle />
+                        {/* <ModeToggle /> */}
                         {/* Sidebar Avatar */}
                         <div
                             onClick={toggleSidebar}
