@@ -19,7 +19,7 @@ const RadialShareMenu = () => {
 
     const path = location.pathname.replace(/^\/|\/$/g, "") || "home";
     const pageId = path.toLowerCase();
-    const backendShareUrl = `http://localhost:5001/api/share/${pageId}`;
+    const backendShareUrl = `https://api.spaceswala.com/api/share/${pageId}`;
 
     const shareText = encodeURIComponent("Check this out on Spaceswala!");
     const encodedUrl = encodeURIComponent(backendShareUrl);
