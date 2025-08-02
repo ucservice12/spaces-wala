@@ -2,12 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
-    FaInstagram,
-    FaWhatsapp,
-    FaTelegram,
-    FaLinkedin,
-    FaShareAlt,
-    FaFacebook,
+    FaInstagram, FaWhatsapp, FaTelegram, FaLinkedin,
+    FaShareAlt, FaFacebook
 } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 
@@ -19,8 +15,8 @@ const RadialShareMenu = () => {
 
     const path = location.pathname.replace(/^\/|\/$/g, "") || "home";
     const pageId = path.toLowerCase();
-    const backendShareUrl = `http://localhost:5001/api/share/${pageId}`;
 
+    const backendShareUrl = `https://spaceswala.com/api/share/${pageId}`;
     const shareText = encodeURIComponent("Check this out on Spaceswala!");
     const encodedUrl = encodeURIComponent(backendShareUrl);
 
@@ -55,12 +51,12 @@ const RadialShareMenu = () => {
             link: `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`,
             color: "bg-blue-600",
         },
-        // {
-        //     label: "Twitter (X)",
-        //     icon: <FaXTwitter />,
-        //     link: `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${shareText}`,
-        //     color: "bg-black",
-        // },
+        {
+            label: "Twitter (X)",
+            icon: <FaXTwitter />,
+            link: `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${shareText}`,
+            color: "bg-black",
+        },
     ];
 
     useEffect(() => {
@@ -112,7 +108,7 @@ const RadialShareMenu = () => {
 
             <button
                 onClick={() => setOpen((prev) => !prev)}
-                className="z-10 w-10 h-10 bg-white/30 backdrop-blur-md text-white border border-white/20 rounded-full shadow-2xl flex items-center justify-center hover:bg-white/20 transition-colors duration-300"
+                className="z-10 w-12 h-12 bg-white/30 backdrop-blur-md text-white border border-white/20 rounded-full shadow-2xl flex items-center justify-center hover:bg-white/20 transition-colors duration-300"
                 aria-label="Toggle Share Menu"
             >
                 <FaShareAlt size={22} />

@@ -177,14 +177,16 @@ const Footer = () => {
     { icon: Linkedin, href: 'https://linkedin.com' },
     { icon: Youtube, href: 'https://youtube.com' },
   ];
-return (
-    <footer ref={footerRef} className="bg-black text-gray-300 px-4 md:px-16 py-10 mt-">
-      <div className="flex flex-wrap justify-center gap-x-40 gap-y-4 border-b border-gray-700 pb-6 mb-8">
+  return (
+    <footer ref={footerRef} className="bg-black text-gray-300 px-4 md:px-16 py-10 ">
+      <div className="grid grid-cols-3 justify-items-center items-center text-white text-sm text-center uppercase tracking-wider md:flex md:justify-between gap-y-4 border-b border-gray-700 pb-6 mb-8">
         {menuTabs.map((tab) => (
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
-            className={`pb-2 text-sm font-medium transition-colors ${activeTab === tab ? 'text-white border-b-2 border-white' : 'text-gray-400 hover:text-white'
+            className={`pb-2 text-sm font-medium transition-colors ${activeTab === tab
+              ? 'text-white border-b-2 border-white'
+              : 'text-gray-400 hover:text-white'
               }`}
           >
             {tab}
@@ -192,20 +194,20 @@ return (
         ))}
       </div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-x-4 gap-y-2 text-xs min-h-[150px] mb-12">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-x-4 gap-y-2  text-xs min-h-[150px] mb-12">
         {tabContents[activeTab]?.map((item) => (
-          <Link key={item.label} to={item.to} className="hover:text-white py-1">
+          <Link key={item.label} to={item.to} className="hover:text-white py-1 pl-10 md:pl-0 items-center">
             {item.label}
           </Link>
         ))}
       </div>
-       <div
-          className="border-t border-gray-700 pt-8 mt-8" // Removed duplicate border-t div and adjusted mt
-        ></div>
+      <div
+        className="border-t border-gray-700 pt-8 mt-8" // Removed duplicate border-t div and adjusted mt
+      ></div>
 
       {/* Main Footer Content */}
       <div className="container mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-12">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-12">
           {/* Company Links */}
           <div>
             <h3 className="text-lg font-semibold mb-6 text-white uppercase tracking-wider">Company</h3>
@@ -259,34 +261,32 @@ return (
             </ul>
           </div>
 
-          {/* Connect With Us and Logo */}
-          <div className="lg:col-span-2 flex flex-col items-center md:items-start text-center md:text-left">
-            {/* Logo - Adjusted placement */}
-            <Link to="/" className="mb-6"> {/* Added margin-bottom for spacing */}
+          <div className="lg:col-span-2 flex flex-col  md:items-start">
+            {/* <Link to="/" className="mb-6">
               <img
                 src="/logo.png"
                 alt="logo"
                 className="sm:h-24 h-20"
               />
-            </Link>
+            </Link> */}
 
             {/* Connect With Us */}
-            <div className="w-full"> {/* Ensures it takes full width within its grid column */}
-              <h3 className="text-lg font-semibold mb-6 text-white uppercase tracking-wider">Connect With Us</h3>
-              <div className="flex justify-center md:justify-start space-x-5"> {/* Center on small screens, left on md+ */}
-                {socialLinks.map(({ icon: Icon, href }, index) => (
-                  <a
-                    key={index}
-                    href={href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-gray-400 hover:text-blue-400 transition-colors duration-200"
-                  >
-                    <Icon size={24} />
-                  </a>
-                ))}
-              </div>
+            {/* <div className="w-full">  */}
+            <h3 className="text-lg font-semibold mb-6 md:text-center text-white uppercase tracking-wider">Connect With Us</h3>
+            <div className="grid grid-cols-2 gap-y-7 w-full md:w-1/2"> {/* Center on small screens, left on md+ */}
+              {socialLinks.map(({ icon: Icon, href }, index) => (
+                <a
+                  key={index}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-400 hover:text-blue-400 transition-colors duration-200"
+                >
+                  <Icon size={24} />
+                </a>
+              ))}
             </div>
+            {/* </div> */}
           </div>
         </div>
 

@@ -6,6 +6,8 @@ import userRouters from "./routes/userRoutes.js";
 import authRoutes from "./routes/authRoutes.js"
 import propertyRoutes from "./routes/propertyRoutes.js"
 import searchRoutes from './routes/searchRoutes.js'
+import shareRoutes from './routes/shareRoutes.js'
+
 import { dbconnection } from './database/dbconnection.js';
 
 // Load env variables
@@ -37,6 +39,7 @@ app.get('/', (req, res) => {
 app.use("/api/user", userRouters);
 app.use("/api/auth", authRoutes);
 app.use("/api/property", propertyRoutes);
-app.use('/api/search', searchRoutes)
+app.use('/api/search', searchRoutes);
+app.use('/api/share', shareRoutes)
 // Start server
 app.listen(PORT, () => console.log(`Server running at http://localhost:${PORT}`));

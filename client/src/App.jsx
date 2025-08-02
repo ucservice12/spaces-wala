@@ -34,6 +34,7 @@ import SettingsPage from './pages/dashboardpages/SettingsPage';
 
 
 import { isauthrize } from './machine/auth';
+import ShareTemplate from './custom/ShareTemplate';
 
 function App() {
   const dispatch = useDispatch();
@@ -64,6 +65,7 @@ function App() {
         <Route path="/privacy" element={<PrivacyPage />} />
         <Route path="/testimonials" element={<TestimonialsPage />} />
         <Route path="/payrent" element={<RentPageMain />} />
+        <Route path="/share/:id" element={<ShareTemplate />} />
 
         {/* this is priate routes insert in privateroutes in production */}
         <Route path="/seller/post-property" element={<PostPropertyForm />} />

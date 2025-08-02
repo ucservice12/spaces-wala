@@ -31,6 +31,7 @@ const NavbarDesktop = () => {
     const ref = useRef();
     const location = useLocation();
     const { user } = useSelector((state) => state.auth);
+    console.log(user)
     const isHomePage = location.pathname === "/";
     const chunkArray = (arr, size) => {
         const result = [];
