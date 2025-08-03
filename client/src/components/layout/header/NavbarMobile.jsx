@@ -12,9 +12,9 @@ import UserSidebar from "../../../custom/UserSidebar";
 
 const NavbarMobile = () => {
     const location = useLocation();
-    const [open, setOpen] = useState(false);
-    const [openMenuIndex, setOpenMenuIndex] = useState(0);
-    const [selectedLink, setSelectedLink] = useState("");
+    // const [open, setOpen] = useState(false);
+    // const [openMenuIndex, setOpenMenuIndex] = useState(0);
+    // const [selectedLink, setSelectedLink] = useState("");
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
     const [searchTerm, setSearchTerm] = useState("");
@@ -22,11 +22,11 @@ const NavbarMobile = () => {
     const isHomePage = location.pathname === "/";
 
     useEffect(() => {
-        document.body.style.overflow = open ? "hidden" : "";
+        document.body.style.overflow = isSidebarOpen ? 'hidden' : 'auto';
         return () => {
-            document.body.style.overflow = "";
+            document.body.style.overflow = 'auto'; // reset on unmount
         };
-    }, [open]);
+    }, [isSidebarOpen]);
     useEffect(() => {
         const handleScroll = () => {
             setScrolled(window.scrollY > 40);

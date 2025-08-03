@@ -11,17 +11,28 @@ import { User } from '@/components/icons/User';
 import { Grip } from '@/components/icons/Grip';
 import { Blocks } from '@/components/icons/Blocks';
 import { motion } from 'framer-motion';
-import backgroundImage from '@/assets/hero/herobgimage.jpeg';
+import backgroundImag from '@/assets/hero/herobgimage.jpeg';
+import tab2 from '@/assets/hero/tab2image.jpeg'
+import { useState } from 'react';
 
 const Hero = () => {
+  const [activeTab, setActiveTab] = useState('rent')
+
+  const backgroundMap = {
+    buy: backgroundImag,
+    rent: tab2,
+    sell: tab2,
+    commercial: tab2,
+    pg: tab2,
+  };
   return (
     <div
       className="relative min-h-screen flex items-center bg-cover bg-center overflow-hidden"
-      style={{ backgroundImage: `url('${backgroundImage}')` }}
+      style={{ backgroundImage: `url('${backgroundMap[activeTab]}')` }}
     >
       {/* Preload Background Image */}
       <img
-        src={backgroundImage}
+        src={backgroundMap[activeTab]}
         alt="preload background"
         className="hidden"
         loading="eager"

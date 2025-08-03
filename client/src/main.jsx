@@ -7,17 +7,19 @@ import { store } from './redux/store.js';
 import { BrowserRouter } from 'react-router-dom';
 import { HelmetProvider } from "react-helmet-async";
 
+import { ThemeProvider } from "@/components/theme-provider"
+
 const rootElement = document.getElementById('root');
 const root = ReactDOM.createRoot(rootElement);
 
 root.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <BrowserRouter>
-        <HelmetProvider>
+    <ThemeProvider defaultTheme="default" storageKey="spaces-wala-theme">
+      <Provider store={store}>
+        <BrowserRouter>
           <App />
-        </HelmetProvider>
-      </BrowserRouter>
-    </Provider>
+        </BrowserRouter>
+      </Provider>
+    </ThemeProvider>
   </React.StrictMode>
 );
