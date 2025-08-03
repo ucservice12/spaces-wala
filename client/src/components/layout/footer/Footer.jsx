@@ -172,7 +172,7 @@ const Footer = () => {
 
   const socialLinks = [
     { icon: Facebook, href: 'https://facebook.com' },
-    { icon: Twitter, href: 'https://twitter.com' },
+    // { icon: Twitter, href: 'https://twitter.com' },
     { icon: Instagram, href: 'https://instagram.com' },
     { icon: Linkedin, href: 'https://linkedin.com' },
     { icon: Youtube, href: 'https://youtube.com' },
@@ -194,9 +194,9 @@ const Footer = () => {
         ))}
       </div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-x-4 gap-y-2  text-xs min-h-[150px] mb-12">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-x-4 gap-y-1  text-xs min-h-[150px] mb-12">
         {tabContents[activeTab]?.map((item) => (
-          <Link key={item.label} to={item.to} className="hover:text-white py-1 pl-10 md:pl-0 items-center">
+          <Link key={item.label} to={item.to} className="hover:text-white pl-10 md:pl-0 items-center">
             {item.label}
           </Link>
         ))}
@@ -211,7 +211,7 @@ const Footer = () => {
           {/* Company Links */}
           <div>
             <h3 className="text-lg font-semibold mb-6 text-white uppercase tracking-wider">Company</h3>
-            <ul className="space-y-3">
+            <ul className="space-y-2">
               {companyLinks.map((link, index) => (
                 <li key={index}>
                   <Link
@@ -228,7 +228,7 @@ const Footer = () => {
           {/* Partner Sites */}
           <div>
             <h3 className="text-lg font-semibold mb-6 text-white uppercase tracking-wider">Partner Sites</h3>
-            <ul className="space-y-3">
+            <ul className="space-y-2">
               {partnerSites.map((site, index) => (
                 <li key={index}>
                   <a
@@ -247,7 +247,7 @@ const Footer = () => {
           {/* Explore Links */}
           <div>
             <h3 className="text-lg font-semibold mb-6 text-white uppercase tracking-wider">Explore</h3>
-            <ul className="space-y-3">
+            <ul className="space-y-2">
               {exploreLinks.map((link, index) => (
                 <li key={index}>
                   <Link
@@ -273,7 +273,7 @@ const Footer = () => {
             {/* Connect With Us */}
             {/* <div className="w-full">  */}
             <h3 className="text-lg font-semibold mb-6 md:text-center text-white uppercase tracking-wider">Connect With Us</h3>
-            <div className="grid grid-cols-2 gap-y-7 w-full md:w-1/2"> {/* Center on small screens, left on md+ */}
+            <div className="grid grid-cols-4 gap-y-3 w-full md:w-1/2"> {/* Center on small screens, left on md+ */}
               {socialLinks.map(({ icon: Icon, href }, index) => (
                 <a
                   key={index}

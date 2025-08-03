@@ -16,7 +16,7 @@ import tab2 from '@/assets/hero/tab2image.jpeg'
 import { useState } from 'react';
 
 const Hero = () => {
-  const [activeTab, setActiveTab] = useState('rent')
+  const [activeTab, setActiveTab] = useState('buy')
 
   const backgroundMap = {
     buy: backgroundImag,
@@ -75,7 +75,7 @@ const Hero = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: "easeOut", delay: 0.3 }}
             >
-              <SearchBar className="mt-4 w-full" />
+              <SearchBar className="mt-4 w-full" activeTab={activeTab} setActiveTab={setActiveTab} />
             </motion.div>
 
             {/* Statistics */}
