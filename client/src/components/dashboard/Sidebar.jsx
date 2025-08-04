@@ -46,7 +46,7 @@ export default function Sidebar() {
                 {/* Main avatar */}
                 <div className="relative w-24 h-24 rounded-full bg-gradient-to-br from-purple-50 to-purple-50 flex items-center justify-center shadow-lg border-4 border-white z-9 overflow-hidden">
                     <img
-                        src="https://c.housingcdn.com/demand/s/client/common/assets/tenant-avatar.cedc2f44.png" 
+                        src="https://c.SpacesWalacdn.com/demand/s/client/common/assets/tenant-avatar.cedc2f44.png"
                         alt="User Avatar"
                         className="w-full h-full object-cover"
                     />

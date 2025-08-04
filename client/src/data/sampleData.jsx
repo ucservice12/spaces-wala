@@ -70,7 +70,7 @@ export const sampleProperties = [
     bedrooms: 2,
     bathrooms: 2,
     area: 1100,
-    image: 'https://is1-2.housingcdn.com/4f2250e8/44160255f32417b37f3b0f705105d0cf/v0/fs/triyom_casa-abhva_1-surat-triyom_realty.jpeg',
+    image: 'https://is1-2.SpacesWalacdn.com/4f2250e8/44160255f32417b37f3b0f705105d0cf/v0/fs/triyom_casa-abhva_1-surat-triyom_realty.jpeg',
     date: '2023-09-03'
   },
   {

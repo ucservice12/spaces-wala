@@ -10,24 +10,25 @@ import { Badge } from "@/components/ui/badge";
 import profileImage from "@/assets/navbar/profileimage.webp";
 import { menuItems } from "@/data/Navlinks";
 import {
-    ChevronDown, Menu, Heart, FileText
+    ChevronDown, Menu, Heart, FileText,
 } from "lucide-react";
 import { FadeInWhenVisible } from "@/custom/FadeInWhenVisible";
 import { motion, AnimatePresence } from "framer-motion";
 import { useSelector } from "react-redux";
 import UserSidebar from "@/custom/UserSidebar";
-
 import { ModeToggle } from '@/components/mode-toggle';
 
 const NavbarDesktop = () => {
     const [hoveredIndex, setHoveredIndex] = useState(null);
     const [scrolled, setScrolled] = useState(false);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const [isPackagesDropdownOpen, setIsPackagesDropdownOpen] = useState(false);
     const ref = useRef();
     const location = useLocation();
     const { user } = useSelector((state) => state.auth);
-    console.log(user)
     const isHomePage = location.pathname === "/";
+
+    const packagesDropdownRef = useRef(null);
 
     const chunkArray = (arr, size) => {
         const result = [];
@@ -36,12 +37,6 @@ const NavbarDesktop = () => {
         }
         return result;
     };
-    useEffect(() => {
-        document.body.style.overflow = isSidebarOpen ? 'hidden' : 'auto';
-        return () => {
-            document.body.style.overflow = 'auto'; // reset on unmount
-        };
-    }, [isSidebarOpen]);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -51,8 +46,29 @@ const NavbarDesktop = () => {
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (packagesDropdownRef.current && !packagesDropdownRef.current.contains(event.target)) {
+                setIsPackagesDropdownOpen(false);
+            }
+        };
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
+
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen);
+    };
+
+    const togglePackagesDropdown = () => {
+        setIsPackagesDropdownOpen(!isPackagesDropdownOpen);
+    };
+
+    const packagesDropdownVariants = {
+        hidden: { opacity: 0, y: -10, transition: { duration: 0.2 } },
+        visible: { opacity: 1, y: 0, transition: { duration: 0.2 } },
     };
 
     return (
@@ -92,10 +108,43 @@ const NavbarDesktop = () => {
                             <Link to="/dashboard/saved"><span className="text-sm">Saved</span></Link>
                         </div>
 
-                        <div className="flex items-center gap-1 cursor-pointer hover:text-white/80">
-                            <FileText className="w-4 h-4" />
-                            <span className="text-sm">Packages</span>
-                            <ChevronDown className="w-4 h-4" />
+                        <div className="relative" ref={packagesDropdownRef}>
+                            <div
+                                onClick={togglePackagesDropdown}
+                                className="flex items-center gap-1 cursor-pointer hover:text-white/80"
+                            >
+                                <FileText className="w-4 h-4" />
+                                <span className="text-sm">Packages</span>
+                                <ChevronDown className={`w-4 h-4 transition-transform ${isPackagesDropdownOpen ? 'rotate-180' : ''}`} />
+                            </div>
+                            <AnimatePresence>
+                                {isPackagesDropdownOpen && (
+                                    <motion.div
+                                        className="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+                                        initial="hidden"
+                                        animate="visible"
+                                        exit="hidden"
+                                        variants={packagesDropdownVariants}
+                                    >
+                                        <div className="py-1">
+                                            <Link
+                                                to="/packages/Developers"
+                                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                onClick={() => setIsPackagesDropdownOpen(false)}
+                                            >
+                                                For Developers
+                                            </Link>
+                                            <Link
+                                                to="/packages/brokers"
+                                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                onClick={() => setIsPackagesDropdownOpen(false)}
+                                            >
+                                                For Brokers
+                                            </Link>
+                                        </div>
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
                         </div>
 
                         <div className="flex items-center gap-1.5 cursor-pointer hover:text-white/80">
@@ -103,7 +152,8 @@ const NavbarDesktop = () => {
                             <Badge className="bg-pink-500 text-white text-[10px] px-2">FREE</Badge>
                         </div>
 
-                        {/* <ModeToggle /> */}
+                        {/* 👇 ADD DARK/LIGHT TOGGLE BUTTON HERE */}
+                        {/*                         <ModeToggle /> */}
                         {/* Sidebar Avatar */}
                         <div
                             onClick={toggleSidebar}
@@ -116,11 +166,11 @@ const NavbarDesktop = () => {
                                 className="w-5 h-5 rounded-full object-cover"
                             />
                         </div>
-                    </div>
-                </div>
+                    </div >
+                </div >
 
-                {/* Dropdown Panel */}
-                <AnimatePresence>
+                {/* Dropdown Panel - (existing code for other dropdowns, if any) */}
+                < AnimatePresence >
                     {hoveredIndex !== null && menuItems[hoveredIndex].links && (
                         <motion.div
                             className="absolute left-0 top-100 w-full bg-card/95 backdrop-blur-md shadow-lg z-30 border-t"
@@ -180,8 +230,8 @@ const NavbarDesktop = () => {
                             </div>
                         </motion.div>
                     )}
-                </AnimatePresence>
-            </motion.div>
+                </AnimatePresence >
+            </motion.div >
 
             <UserSidebar
                 isSidebarOpen={isSidebarOpen}

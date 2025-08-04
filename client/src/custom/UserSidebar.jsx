@@ -28,7 +28,7 @@ const sidebarMenuItems = [
       { id: 'ql-news', icon: <Newspaper />, label: 'News' },
       { id: 'ql-research', icon: <BarChart />, label: 'Research' },
       { id: 'ql-pay', icon: <CreditCard />, label: 'Pay on Credit' },
-      { id: 'ql-protect', icon: <Shield />, label: 'Housing Protect', badge: 'NEW' },
+      { id: 'ql-protect', icon: <Shield />, label: 'SpacesWala Protect', badge: 'NEW' },
     ],
   },
   {
@@ -40,19 +40,19 @@ const sidebarMenuItems = [
       { id: 'rp-developers', icon: <User />, label: 'For Developers' },
       { id: 'rp-brokers', icon: <Briefcase />, label: 'For Brokers' },
       { id: 'rp-owners', icon: <User />, label: 'For Owners' },
-      { id: 'rp-premium', icon: <Star />, label: 'Housing Premium' },
+      { id: 'rp-premium', icon: <Star />, label: 'SpacesWala Premium' },
     ],
   },
   {
-    id: 'housing-edge',
+    id: 'SpacesWala-edge',
     icon: <Lightbulb />,
-    label: 'Housing Edge',
+    label: 'SpacesWala Edge',
     hasSubmenu: true,
     submenuItems: [
       { id: 'he-credit', icon: <CreditCard />, label: 'Pay on Credit' },
-      { id: 'he-premium', icon: <Star />, label: 'Housing Premium' },
+      { id: 'he-premium', icon: <Star />, label: 'SpacesWala Premium' },
       { id: 'he-loans', icon: <Home />, label: 'Home Loans' },
-      { id: 'he-protect', icon: <Shield />, label: 'Housing Protect', badge: 'NEW' },
+      { id: 'he-protect', icon: <Shield />, label: 'SpacesWala Protect', badge: 'NEW' },
       { id: 'he-rent', icon: <FileText />, label: 'Rent Receipt...' },
     ],
   },
@@ -70,7 +70,7 @@ const sidebarMenuItems = [
       { id: 's-value', icon: <Star />, label: 'Property Value' },
     ],
   },
-  { id: 'housing-advice', icon: <Lightbulb />, label: 'Housing Advice', hasSubmenu: true, submenuItems: [{ id: 'ha-buying', icon: <BookOpen />, label: 'Buying Guide' }] },
+  { id: 'SpacesWala-advice', icon: <Lightbulb />, label: 'SpacesWala Advice', hasSubmenu: true, submenuItems: [{ id: 'ha-buying', icon: <BookOpen />, label: 'Buying Guide' }] },
 ];
 
 const bottomMenuItems = [
@@ -109,7 +109,7 @@ const UserSidebar = ({ toggleSidebar, isSidebarOpen }) => {
         return (
           <div className="flex flex-col items-center p-6">
             <img
-              src="https://c.housingcdn.com/demand/s/client/common/assets/fallback.3b935c39.svg"
+              src="https://c.SpacesWalacdn.com/demand/s/client/common/assets/fallback.3b935c39.svg"
               alt="Start new search illustration"
               className="w-full md:w-2/3 mb-6"
             />
@@ -144,7 +144,7 @@ const UserSidebar = ({ toggleSidebar, isSidebarOpen }) => {
         return (
           <div className="flex flex-col items-center p-6">
             <img
-              src="https://c.housingcdn.com/demand/s/client/common/assets/fallback.3b935c39.svg"
+              src="https://c.SpacesWalacdn.com/demand/s/client/common/assets/fallback.3b935c39.svg"
               alt="No activity"
               className="w-full md:w-2/3 mb-6"
             />
