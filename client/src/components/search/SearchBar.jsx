@@ -3,14 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import { Search, MapPin, ChevronDown } from 'lucide-react';
 import { fetchSuggestions } from '../../machine/property';
 
-// Your constants remain unchanged
 const TABS = [
   { key: 'buy', label: 'Buy' },
   { key: 'rent', label: 'Rent' },
   { key: 'sell', label: 'Sell' },
   { key: 'commercial', label: 'Commercial' },
   { key: 'pg', label: 'PG/Co-Living' },
-  
 ];
 
 const Cities = [
@@ -27,14 +25,28 @@ const popularByCity = {
   Pune: ["Wakad", "Baner", "Kothrud", "Viman Nagar", "Hinjewadi"],
   Bengaluru: ["Whitefield", "Electronic City", "JP Nagar", "KR Puram", "Devanahalli"],
   Mumbai: ["Andheri West", "Borivali", "Dadar", "Mira Road East", "Chembur"],
-  Nashik: ["Gangapur Road", "Indira Nagar", "College Road"], // Added Nashik for the example
+  Nashik: ["Gangapur Road", "Indira Nagar", "College Road"],
+};
+import heroBuy from '@/assets/hero/herobuy.jpg';
+import hero2 from '@/assets/hero/hero2.jpg';
+import hero3 from '@/assets/hero/hero3.jpg';
+import commercial from '@/assets/hero/herobuy.jpg';
+import herobgimage from '@/assets/hero/herobgimage.jpeg';
+import pgliving from '@/assets/hero/pgliving.avif';
+
+const TAB_IMAGES = {
+    buy: herobgimage,
+    rent: hero2,
+    sell: hero3,
+    commercial: commercial,
+    pg: pgliving
 };
 
-const SearchBar = ({ className = '', variant = 'dark' }) => {
+const SearchBar = ({ className = '', variant = 'dark', onTabChange }) => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('buy');
   const [location, setLocation] = useState('');
-  const [city, setCity] = useState('Nashik'); // Set default city as per image
+  const [city, setCity] = useState('Nashik');
   const [query, setQuery] = useState('');
   const [showCityDropdown, setShowCityDropdown] = useState(false);
   const [showPopularSearches, setShowPopularSearches] = useState(false);
@@ -74,7 +86,7 @@ const SearchBar = ({ className = '', variant = 'dark' }) => {
   const handleQueryChange = (e) => {
     const value = e.target.value;
     setQuery(value);
-    setLocation(value); // Sync location with query
+    setLocation(value);
   };
 
   const handleQueryFocus = () => {
@@ -83,12 +95,19 @@ const SearchBar = ({ className = '', variant = 'dark' }) => {
     }
   };
 
-  // Your existing logic for setting popular locations
+  // New function to handle tab click and notify parent
+  const handleTabClick = (tabKey) => {
+    setActiveTab(tabKey);
+    // Check if the prop exists before calling it
+    if (onTabChange) {
+      onTabChange(TAB_IMAGES[tabKey]);
+    }
+  };
+
   useEffect(() => {
     setPopularLocations(popularByCity[city] || []);
   }, [city]);
 
-  // Your existing logic for handling clicks outside dropdowns
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -103,7 +122,6 @@ const SearchBar = ({ className = '', variant = 'dark' }) => {
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
-
 
   useEffect(() => {
     if (query.length < 2 || !city) {
@@ -144,7 +162,7 @@ const SearchBar = ({ className = '', variant = 'dark' }) => {
                     : 'text-gray-400 hover:text-white'
                 }
               `}
-              onClick={() => setActiveTab(tab.key)}
+              onClick={() => handleTabClick(tab.key)}
             >
               {tab.label}
               {activeTab === tab.key && (
@@ -165,7 +183,7 @@ const SearchBar = ({ className = '', variant = 'dark' }) => {
                 className="flex items-center px-4 py-2 cursor-pointer relative w-1/3 min-w-[150px] max-w-[200px]"
                 onClick={() => {
                   setShowCityDropdown(!showCityDropdown);
-                  setShowPopularSearches(false); // Close other dropdown
+                  setShowPopularSearches(false);
                 }}
               >
                 <input
@@ -187,14 +205,14 @@ const SearchBar = ({ className = '', variant = 'dark' }) => {
               <div className="relative flex-1">
                 <input
                   type="text"
-                  className="w-full px-4 py-2 text-sm text-gray-700 bg-transparent outline-none placeholder-gray-400"
+                  className="w-full px-0 py-2 text-sm text-gray-700 bg-transparent outline-none placeholder-gray-400"
                   value={query}
                   onChange={handleQueryChange}
                   onFocus={() => {
                     setShowPopularSearches(true);
-                    setShowCityDropdown(false); // Close other dropdown
+                    setShowCityDropdown(false);
                   }}
-                  placeholder="Search for locality, landmark, project, or builder"
+                  placeholder="Search for locality, landmark, project, or builder."
                   aria-label="Search query"
                 />
               </div>
@@ -278,8 +296,8 @@ const SearchBar = ({ className = '', variant = 'dark' }) => {
                     }}
                   >
                     <div className="flex items-center">
-                        <Search className="h-4 w-4 text-gray-400 mr-2" />
-                        {s}
+                      <Search className="h-4 w-4 text-gray-400 mr-2" />
+                      {s}
                     </div>
                   </div>
                 ))}

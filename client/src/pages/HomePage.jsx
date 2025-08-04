@@ -298,7 +298,7 @@ const HomePage = () => {
                     loading="lazy"
                     src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg"
                     alt="Google Play"
-                    className="h-14 transition-transform duration-200 hover:scale-105"
+                    className="h-12 transition-transform duration-200 hover:scale-105"
                   />
                 </a>
                 <a href="#" aria-label="Download on Apple App Store">
@@ -306,7 +306,7 @@ const HomePage = () => {
                     loading="lazy"
                     src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg"
                     alt="App Store"
-                    className="h-14 transition-transform duration-200 hover:scale-105"
+                    className="h-12 transition-transform duration-200 hover:scale-105"
                   />
                 </a>
               </div>
@@ -321,8 +321,8 @@ const HomePage = () => {
               <img
                 loading="lazy"
                 src="https://i.ytimg.com/vi/F-PWkKt2mUU/maxresdefault.jpg"
-                alt="Mobile App"
-                className="rounded-xl shadow-2xl w-full max-w-sm md:max-w-none" // Responsive sizing
+                style={{ width: '950px', height: '300px' }}
+                className="rounded-xl shadow-1xl"
               />
             </motion.div>
           </div>

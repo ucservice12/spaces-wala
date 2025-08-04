@@ -24,6 +24,8 @@ import PrivacyPage from './pages/PrivacyPage';
 import TestimonialsPage from './pages/TestimonialsPage';
 import PostPropertyForm from './pages/postproperty/PostPropertyForm';
 import RentPageMain from './pages/payrentPage/RentPageMain';
+import Developers from './pages/packages/Developers';
+import Brokers from './pages/packages/Brokers';
 
 import ProfilePage from './pages/dashboardpages/ProfilePage';
 import MyPropertiesPage from './pages/dashboardpages/MyPropertiesPage';
@@ -65,6 +67,8 @@ function App() {
         <Route path="/privacy" element={<PrivacyPage />} />
         <Route path="/testimonials" element={<TestimonialsPage />} />
         <Route path="/payrent" element={<RentPageMain />} />
+        <Route path="/packages/developers" element={<Developers />} />
+        <Route path="/packages/brokers" element={<Brokers />} />
 
         {/* this is priate routes insert in privateroutes in production */}
         <Route path="/seller/post-property" element={<PostPropertyForm />} />
