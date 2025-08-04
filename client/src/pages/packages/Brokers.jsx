@@ -65,7 +65,7 @@ const PricingSection = () => {
       name: 'Audience Maximiser',
       features: [
         'A powerful retargeting tool designed to connect with high-intent buyers',
-        'Strategically retargets high-intent buyers through social media, Google\'s ad network, and the Housing.com platform',
+        'Strategically retargets high-intent buyers through social media, Google\'s ad network, and the spaceswala platform',
         'Retargets engaged buyers, enhancing visibility and impressions across various online channels',
         'Choose between two targeting options of Locality and Project level retargeting to optimize your reach'
       ]
