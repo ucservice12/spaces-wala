@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, memo } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
@@ -21,7 +21,7 @@ import {
 } from 'lucide-react';
 
 // Enhanced 3D Dynamic Background with a subtle monochromatic theme
-const Enhanced3DBackground = () => {
+const Enhanced3DBackground = memo(() => {
     const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
     useEffect(() => {
@@ -41,23 +41,15 @@ const Enhanced3DBackground = () => {
             <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-950 to-gray-900" />
 
             {/* Animated radial gradient overlay based on mouse position */}
-            <motion.div
+            <div
                 className="absolute inset-0"
                 style={{
-                    background: `radial-gradient(circle at ${mousePosition.x}% ${mousePosition.y}%, rgba(255, 255, 255, 0.05) 0%, transparent 50%)`,
+                    background: `radial-gradient(circle at ${mousePosition.x}% ${mousePosition.y}%, rgba(255, 255, 255, 0.08) 0%, transparent 50%)`,
                 }}
-                animate={{
-                    background: [
-                        `radial-gradient(circle at ${mousePosition.x}% ${mousePosition.y}%, rgba(255, 255, 255, 0.05) 0%, transparent 50%)`,
-                        `radial-gradient(circle at ${mousePosition.x}% ${mousePosition.y}%, rgba(255, 255, 255, 0.08) 0%, transparent 50%)`,
-                        `radial-gradient(circle at ${mousePosition.x}% ${mousePosition.y}%, rgba(255, 255, 255, 0.05) 0%, transparent 50%)`,
-                    ],
-                }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
             />
 
-            {/* Floating geometric shapes */}
-            {[...Array(6)].map((_, i) => (
+            {/* Floating geometric shapes (reduced count for better performance) */}
+            {[...Array(3)].map((_, i) => (
                 <motion.div
                     key={i}
                     className="absolute rounded-full opacity-5"
@@ -96,17 +88,16 @@ const Enhanced3DBackground = () => {
             />
         </div>
     );
-};
+});
 
 // 3D Card component for sections with a dark theme
-const Card3D = ({ children, className = "" }) => (
+const Card3D = memo(({ children, className = "" }) => (
     <motion.div
         className={`relative bg-white/5 backdrop-blur-md border border-white/10 rounded-xl p-6 shadow-2xl ${className}`}
         style={{
             background: 'linear-gradient(145deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05))',
             boxShadow: '0 8px 32px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1)',
         }}
-        // Toned down hover effect
         whileHover={{
             scale: 1.01,
             transition: { duration: 0.2 }
@@ -115,7 +106,7 @@ const Card3D = ({ children, className = "" }) => (
     >
         {children}
     </motion.div>
-);
+));
 
 const Footer = () => {
     const [activeTab, setActiveTab] = useState('REAL ESTATE');
@@ -252,11 +243,11 @@ const Footer = () => {
     ];
 
     const socialLinks = [
-        { icon: Facebook, href: 'https://facebook.com', color: '#3b5998' }, // Facebook blue
-        { icon: Twitter, href: 'https://twitter.com', color: '#00acee' }, // Twitter blue
-        { icon: Instagram, href: 'https://instagram.com', color: '#C13584' }, // Instagram purple
-        { icon: Linkedin, href: 'https://linkedin.com', color: '#0e76a8' }, // LinkedIn blue
-        { icon: Youtube, href: 'https://youtube.com', color: '#c4302b' }, // YouTube red
+        { icon: Facebook, href: 'https://facebook.com' },
+        { icon: Twitter, href: 'https://twitter.com' },
+        { icon: Instagram, href: 'https://instagram.com' },
+        { icon: Linkedin, href: 'https://linkedin.com' },
+        { icon: Youtube, href: 'https://youtube.com' },
     ];
 
     const trustBadges = [
@@ -305,10 +296,7 @@ const Footer = () => {
                                     ? 'text-white drop-shadow-md'
                                     : 'text-gray-500 hover:text-white '
                                     }`}
-                                whileHover={{
-                                    scale: activeTab === tab.name ? 1.05 : 1,
-                                    rotateY: 0,
-                                }}
+                                whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.98 }}
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
@@ -352,7 +340,7 @@ const Footer = () => {
                                     x: 3,
                                     transition: { duration: 0.2 }
                                 }}
-                                className="cursor-pointer hover:bg-white/5 p-2 rounded transition-all"
+                                className="cursor-pointer hover:bg-white/5 p-0 rounded transition-all"
                             >
                                 <Link to={item.to} className="block text-gray-400">
                                     {item.label}
@@ -379,11 +367,11 @@ const Footer = () => {
                             />
                             <motion.button
                                 type="submit"
-                                className="bg-white text-gray-900 font-medium w-12 h-12 rounded-lg hover:bg-gray-200 transition-all flex items-center justify-center text-sm md:text-base" // Updated classes
+                                className="bg-white text-gray-900 font-medium w-12 h-12 rounded-lg hover:bg-gray-200 transition-all flex items-center justify-center text-sm md:text-base"
                                 whileHover={{ scale: 1.02 }}
                                 whileTap={{ scale: 0.98 }}
                             >
-                                <Mail size={20} /> {/* Increased icon size for better visibility */}
+                                <Mail size={20} />
                             </motion.button>
                         </form>
                         {/* Trust Section */}
@@ -509,7 +497,6 @@ const Footer = () => {
                                 })}
                             </div>
                         </div>
-
                         <div className="text-center md:text-right">
                             <p className="text-gray-500 text-sm">
                                 © 2025 Utech india pvt ltd. All rights reserved.
@@ -519,7 +506,7 @@ const Footer = () => {
                         <motion.button
                             onClick={scrollToTop}
                             className="w-12 h-12 rounded-full bg-white text-gray-900 flex items-center justify-center hover:bg-gray-200 transition-all"
-                            whileHover={{ scale: 1.05, rotate: 0 }}
+                            whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
                         >
                             <ArrowUp size={20} />

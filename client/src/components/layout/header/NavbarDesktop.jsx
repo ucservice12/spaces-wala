@@ -152,7 +152,7 @@ const NavbarDesktop = () => {
                             <Badge className="bg-pink-500 text-white text-[10px] px-2">FREE</Badge>
                         </div>
 
-                        {/* 👇 ADD DARK/LIGHT TOGGLE BUTTON HERE */}
+                        {/* ADD DARK/LIGHT TOGGLE BUTTON HERE */}
 {/*                         <ModeToggle /> */}
                         {/* Sidebar Avatar */}
                         <div
