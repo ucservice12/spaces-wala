@@ -1,5 +1,5 @@
 import { sampleProperties } from '../data/sampleData';
-import SearchBar from '../components/search/SearchBar';
+import SearchBar from '../components/search/DesktopSearchBar';
 import { Home } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import PropertyCard from '../components/property/PropertyCard';
