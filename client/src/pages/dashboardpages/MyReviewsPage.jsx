@@ -3,11 +3,11 @@ import { motion } from 'framer-motion';
 
 const MyReviews = () => {
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
+    <div className="min-h-screen bg-gray-50 p-4 sm:p-6">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <motion.h1 
-          className="text-3xl font-bold text-gray-900 mb-16"
+          className="text-2xl sm:text-3xl font-bold text-gray-900 mb-8 sm:mb-16"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
@@ -17,21 +17,19 @@ const MyReviews = () => {
 
         {/* Empty State Container */}
         <motion.div 
-          className="flex flex-col items-center justify-center text-center py-16"
+          className="flex flex-col items-center justify-center text-center py-8 sm:py-16"
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
           {/* Illustration */}
           <motion.div 
-            className="mb-8"
+            className="mb-8 w-48 h-auto"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.4 }}
           >
             <svg
-              width="200"
-              height="160"
               viewBox="0 0 200 160"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -111,7 +109,7 @@ const MyReviews = () => {
 
           {/* No Reviews Text */}
           <motion.h2 
-            className="text-2xl font-semibold text-gray-900 mb-3"
+            className="text-xl sm:text-2xl font-semibold text-gray-900 mb-3"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.6 }}
@@ -121,7 +119,7 @@ const MyReviews = () => {
 
           {/* Subtitle */}
           <motion.p 
-            className="text-gray-500 text-lg"
+            className="text-sm sm:text-lg text-gray-500"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.8 }}

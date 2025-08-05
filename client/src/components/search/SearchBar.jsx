@@ -264,14 +264,16 @@ import { useNavigate } from 'react-router-dom';
 import { Search, MapPin, ChevronDown } from 'lucide-react';
 import { fetchSuggestions } from '../../machine/property';
 
+// Tabs for different search categories
 const TABS = [
   { key: 'buy', label: 'Buy' },
   { key: 'rent', label: 'Rent' },
   { key: 'sell', label: 'Sell' },
   { key: 'commercial', label: 'Commercial' },
-  { key: 'pg', label: 'PG/Co-Living' },
+  { key: 'pg', label: 'PG/Accommodation' },
 ];
 
+// List of cities for the city dropdown
 const Cities = [
   "Mumbai", "Bengaluru", "Hyderabad", "Pune", "Chennai", "Delhi", "Gurgaon", "Noida",
   "Kolkata", "Ahmedabad", "Thane", "Navi Mumbai", "Ghaziabad", "Greater Noida",
@@ -282,19 +284,23 @@ const Cities = [
   "Raipur", "Dehradun", "Trivandrum", "Thrissur", "Salem", "Gwalior"
 ];
 
+// Popular search locations based on city
 const popularByCity = {
   Pune: ["Wakad", "Baner", "Kothrud", "Viman Nagar", "Hinjewadi"],
   Bengaluru: ["Whitefield", "Electronic City", "JP Nagar", "KR Puram", "Devanahalli"],
   Mumbai: ["Andheri West", "Borivali", "Dadar", "Mira Road East", "Chembur"],
   Nashik: ["Gangapur Road", "Indira Nagar", "College Road"],
 };
+
+// Image imports for tab-based background changes (as defined in your original code)
 import heroBuy from '@/assets/hero/herobuy.jpg';
 import hero2 from '@/assets/hero/hero2.jpg';
 import hero3 from '@/assets/hero/hero3.jpg';
-import commercial from '@/assets/hero/herobuy.jpg';
+import commercial from '@/assets/hero/commercial.jpg';
 import herobgimage from '@/assets/hero/herobgimage.jpeg';
 import pgliving from '@/assets/hero/pgliving.avif';
 
+// Mapping tab keys to their corresponding background images
 const TAB_IMAGES = {
   buy: herobgimage,
   rent: hero2,
@@ -315,10 +321,12 @@ const SearchBar = ({ className = '', variant = 'dark', onTabChange }) => {
   const [popularLocations, setPopularLocations] = useState([]);
   const [suggestions, setSuggestions] = useState([]);
 
+  // Refs to manage dropdown visibility when clicking outside
   const cityInputRef = useRef(null);
   const cityDropdownRef = useRef(null);
   const popularSearch = useRef(null);
 
+  // Handles the form submission for search
   const handleSearch = (e) => {
     e.preventDefault();
     if (location.trim()) {
@@ -326,6 +334,7 @@ const SearchBar = ({ className = '', variant = 'dark', onTabChange }) => {
     }
   };
 
+  // Handles input changes for the city field and filters the city list
   const handleCityInput = (value) => {
     setCity(value);
     setLocation(value);
@@ -336,6 +345,7 @@ const SearchBar = ({ className = '', variant = 'dark', onTabChange }) => {
     setFilteredCities(filtered);
   };
 
+  // Handles selection of a city from the dropdown
   const handleCitySelect = (value) => {
     setCity(value);
     setLocation(value);
@@ -344,31 +354,34 @@ const SearchBar = ({ className = '', variant = 'dark', onTabChange }) => {
     setShowPopularSearches(false);
   };
 
+  // Handles input changes for the main search query
   const handleQueryChange = (e) => {
     const value = e.target.value;
     setQuery(value);
     setLocation(value);
   };
 
+  // Shows popular searches when the query input is focused and empty
   const handleQueryFocus = () => {
     if (!query && popularLocations.length > 0) {
       setShowPopularSearches(true);
     }
   };
 
-  // New function to handle tab click and notify parent
+  // Handles tab clicks and triggers the `onTabChange` prop to update the parent component's state
   const handleTabClick = (tabKey) => {
     setActiveTab(tabKey);
-    // Check if the prop exists before calling it
     if (onTabChange) {
       onTabChange(TAB_IMAGES[tabKey]);
     }
   };
 
+  // Effect to update popular locations whenever the selected city changes
   useEffect(() => {
     setPopularLocations(popularByCity[city] || []);
   }, [city]);
 
+  // Effect to handle clicks outside the component, closing the dropdowns
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -384,6 +397,7 @@ const SearchBar = ({ className = '', variant = 'dark', onTabChange }) => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  // Effect to debounce search queries and fetch suggestions
   useEffect(() => {
     if (query.length < 2 || !city) {
       setSuggestions([]);
