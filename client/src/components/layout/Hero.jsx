@@ -119,15 +119,17 @@
 import { useState } from 'react';
 import SearchBar from '@/components/search/SearchBar';
 import {
-  TypographyP,
-  TypographyH4,
-  TypographyMuted,
+    TypographyP,
+    TypographyH4,
+    TypographyMuted,
 } from '@/custom/Typography';
 import { Dice6 } from '@/components/icons/Dice6';
 import { User } from '@/components/icons/User';
 import { Grip } from '@/components/icons/Grip';
 import { Blocks } from '@/components/icons/Blocks';
 import { motion, AnimatePresence } from 'framer-motion';
+
+
 import originalBackgroundImage from '@/assets/hero/herobgimage.jpeg';
 
 
@@ -137,8 +139,7 @@ import hero3 from '@/assets/hero/hero3.jpg';
 import commercial from '@/assets/hero/commercial.jpg';
 import herobgimage from '@/assets/hero/herobgimage.jpeg';
 import pgliving from '@/assets/hero/pgliving.avif';
-
-
+import RadialShareMenu from '@/custom/RadialShareMenu';
 const TAB_IMAGES = {
     buy: herobgimage,
     rent: hero2,
@@ -170,7 +171,7 @@ const Hero = () => {
                     style={{ backgroundImage: `url('${backgroundImage}')` }}
                 />
             </AnimatePresence>
-            
+
             {/* Dark Overlay */}
             <div className="absolute inset-0 bg-gradient-to-r from-gray-900/80 to-gray-900/40" />
 
@@ -209,9 +210,9 @@ const Hero = () => {
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8, ease: "easeOut", delay: 0.3 }}
                         >
-                            <SearchBar 
-                                className="mt-4 w-full" 
-                                onTabChange={handleTabChange} 
+                            <SearchBar
+                                className="mt-4 w-full"
+                                onTabChange={handleTabChange}
                             />
                         </motion.div>
 
@@ -245,6 +246,7 @@ const Hero = () => {
                     </div>
                 </div>
             </div>
+            <RadialShareMenu loacation="homeherosection" />
         </div>
     );
 };

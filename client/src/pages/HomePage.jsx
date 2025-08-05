@@ -17,6 +17,7 @@ import {
 import AnimatedHome from '@/components/icons/AnimatedHome';
 import AnimatedBuilding from '@/components/icons/AnimatedBuilding';
 import AnimatedUsers from '@/components/icons/AnimatedUsers';
+import RadialShareMenu from '@/custom/RadialShareMenu';
 
 const testimonials = [
   {
@@ -169,6 +170,9 @@ const HomePage = () => {
             })}
           </div>
         </div>
+        {/* <div className='mt-28'> */}
+        <RadialShareMenu loacation="popularCitiesSection" className="bg-slate-500 hover:bg-slate-400" />
+        {/* </div> */}
       </motion.section>
       {/* Our Services Section */}
       <section className="py-16 bg-gradient-to-br from-blue-50 to-indigo-50">
@@ -241,7 +245,7 @@ const HomePage = () => {
         className="border-t border-gray-700 pt-8 mt-8" // Removed duplicate border-t div and adjusted mt
       ></div>
       {/* Testimonials Section */}
-      <section className="py-16 bg-gradient-to-br from-indigo-50 to-purple-50">
+      <section className="py-16 bg-gradient-to-br relative from-indigo-50 to-purple-50">
         <div className="max-w-7xl mx-auto px-4">
           <TypographyH2 className="font-bold text-center text-4xl md:text-5xl text-gray-800 mb-12">
             Trusted by Thousands of Happy Customers on <span className="text-blue-600">SpacesWala.com</span>
@@ -276,6 +280,8 @@ const HomePage = () => {
             ))}
           </div>
         </div>
+        <RadialShareMenu loacation="testimonialsSection" className="bg-slate-500 hover:bg-slate-400" />
+
       </section>
 
       {/* Download App Section */}

@@ -195,7 +195,6 @@ const UserSidebar = ({ toggleSidebar, isSidebarOpen }) => {
               </div>
             </div>
 
-            {/* ✅ Login Button */}
             <Button
               onClick={handleLogin}
               className="bg-purple-500 text-white hover:bg-purple-600 px-4 py-2 rounded-md font-semibold text-sm mt-9"

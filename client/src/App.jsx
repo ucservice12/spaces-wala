@@ -36,7 +36,6 @@ import SettingsPage from './pages/dashboardpages/SettingsPage';
 import MyActivity from './pages/dashboardpages/MyActivity';
 import MyReviewsPage from './pages/dashboardpages/MyReviewsPage';
 import { isauthrize } from './machine/auth';
-import ShareTemplate from './custom/ShareTemplate';
 
 
 function App() {
@@ -68,7 +67,6 @@ function App() {
         <Route path="/privacy" element={<PrivacyPage />} />
         <Route path="/testimonials" element={<TestimonialsPage />} />
         <Route path="/payrent" element={<RentPageMain />} />
-        <Route path="/share/:id" element={<ShareTemplate />} />
         <Route path="/packages/developers" element={<Developers />} />
         <Route path="/packages/brokers" element={<Brokers />} />
 
