@@ -3,11 +3,11 @@ import { motion } from 'framer-motion';
 
 const MyReviews = () => {
   return (
-    <div className="min-h-screen bg-gray-50 p-4 sm:p-6">
+    <div className="min-h-screen bg-gray-50 p-8 sm:p-8">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <motion.h1 
-          className="text-2xl sm:text-3xl font-bold text-gray-900 mb-8 sm:mb-16"
+          className="text-2xl sm:text-3xl font-bold text-gray-900 mb-8 sm:mb-18"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}

@@ -68,7 +68,7 @@ const HeroSectionMobile = () => {
                             className="rounded-l-none flex-1 bg-gray-900 text-white border border-gray-700 placeholder-gray-500"
                         />
                     </div>
-                    <Button className="w-full bg-primary hover:bg-primary/90 text-white py-1.5 text-sm rounded-md">
+                    <Button className="w-72 bg-primary hover:bg-primary/90 text-white px-4 py-1 text-sm rounded">
                         Send
                     </Button>
                 </div>

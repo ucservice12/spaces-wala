@@ -5,7 +5,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        inter: ['Inter', 'sans-serif'],
+           rubik: ['Rubik', 'Helvetica', 'sans-serif'],
       },
       borderRadius: {
         lg: 'var(--radius)',

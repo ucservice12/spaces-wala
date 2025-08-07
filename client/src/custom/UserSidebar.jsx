@@ -76,7 +76,7 @@ const sidebarMenuItems = [
         icon: <Lightbulb />,
         label: 'Housing Advice',
         hasSubmenu: true,
-        submenuItems: [{ id: 'ha-buying', icon: <BookOpen />, label: 'Buying Guide', path: '/housing-advice/buying-guide' }]
+        submenuItems: [{ id: 'ha-buying', icon: <BookOpen />, label: 'Buying Guide', path: '/housing-advice/buying-guide' }],
     },
 ];
 
@@ -88,6 +88,7 @@ const bottomMenuItems = [
 const UserSidebar = ({ toggleSidebar, isSidebarOpen }) => {
     const [expandedMenus, setExpandedMenus] = useState({});
     const [activeActivity, setActiveActivity] = useState('contacted-properties');
+    const [isActivityDropdownOpen, setIsActivityDropdownOpen] = useState(false); // State for dropdown
     const navigate = useNavigate();
 
     const toggleMenu = (menuId) => {
@@ -97,12 +98,15 @@ const UserSidebar = ({ toggleSidebar, isSidebarOpen }) => {
         }));
     };
 
+    const toggleActivityDropdown = () => {
+        setIsActivityDropdownOpen((prev) => !prev);
+    };
+
     const handleLogin = () => {
         toggleSidebar();
         navigate('/login');
     };
 
-    // New handler for navigation
     const handleNavigate = (path) => {
         if (path) {
             toggleSidebar();
@@ -173,6 +177,7 @@ const UserSidebar = ({ toggleSidebar, isSidebarOpen }) => {
                 );
         }
     };
+
     return (
         <>
             <motion.div
@@ -212,7 +217,6 @@ const UserSidebar = ({ toggleSidebar, isSidebarOpen }) => {
                             </div>
                         </div>
 
-                        {/* Login Button */}
                         <Button
                             onClick={handleLogin}
                             className="bg-blue-500 text-white hover:bg-blue-600 px-2 py-2 rounded-md font-semibold text-sm mt-9"
@@ -232,26 +236,49 @@ const UserSidebar = ({ toggleSidebar, isSidebarOpen }) => {
                 </div>
 
                 {/* My Activity Section */}
-                <div className="p-4 border-b">
-                    <h3 className="font-semibold text-gray-800 text-lg mb-3">My Activity</h3>
-                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                        <div onClick={() => setActiveActivity('contacted-properties')}>
-                            <ActivityItem icon={<PhoneCall />} label="Contacted" subLabel="Properties" count="00" highlight={activeActivity === 'contacted-properties'} />
-                        </div>
-                        <div onClick={() => setActiveActivity('seen-properties')}>
-                            <ActivityItem icon={<Eye />} label="Seen" subLabel="Properties" count="00" highlight={activeActivity === 'seen-properties'} />
-                        </div>
-                        <div onClick={() => setActiveActivity('saved-properties')}>
-                            <ActivityItem icon={<Star />} label="Saved" subLabel="Properties" count="00" highlight={activeActivity === 'saved-properties'} />
-                        </div>
-                        <div onClick={() => setActiveActivity('recent-searches')}>
-                            <ActivityItem icon={<Search />} label="Recent" subLabel="Searches" count="02" highlight={activeActivity === 'recent-searches'} />
-                        </div>
-                    </div>
-                </div>
-
                 <div className="flex-1 overflow-y-auto pb-4">
-                    {renderActivityContent()}
+                    <div className="p-4 border-b">
+                        <div
+                            className="flex items-center justify-between cursor-pointer sm:cursor-default"
+                            onClick={toggleActivityDropdown}
+                        >
+                            <h3 className="font-semibold text-gray-800 text-lg">My Activity</h3>
+                            <div className="sm:hidden">
+                                {isActivityDropdownOpen ? (
+                                    <ChevronDown className="w-5 h-5 text-gray-600" />
+                                ) : (
+                                    <ChevronRight className="w-5 h-5 text-gray-600" />
+                                )}
+                            </div>
+                        </div>
+                        <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{
+                                height: isActivityDropdownOpen || window.innerWidth >= 640 ? 'auto' : 0,
+                                opacity: isActivityDropdownOpen || window.innerWidth >= 640 ? 1 : 0,
+                            }}
+                            transition={{ duration: 0.2 }}
+                            className="overflow-hidden sm:block"
+                        >
+                            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-3">
+                                <div onClick={() => setActiveActivity('contacted-properties')}>
+                                    <ActivityItem icon={<PhoneCall />} label="Contacted" subLabel="Properties" count="00" highlight={activeActivity === 'contacted-properties'} />
+                                </div>
+                                <div onClick={() => setActiveActivity('seen-properties')}>
+                                    <ActivityItem icon={<Eye />} label="Seen" subLabel="Properties" count="00" highlight={activeActivity === 'seen-properties'} />
+                                </div>
+                                <div onClick={() => setActiveActivity('saved-properties')}>
+                                    <ActivityItem icon={<Star />} label="Saved" subLabel="Properties" count="00" highlight={activeActivity === 'saved-properties'} />
+                                </div>
+                                <div onClick={() => setActiveActivity('recent-searches')}>
+                                    <ActivityItem icon={<Search />} label="Recent" subLabel="Searches" count="02" highlight={activeActivity === 'recent-searches'} />
+                                </div>
+                            </div>
+                        </motion.div>
+                    </div>
+
+                    {/* Conditionally render activity content based on dropdown state in mobile view */}
+                    {(isActivityDropdownOpen || window.innerWidth >= 640) && renderActivityContent()}
 
                     <nav className="p-4 space-y-1">
                         {sidebarMenuItems.map((item) => (
@@ -314,7 +341,11 @@ const UserSidebar = ({ toggleSidebar, isSidebarOpen }) => {
                             </div>
                         ))}
                         {bottomMenuItems.map((item) => (
-                            <div key={item.id} className="flex items-center justify-between p-3 hover:bg-gray-100 rounded-lg cursor-pointer transition-colors" onClick={() => handleNavigate(item.path)}>
+                            <div
+                                key={item.id}
+                                className="flex items-center justify-between p-3 hover:bg-gray-100 rounded-lg cursor-pointer transition-colors"
+                                onClick={() => handleNavigate(item.path)}
+                            >
                                 <div className="flex items-center space-x-3">
                                     {React.cloneElement(item.icon, { className: 'w-5 h-5 text-gray-600' })}
                                     <span className="text-gray-700 font-medium">{item.label}</span>
@@ -336,14 +367,18 @@ const UserSidebar = ({ toggleSidebar, isSidebarOpen }) => {
 };
 
 const ActivityItem = ({ icon, label, subLabel, count, highlight }) => (
-    <div className={`flex flex-col items-center p-1 rounded-md transition-colors border
-    ${highlight ? 'bg-blue-100 border-blue-500' : 'bg-gray-100 border-gray-200'}
-    cursor-pointer h-full text-center`}>
-        <div className={`flex items-center justify-center mb-1 rounded-full
-        ${highlight ? 'bg-blue-200' : 'bg-gray-200'}
-        w-8 h-8 sm:w-10 sm:h-10`}>
+    <div
+        className={`flex flex-col items-center p-1 rounded-md transition-colors border
+        ${highlight ? 'bg-blue-100 border-blue-500' : 'bg-gray-100 border-gray-200'}
+        cursor-pointer h-full text-center`}
+    >
+        <div
+            className={`flex items-center justify-center mb-1 rounded-full
+            ${highlight ? 'bg-blue-200' : 'bg-gray-200'}
+            w-8 h-8 sm:w-10 sm:h-10`}
+        >
             {React.cloneElement(icon, {
-                className: `sm:w-5 sm:h-5 w-4 h-4 ${highlight ? 'text-blue-600' : 'text-gray-600'}`
+                className: `sm:w-5 sm:h-5 w-4 h-4 ${highlight ? 'text-blue-600' : 'text-gray-600'}`,
             })}
         </div>
         <div className="flex-1 flex flex-col justify-center">

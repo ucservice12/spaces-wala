@@ -85,7 +85,7 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4" style={{ backgroundColor: '#f5f5f5' }}>
+    <div className="min-h-screen flex items-center justify-center p-2" style={{ backgroundColor: '#f5f5f5' }}>
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
@@ -103,7 +103,7 @@ const LoginPage = () => {
         </div>
 
         {/* Form Section */}
-        <div className="w-full md:w-1/2 p-8 md:p-10">
+        <div className="w-full md:w-1/2 p-2 md:p-10">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}

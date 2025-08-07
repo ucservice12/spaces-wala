@@ -1,20 +1,19 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import SearchBar from '@/components/search/SearchBar';
 import {
-  TypographyP,
-  TypographyH4,
-  TypographyMuted,
+    TypographyP,
+    TypographyH4,
+    TypographyMuted,
 } from '@/custom/Typography';
 import { Dice6 } from '@/components/icons/Dice6';
 import { User } from '@/components/icons/User';
 import { Grip } from '@/components/icons/Grip';
 import { Blocks } from '@/components/icons/Blocks';
 import { motion, AnimatePresence } from 'framer-motion';
-import originalBackgroundImage from '@/assets/hero/herobgimage.jpeg';
 
-
+// Import all images for preloading
 import heroBuy from '@/assets/hero/herobuy.jpg';
 import hero2 from '@/assets/hero/hero2.jpg';
 import hero3 from '@/assets/hero/hero3.jpg';
@@ -22,30 +21,56 @@ import commercial from '@/assets/hero/commercial.jpg';
 import herobgimage from '@/assets/hero/herobgimage.jpeg';
 import pgliving from '@/assets/hero/pgliving.avif';
 
-
 const TAB_IMAGES = {
     buy: herobgimage,
     rent: hero2,
     sell: hero3,
     commercial: commercial,
-    pg: pgliving.avif,
+    pg: pgliving,
 };
 
 const Hero = () => {
-    // State to hold the current background image URL
     const [backgroundImage, setBackgroundImage] = useState(TAB_IMAGES.buy);
+    const [imagesLoaded, setImagesLoaded] = useState(false);
 
-    // This function will be passed to the SearchBar to update the background
+    useEffect(() => {
+        const imagePromises = Object.values(TAB_IMAGES).map((src) => {
+            return new Promise((resolve, reject) => {
+                const img = new Image();
+                img.src = src;
+                img.onload = resolve;
+                img.onerror = reject;
+            });
+        });
+
+        Promise.all(imagePromises)
+            .then(() => {
+                setImagesLoaded(true);
+            })
+            .catch((error) => {
+                console.error("Error preloading images:", error);
+                setImagesLoaded(true); // Still show content even if some images fail
+            });
+    }, []);
+
     const handleTabChange = (newImageUrl) => {
         setBackgroundImage(newImageUrl);
     };
+
+    if (!imagesLoaded) {
+        return (
+            <div className="flex items-center justify-center min-h-screen bg-gray-900 text-white">
+                <p>Loading...</p>
+            </div>
+        );
+    }
 
     return (
         <div className="relative min-h-screen flex items-center overflow-hidden">
             {/* Background Image with a fade animation */}
             <AnimatePresence>
                 <motion.div
-                    key={backgroundImage} // `key` is essential for AnimatePresence to detect changes
+                    key={backgroundImage}
                     className="absolute inset-0 bg-cover bg-center"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
@@ -54,7 +79,7 @@ const Hero = () => {
                     style={{ backgroundImage: `url('${backgroundImage}')` }}
                 />
             </AnimatePresence>
-            
+
             {/* Dark Overlay */}
             <div className="absolute inset-0 bg-gradient-to-r from-gray-900/80 to-gray-900/40" />
 
@@ -64,27 +89,25 @@ const Hero = () => {
                     <div className="w-full lg:max-w-2xl space-y-6 sm:space-y-8 mt-10 sm:mt-16">
 
                         {/* Heading */}
-                        <motion.h1
+                        <motion.div
                             initial={{ opacity: 0, y: 15 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.6, ease: "easeOut" }}
-                            className="text-white font-bold leading-tight text-[clamp(1.5rem,6vw,3rem)]"
+                            className="space-y-4"
                         >
-                            <p>
-                                Find Your Perfect Home with <span className="text-primary">spaceswala</span>
-                            </p>
-                        </motion.h1>
-
-                        {/* Description */}
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.7, ease: "easeOut", delay: 0.15 }}
-                        >
-                            <TypographyP className="text-white text-[clamp(1rem,2.5vw,1.25rem)]">
-                                Discover properties for buying, renting, or selling across India.
-                                Your dream home is just a search away.
-                            </TypographyP>
+                            <h1 className="text-white font-bold tracking-normal leading-tight text-[clamp(2rem,4vw,2.75rem)]">
+                                Find Your Perfect Home with <span className=" text-primary">spaceswala</span>
+                            </h1>
+                            {/* Description */}
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.7, ease: "easeOut", delay: 0.15 }}
+                            >
+                                <p className="font-rubik text-white text-[clamp(1rem,1.5vw,1.25rem)] font-normal max-w-2xl">
+                                    Discover properties for buying, renting, or selling across India. Your dream home is just a search away.
+                                </p>
+                            </motion.div>
                         </motion.div>
 
                         {/* Search Bar - now with the onTabChange prop */}
@@ -93,9 +116,9 @@ const Hero = () => {
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8, ease: "easeOut", delay: 0.3 }}
                         >
-                            <SearchBar 
-                                className="mt-4 w-full" 
-                                onTabChange={handleTabChange} 
+                            <SearchBar
+                                className="mt-4 w-full"
+                                onTabChange={handleTabChange}
                             />
                         </motion.div>
 

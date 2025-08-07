@@ -1,6 +1,6 @@
 import { Routes, Route, Outlet } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import MainLayout from './components/layout/main/MainLayout';
 import DashboardLayout from './components/layout/DashboardLayout';
 import PrivateRoute from './context/PrivateRoute';
@@ -24,7 +24,6 @@ import PrivacyPage from './pages/PrivacyPage';
 import TestimonialsPage from './pages/TestimonialsPage';
 import PostPropertyForm from './pages/postproperty/PostPropertyForm';
 import RentPageMain from './pages/payrentPage/RentPageMain';
-import Developers from './pages/packages/Developers';
 import Brokers from './pages/packages/Brokers';
 
 import ProfilePage from './pages/dashboardpages/ProfilePage';
@@ -70,31 +69,25 @@ function App() {
           <Route path="privacy" element={<PrivacyPage />} />
           <Route path="testimonials" element={<TestimonialsPage />} />
           <Route path="payrent" element={<RentPageMain />} />
-          <Route path="packages/developers" element={<Developers />} />
-          <Route path="packages/brokers" element={<Brokers />} />
-           <Route path="moblie/profile" element={<Brokers />} />
-          {/* Dashboard Private Routes */}
+          {/* <Route path="packages/brokers" element={<Brokers />} /> */}
+          <Route path="moblie/profile" element={<Brokers />} />
+
+          {/* Dashboard Routes with PrivateRoute protection */}
           <Route path="dashboard" element={<DashboardLayout />}>
-            <Route path="profile" element={<ProfilePage />} />
-            <Route path="my-properties" element={<MyPropertiesPage />} />
-            <Route path="saved" element={<SavedListingsPage />} />
-            <Route path="analytics" element={<AnalyticsPage />} />
-            <Route path="messages" element={<MessagesPage />} />
-            <Route path="settings" element={<SettingsPage />} />
-            <Route path="my-activity" element={<MyActivity />} />
-            <Route path="my-reviews" element={<MyReviewsPage />} />
-           
+            <Route element={<PrivateRoute />}>
+              <Route path="profile" element={<ProfilePage />} />
+              <Route path="my-properties" element={<MyPropertiesPage />} />
+              <Route path="saved" element={<SavedListingsPage />} />
+              <Route path="analytics" element={<AnalyticsPage />} />
+              <Route path="messages" element={<MessagesPage />} />
+              <Route path="settings" element={<SettingsPage />} />
+              <Route path="my-activity" element={<MyActivity />} />
+              <Route path="my-reviews" element={<MyReviewsPage />} />
+            </Route>
           </Route>
           
-          {/* Protected Routes */}
-          <Route
-            element={
-              <PrivateRoute>
-                <Outlet />
-              </PrivateRoute>
-            }
-          >
-            {/* Seller Private Route */}
+          {/* Other Protected Routes */}
+          <Route element={<PrivateRoute />}>
             <Route path="/seller/post-property" element={<PostPropertyForm />} />
           </Route>
 
@@ -102,7 +95,6 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
-     
     </>
   );
 }

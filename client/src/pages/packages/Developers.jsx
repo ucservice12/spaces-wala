@@ -143,6 +143,6 @@ const Developer = () => {
       </section>
     </div>
   );
-};
+ };
 
 export default Developer;
