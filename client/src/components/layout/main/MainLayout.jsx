@@ -13,7 +13,6 @@ const MainLayout = () => {
 
             <Footer />
 
-            {/*  Share menu stays fixed on screen */}
         </div>
     );
 };

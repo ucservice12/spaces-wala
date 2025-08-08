@@ -12,11 +12,8 @@ import {
   TypographyH4,
   TypographyMuted,
   TypographyP,
-  TypographySmall,
 } from '@/custom/Typography';
-import AnimatedHome from '@/components/icons/AnimatedHome';
-import AnimatedBuilding from '@/components/icons/AnimatedBuilding';
-import AnimatedUsers from '@/components/icons/AnimatedUsers';
+
 import image1 from '../assets/image1.svg';
 import image2 from '../assets/image2.svg';
 import image3 from '../assets/image3.svg';
@@ -189,7 +186,7 @@ const HomePage = () => {
       </section>
 
       {/* <div className='mt-28'> */}
-      <RadialShareMenu loacation="popularCitiesSection" className="bg-slate-500 hover:bg-slate-400" />
+      {/* <RadialShareMenu loacation="popularCitiesSection" className="bg-slate-500 hover:bg-slate-400" /> */}
       {/* </div> */}
       {/* Our Services Section */}
       <section className="py-16 bg-gradient-to-br from-blue-50 to-indigo-50">

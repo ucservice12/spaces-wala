@@ -5,14 +5,12 @@ import { motion } from 'framer-motion';
 import { FaFacebookF, FaXTwitter, FaInstagram, FaLinkedinIn } from "react-icons/fa6";
 import { ArrowUp } from 'lucide-react';
 
-// Dummy Card3D wrapper (replace with your actual 3D card component)
 const Card3D = ({ children }) => (
   <div className="p-4 rounded-lg bg-white/5 shadow-md backdrop-blur-lg">
     {children}
   </div>
 );
 
-// Social links array
 const socialLinks = [
   { href: 'https://facebook.com/yourusername', icon: FaFacebookF },
   { href: 'https://twitter.com/yourusername', icon: FaXTwitter },
@@ -20,7 +18,6 @@ const socialLinks = [
   { href: 'https://linkedin.com/in/yourusername', icon: FaLinkedinIn },
 ];
 
-// Scroll to top function
 const scrollToTop = () => {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 };
@@ -33,26 +30,35 @@ const Footer = () => {
         {/* Top Section */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
 
-          {/* Payment Methods */}
-          <div>
-            <h3 className="text-sm font-medium text-gray-300 mb-4 tracking-wider uppercase">Payment Methods</h3>
-            <div className="flex flex-wrap gap-3 mb-6">
-              {['VISA', 'MasterCard', 'PayPal', 'SOFORT', 'VORKASSE', 'Apple Pay'].map((method, idx) => (
-                <div key={idx} className="bg-white rounded px-3 py-2 flex items-center justify-center min-w-[60px] h-10">
-                  <span className={`font-bold text-sm ${method === 'SOFORT' ? 'text-green-600 text-xs'
-                      : method === 'VORKASSE' ? 'text-gray-800 text-xs'
-                        : 'text-blue-600'
-                    }`}>
-                    {method}
-                  </span>
-                </div>
-              ))}
+          {/* Payment + Social */}
+          <div className="flex flex-col gap-6">
+            <div>
+              <h3 className="text-sm font-medium text-gray-300 mb-4 tracking-wider uppercase">Payment Methods</h3>
+              <div className="flex flex-wrap gap-3">
+                {['VISA', 'MasterCard', 'PayPal', 'SOFORT', 'VORKASSE', 'Apple Pay'].map((method, idx) => (
+                  <div
+                    key={idx}
+                    className="bg-white rounded px-3 py-2 flex items-center justify-center min-w-[60px] h-10"
+                  >
+                    <span
+                      className={`font-bold text-sm ${method === 'SOFORT'
+                          ? 'text-green-600 text-xs'
+                          : method === 'VORKASSE'
+                            ? 'text-gray-800 text-xs'
+                            : 'text-blue-600'
+                        }`}
+                    >
+                      {method}
+                    </span>
+                  </div>
+                ))}
+              </div>
             </div>
 
-            {/* Social Media & Copyright */}
+            {/* Social + Scroll */}
             <Card3D>
-              <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-                <div className="flex gap-4">
+              <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-6">
+                <div className="flex gap-4 flex-wrap justify-center">
                   {socialLinks.map((social, index) => {
                     const Icon = social.icon;
                     return (
@@ -76,35 +82,35 @@ const Footer = () => {
                   })}
                 </div>
 
-                <div className="text-center md:text-right">
-                  <p className="text-gray-500 text-sm">
+                <div className="text-center md:text-right text-xs sm:text-sm">
+                  <p className="text-gray-500">
                     © 2025 U Tech (India) Pvt Ltd. All rights reserved.
                   </p>
                 </div>
 
-                {/* Scroll to top button */}
+                {/* Scroll to top */}
                 <motion.button
                   onClick={scrollToTop}
-                  className="w-12 h-12 rounded-full bg-white text-gray-900 flex items-center justify-center hover:bg-gray-200 transition-all"
+                  className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white text-gray-900 flex items-center justify-center hover:bg-gray-200 transition-all"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <ArrowUp size={20} />
+                  <ArrowUp size={18} />
                 </motion.button>
               </div>
             </Card3D>
           </div>
 
-          {/* Logo Section */}
-          <div className="flex flex-col sm:flex-row sm:items-center gap-4">
-            <Link to="/">
+          {/* Logo + Tagline */}
+          <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 text-center sm:text-left">
+            <Link to="/" className="flex justify-center">
               <img
                 src="/logo.png"
                 alt="logo"
-                className="sm:h-24 h-20"
+                className="h-16 sm:h-20 md:h-24 object-contain"
               />
             </Link>
-            <div className="text-gray-400 text-sm">
+            <div className="text-gray-400 text-sm leading-relaxed">
               Unlock a new chapter with the perfect home. <br />
               <span className="text-gray-300 font-semibold">Start Fresh, Live Fully</span>
             </div>
@@ -112,7 +118,7 @@ const Footer = () => {
         </div>
 
         {/* Middle Section */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
 
           {/* Company */}
           <div>
@@ -167,7 +173,7 @@ const Footer = () => {
           {/* Social Media */}
           <div>
             <h3 className="text-sm font-medium text-gray-300 mb-4 tracking-wider uppercase">Social Media</h3>
-            <div className="flex gap-4 mb-6">
+            <div className="flex gap-4 flex-wrap">
               <FaFacebookF className="text-white hover:text-blue-500 text-xl cursor-pointer" />
               <FaXTwitter className="text-white hover:text-black text-xl cursor-pointer" />
               <FaInstagram className="text-white hover:text-pink-500 text-xl cursor-pointer" />
@@ -185,11 +191,11 @@ const Footer = () => {
               <input
                 type="email"
                 placeholder="E-Mail Address"
-                className="flex-1 px-4 py-2 bg-transparent border border-gray-600 text-white placeholder-gray-400 focus:outline-none focus:border-white"
+                className="flex-1 px-4 py-2 bg-transparent border border-gray-600 text-white placeholder-gray-400 focus:outline-none focus:border-white text-sm"
               />
               <Button
                 variant="outline"
-                className="px-6 py-2 border-gray-600 text-black hover:bg-white hover:text-gray-800"
+                className="px-4 sm:px-6 py-2 border-gray-600 text-black hover:bg-white hover:text-gray-800 text-sm"
               >
                 SEND
               </Button>
@@ -198,7 +204,7 @@ const Footer = () => {
         </div>
 
         {/* Bottom Section */}
-        <div className="border-t border-gray-700 pt-6 text-center text-sm text-gray-400">
+        <div className="border-t border-gray-700 pt-6 text-center text-xs sm:text-sm text-gray-400">
           <p className="mb-2">
             SPACESWALA.COM <a href="#" className="underline hover:text-white">India</a>
           </p>
