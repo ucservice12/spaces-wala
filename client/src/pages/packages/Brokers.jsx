@@ -7,29 +7,32 @@ import { motion } from 'framer-motion';
 const PricingSection = () => {
   const plans = [
     {
-      name: 'Housing Expert Pro',
+      name: 'SpacesWala Expert Pro',
       badge: 'Recommended',
       badgeColor: 'bg-fuchsia-600',
       features: [
-        'Highest visibility across all listing categories',
-        'Reusable slots for multiple listings',
-        'Maximum impressions with larger cards',
-        '"Housing Expert Pro" and "Locality Champion" tags',
-
-
+        'Highest visibility across all listing categories in every locality',
+        'Reusable slots - allowing you to post multiple listings',
+        'Have maximum impressions of the customers with larger cards and differentiated design',
+        'Highlight your brand with "Housing Expert Pro" tag along with "Locality Champion" tag',
+        'Visibility on Home Page and Search Result Page',
+        'Access to on-ground property verification in Tier-I cities',
+        'Unlimited self-verification of properties',
+        'Unique feature to showcase 3 properties in one listing'
       ]
     },
     {
-      name: 'Housing Expert',
+      name: 'SpacesWala Expert',
       badge: 'Enhanced',
       badgeColor: 'bg-orange-500',
       features: [
-        'Preferential Visibility in Search Results',
-        'Reusable slots for multiple listings',
-        '"Housing Expert" and "Trusted Agent" tags',
-        'Home Page visibility',
-        'On-ground property verification',
-
+        'Preferential Visibility in Search Results in Every Locality you Deal',
+        'Reusable slots - allowing you to post multiple listings',
+        'Highlight your brand with "Housing Expert", "Authentic Listing" and "Trusted Agent" tag',
+        'Visibility on Home Page and Search Result Page',
+        'Access to on-ground property verification in Tier-I cities',
+        'Unlimited self-verification of properties',
+        'Unique feature to showcase 3 properties in one listing'
       ]
     },
     {
@@ -37,15 +40,15 @@ const PricingSection = () => {
       badge: 'Value',
       badgeColor: 'bg-green-600',
       features: [
-        'Reusable slots for multiple listings',
-        '"Housing Prime Agent" tag',
-        'On-ground property verification',
-        'Unlimited self-verification',
-        'Dedicated Agent Micro-Site'
+        'Reusable slots - allowing you to post multiple listings',
+        'Highlight your brand with "Housing Prime Agent" tag',
+        'Access to on-ground property verification in Tier-I cities',
+        'Unlimited self-verification of properties',
+        'Dedicate Agent Micro-Site'
       ]
     },
     {
-      name: 'Housing Select',
+      name: 'SpacesWala Select',
       badge: 'Starter',
       badgeColor: 'bg-gray-500',
       features: [
@@ -98,7 +101,7 @@ const PricingSection = () => {
 
   const videoProducts = [
     {
-      name: 'Housing Shorts',
+      name: 'SpacesWala Shorts',
       features: [
         'Interactive Property tour videos',
         'AI-guided narration',
@@ -279,15 +282,12 @@ const Broker = () => {
   return (
     <div className="w-full overflow-hidden bg-slate-50 font-sans">
       {/* Hero Section */}
-      <section className="relative py-40 text-center px-4 overflow-hidden">
-        <div
-          className="absolute inset-0 bg-cover bg-center animate-pan"
-          style={{
-            backgroundImage: `url('https://i.pinimg.com/1200x/b3/86/6b/b3866b72b32ea38037d8bb4e9338615b.jpg')`,
-            animation: 'pan 30s linear infinite alternate',
-          }}
-        ></div>
-        <div className="absolute inset-0 bg-slate-900 opacity-60"></div>
+      <section
+        className="relative py-48 text-center px-4 overflow-hidden"
+        style={{ backgroundImage: `url('https://i.pinimg.com/1200x/b3/86/6b/b3866b72b32ea38037d8bb4e9338615b.jpg')`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+      >
+        <div className="absolute inset-0 bg-black opacity-60"></div>
+
         <motion.div
           className="relative z-10 text-white max-w-4xl mx-auto"
           initial={{ opacity: 0, scale: 0.95 }}

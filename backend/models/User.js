@@ -3,12 +3,12 @@ import mongoose from "mongoose";
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
-        default: "User",
-        unique: true,
+        default: "user",
     },
     email: {
         type: String,
         unique: true,
+        sparse: true,
     },
     mobile: {
         type: String,
@@ -22,11 +22,8 @@ const userSchema = new mongoose.Schema({
     lastLogin: {
         type: Date,
     },
-},
-    {
-        timestamps: true,
-
-    }
-)
+}, {
+    timestamps: true,
+});
 
 export default mongoose.model("User", userSchema);

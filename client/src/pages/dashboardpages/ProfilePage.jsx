@@ -45,18 +45,18 @@ const ProfileCard = () => {
       {/* Profile Header */}
       <div className="text-center mb-8">
         <div className="w-24 h-24 mx-auto mb-4 rounded-full overflow-hidden bg-gradient-to-br from-white-500 to-black">
-          <img 
-            src="https://c.housingcdn.com/demand/s/client/common/assets/tenant-avatar.cedc2f44.png"    
+          <img
+            src="https://c.SpacesWalacdn.com/demand/s/client/common/assets/tenant-avatar.cedc2f44.png"
             className="w-full h-full object-cover"
           />
         </div>
-        <motion.h1 
+        <motion.h1
           className="text-2xl font-bold text-gray-900 mb-1"
           layout
         >
           {isEditing ? editData.name : profileData.name}
         </motion.h1>
-        <motion.p 
+        <motion.p
           className="text-gray-600"
           layout
         >

@@ -1,77 +1,120 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
     FaInstagram,
-    FaTwitter,
     FaWhatsapp,
-    FaShareAlt,
     FaTelegram,
     FaLinkedin,
+    FaShareAlt,
+    FaFacebook,
 } from "react-icons/fa";
+// import { FaXTwitter } from "react-icons/fa6";
+import { tv } from "tailwind-variants";
+import { twMerge } from "tailwind-merge";
 
-const socialIcons = [
-    {
-        label: "Instagram",
-        icon: <FaInstagram />,
-        link: "https://instagram.com",
-        color: "bg-pink-500",
-    },
-    // {
-    //     label: "Twitter",
-    //     icon: <FaTwitter />,
-    //     link: "https://twitter.com",
-    //     color: "bg-blue-400",
-    // },
-    {
-        label: "WhatsApp",
-        icon: <FaWhatsapp />,
-        link: "https://wa.me/your-number",
-        color: "bg-green-500",
-    },
-    {
-        label: "Telegram",
-        icon: <FaTelegram />,
-        link: "https://telegram.me/your-id",
-        color: "bg-blue-500",
-    },
-    {
-        label: "LinkedIn",
-        icon: <FaLinkedin />,
-        link: "https://linkedin.com",
-        color: "bg-blue-600",
-    },
-];
+const button = tv({
+    base: "z-10 w-9 h-9 bg-white/30 backdrop-blur-md text-white border border-white/20 rounded-full shadow-2xl flex items-center justify-center hover:bg-white/20 transition-colors duration-300",
+});
 
-const RadialShareMenu = () => {
+const positionMap = {
+    "bottom-right": "bottom-6 right-1",
+    "bottom-left": "bottom-6 left-4",
+    "top-right": "top-6 right-4",
+    "top-left": "top-6 left-4",
+    "center": "top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2",
+};
+
+const RadialShareMenu = ({ visible = true, position = "bottom-right", className = "", loacation }) => {
     const [open, setOpen] = useState(false);
-    const radius = 80;
+    const radius = 70;
     const menuRef = useRef(null);
+    // const location = useLocation();
+    console.log(loacation)
 
-    // Close on outside click
+    // Normalize route path
+    // const path = location.pathname.replace(/^\/|\/$/g, "") || "home";
+    // const pageId = path.toLowerCase();
+
+    // Backend meta route for social previews
+    const backendShareUrl = `https://api.spaceswala.com/api/share/${loacation}`;
+    const shareText = encodeURIComponent("Check this out on Spaceswala!");
+    const encodedUrl = encodeURIComponent(backendShareUrl);
+
+    const socialIcons = [
+
+        {
+            label: "Facebook",
+            icon: <FaFacebook />,
+            link: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`,
+            color: "bg-blue-700",
+        },
+        {
+            label: "WhatsApp",
+            icon: <FaWhatsapp />,
+            link: `https://wa.me/?text=${shareText}%20${encodedUrl}`,
+            color: "bg-green-500",
+        },
+
+        {
+            label: "LinkedIn",
+            icon: <FaLinkedin />,
+            link: `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`,
+            color: "bg-blue-600",
+        },
+
+    ];
+
     useEffect(() => {
-        const handleClickOutside = (event) => {
-            if (menuRef.current && !menuRef.current.contains(event.target)) {
+        const handleClickOutside = (e) => {
+            if (menuRef.current && !menuRef.current.contains(e.target)) {
                 setOpen(false);
             }
         };
-
         document.addEventListener("mousedown", handleClickOutside);
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, []);
 
+    // Don't render anything if not visible
+    if (!visible) return null;
+
+    const getIconPosition = (index) => {
+        let x = 0;
+        let y = 0;
+        switch (index) {
+            case 0: // Facebook (Top-left)
+                // Angle is 135 degrees (3π/4 radians)
+                x = radius * Math.cos(3 * Math.PI / 4);
+                y = radius * Math.sin(3 * Math.PI / 4);
+                break;
+            case 1: // WhatsApp (Center-left)
+                // Angle is 180 degrees (π radians)
+                x = radius * Math.cos(Math.PI);
+                y = radius * Math.sin(Math.PI);
+                break;
+            case 2: // LinkedIn (Bottom-left)
+                // Angle is 225 degrees (5π/4 radians)
+                x = radius * Math.cos(5 * Math.PI / 4);
+                y = radius * Math.sin(5 * Math.PI / 4);
+                break;
+            default:
+                break;
+        }
+        return { x, y };
+    };
+
     return (
         <div
-            className="fixed bottom-6 right-0 z-50 w-[120px] h-[180px] flex items-center justify-center"
             ref={menuRef}
+            // Adjust container size for the new left-side layout
+            className={`absolute z-10 w-[100px] h-[180px] flex items-center justify-center ${positionMap[position] || positionMap["bottom-right"]
+                }`}
         >
             {socialIcons.map((item, index) => {
-                const angle = -Math.PI / 2 - (index / (socialIcons.length - 1)) * Math.PI;
-                const x = radius * Math.cos(angle);
-                const y = radius * Math.sin(angle);
-
+                const { x, y } = getIconPosition(index);
                 return (
                     <motion.a
-                        key={index}
+                        key={item.label}
                         href={item.link}
                         target="_blank"
                         rel="noopener noreferrer"
@@ -87,17 +130,20 @@ const RadialShareMenu = () => {
                             damping: 20,
                             delay: index * 0.04,
                         }}
-                        className={`absolute text-white w-12 h-12 flex items-center justify-center rounded-full shadow-xl hover:scale-110 transition-transform duration-200 ${item.color}`}
-                        title={item.label}
+                        className={`absolute text-white w-11 h-11 flex items-center justify-center rounded-full shadow-xl hover:scale-110 transition-transform duration-200 ${item.color}`}
+                        title={`Share on ${item.label}`}
+                        aria-label={`Share on ${item.label}`}
                     >
                         {item.icon}
                     </motion.a>
                 );
             })}
 
+
+
             <button
                 onClick={() => setOpen((prev) => !prev)}
-                className="z-10 w-12 h-12 md:bg-blue-400 backdrop-blur-2xl bg-white/30 text-white border border-white/20 rounded-full shadow-2xl flex items-center justify-center md:hover:bg-white/20 transition-colors duration-300"
+                className={twMerge(button(), className)}
                 aria-label="Toggle Share Menu"
             >
                 <FaShareAlt size={22} />

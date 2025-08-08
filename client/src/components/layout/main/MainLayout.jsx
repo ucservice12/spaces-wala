@@ -1,7 +1,6 @@
 import { Outlet } from 'react-router-dom';
 import Navbar from '../header/Navbar';
 import Footer from '../footer/Footer';
-import RadialShareMenu from '@/custom/RadialShareMenu';
 
 const MainLayout = () => {
     return (
@@ -15,7 +14,6 @@ const MainLayout = () => {
             <Footer />
 
             {/*  Share menu stays fixed on screen */}
-            <RadialShareMenu />
         </div>
     );
 };

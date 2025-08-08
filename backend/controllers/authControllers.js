@@ -53,10 +53,11 @@ export const login = async (req, res) => {
         // Set token in cookie
         res.cookie('token', token, {
             httpOnly: true,
-            secure: process.env.NODE_ENV === 'production', // true in production (HTTPS)
-            // sameSite: 'Lax', // or 'None' if frontend is on a different domain with HTTPS
+            secure: process.env.NODE_ENV === 'production', // only sent over HTTPS
+            sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax',
             maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
         });
+
 
         res.status(200).json({
             success: true,

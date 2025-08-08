@@ -2,391 +2,356 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
 import {
-    User, X, Home, Search, Star, ChevronRight, ChevronDown, HelpCircle, Download, CreditCard, Lightbulb, Shield, Bell, CheckCircle, PhoneCall, Building, Newspaper, BarChart, FileText, Briefcase, LandPlot, Eye, Folder, BookOpen, Users, Bookmark
+  User, X, Home, Search, Star, ChevronRight, ChevronDown, HelpCircle, Download, CreditCard, Lightbulb, Shield, Bell, CheckCircle, PhoneCall, Building, Newspaper, BarChart, FileText, Briefcase, LandPlot, Eye, Folder, BookOpen, Users, Bookmark
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 // Placeholder data for the Recent Searches section
 const recentSearches = [
-    { id: 1, label: 'Buy, Wakad ,Any BHK, Any Price' },
-    { id: 2, label: 'Buy, Ravet ,Any BHK, Any Price' },
+  { id: 1, label: 'Buy, Wakad ,Any BHK, Any Price' },
+  { id: 2, label: 'Buy, Ravet ,Any BHK, Any Price' },
 ];
 
 const sidebarMenuItems = [
-    { id: 'zero-brokerage', icon: <Home />, label: 'Zero Brokerage Properties', hasSubmenu: false, path: '/zero-brokerage' },
-    { id: 'transactions', icon: <CreditCard />, label: 'My Transactions', hasSubmenu: false, path: '/my-transactions' },
-    { id: 'reviews', icon: <Star />, label: 'My Reviews', badge: 'NEW', hasSubmenu: false, path: '/dashboard/my-reviews' },
-    {
-        id: 'quick-links',
-        icon: <Search />,
-        label: 'Quick Links',
-        hasSubmenu: true,
-        submenuItems: [
-            { id: 'ql-home', icon: <Home />, label: 'Home', path: '/' },
-            { id: 'ql-post', icon: <FileText />, label: 'Post Properties', path: '/post-properties' },
-            { id: 'ql-news', icon: <Newspaper />, label: 'News', path: '/news' },
-            { id: 'ql-research', icon: <BarChart />, label: 'Research', path: '/research' },
-            { id: 'ql-pay', icon: <CreditCard />, label: 'Pay on Credit', path: '/pay-on-credit' },
-            { id: 'ql-protect', icon: <Shield />, label: 'Housing Protect', badge: 'NEW', path: '/housing-protect' },
-        ],
-    },
-    { id: 'Saved', icon: <Bookmark />, label: 'Saved', hasSubmenu: false, path: '/dashboard/saved' },
-    { id: 'Pay Rent', icon: <LandPlot />, label: 'Pay Rent', hasSubmenu: false, path: '/payrent' },
-    {
-        id: 'residential',
-        icon: <Home />,
-        label: 'Residential Packages',
-        hasSubmenu: true,
-        submenuItems: [
-            { id: 'rp-developers', icon: <User />, label: 'For Developers', path: '/packages/developers' },
-            { id: 'rp-brokers', icon: <Briefcase />, label: 'For Brokers', path: '/packages/brokers' },
-            { id: 'rp-owners', icon: <User />, label: 'For Owners', path: '/residential/owners' },
-            { id: 'rp-premium', icon: <Star />, label: 'Housing Premium', path: '/housing-premium' },
-        ],
-    },
-    {
-        id: 'housing-edge',
-        icon: <Lightbulb />,
-        label: 'Housing Edge',
-        hasSubmenu: true,
-        submenuItems: [
-            { id: 'he-credit', icon: <CreditCard />, label: 'Pay on Credit', path: '/housing-edge/pay-on-credit' },
-            { id: 'he-premium', icon: <Star />, label: 'Housing Premium', path: '/housing-edge/premium' },
-            { id: 'he-loans', icon: <Home />, label: 'Home Loans', path: '/housing-edge/home-loans' },
-            { id: 'he-protect', icon: <Shield />, label: 'Housing Protect', badge: 'NEW', path: '/housing-edge/protect' },
-            { id: 'he-rent', icon: <FileText />, label: 'Rent Receipt...', path: '/housing-edge/rent-receipt' },
-        ],
-    },
-    {
-        id: 'services',
-        icon: <Shield />,
-        label: 'Services',
-        hasSubmenu: true,
-        submenuItems: [
-            { id: 's-buy', icon: <Home />, label: 'Buy Properties', path: '/services/buy' },
-            { id: 's-rent', icon: <Home />, label: 'Rent Properties', path: '/services/rent' },
-            { id: 's-pg', icon: <Users />, label: 'PG/Co-Living', path: '/services/pg' },
-            { id: 's-applyloan', icon: <CreditCard />, label: 'Apply for Home Loan', path: '/services/apply-loan' },
-            { id: 's-emi', icon: <BarChart />, label: 'EMI Calculator', path: '/services/emi-calculator' },
-            { id: 's-value', icon: <Star />, label: 'Property Value', path: '/services/property-value' },
-        ],
-    },
-    {
-        id: 'housing-advice',
-        icon: <Lightbulb />,
-        label: 'Housing Advice',
-        hasSubmenu: true,
-        submenuItems: [{ id: 'ha-buying', icon: <BookOpen />, label: 'Buying Guide', path: '/housing-advice/buying-guide' }],
-    },
+  { id: 'zero-brokerage', icon: <Home />, label: 'Zero Brokerage Properties', hasSubmenu: false, path: '/zero-brokerage' },
+  { id: 'transactions', icon: <CreditCard />, label: 'My Transactions', hasSubmenu: false, path: '/my-transactions' },
+  { id: 'reviews', icon: <Star />, label: 'My Reviews', badge: 'NEW', hasSubmenu: false, path: '/dashboard/my-reviews' },
+  {
+    id: 'quick-links',
+    icon: <Search />,
+    label: 'Quick Links',
+    hasSubmenu: true,
+    submenuItems: [
+      { id: 'ql-home', icon: <Home />, label: 'Home', path: '/' },
+      { id: 'ql-post', icon: <FileText />, label: 'Post Properties', path: '/post-properties' },
+      { id: 'ql-news', icon: <Newspaper />, label: 'News', path: '/news' },
+      { id: 'ql-research', icon: <BarChart />, label: 'Research', path: '/research' },
+      { id: 'ql-pay', icon: <CreditCard />, label: 'Pay on Credit', path: '/pay-on-credit' },
+      { id: 'ql-protect', icon: <Shield />, label: 'Housing Protect', badge: 'NEW', path: '/housing-protect' },
+    ],
+  },
+  { id: 'Saved', icon: <Bookmark />, label: 'Saved', hasSubmenu: false, path: '/dashboard/saved' },
+  { id: 'Pay Rent', icon: <LandPlot />, label: 'Pay Rent', hasSubmenu: false, path: '/payrent' },
+  {
+    id: 'residential',
+    icon: <Home />,
+    label: 'Residential Packages',
+    hasSubmenu: true,
+    submenuItems: [
+      { id: 'rp-developers', icon: <User />, label: 'For Developers', path: '/packages/developers' },
+      { id: 'rp-brokers', icon: <Briefcase />, label: 'For Brokers', path: '/packages/brokers' },
+      { id: 'rp-owners', icon: <User />, label: 'For Owners', path: '/residential/owners' },
+      { id: 'rp-premium', icon: <Star />, label: 'Housing Premium', path: '/housing-premium' },
+    ],
+  },
+  {
+    id: 'housing-edge',
+    icon: <Lightbulb />,
+    label: 'Housing Edge',
+    hasSubmenu: true,
+    submenuItems: [
+      { id: 'he-credit', icon: <CreditCard />, label: 'Pay on Credit', path: '/housing-edge/pay-on-credit' },
+      { id: 'he-premium', icon: <Star />, label: 'Housing Premium', path: '/housing-edge/premium' },
+      { id: 'he-loans', icon: <Home />, label: 'Home Loans', path: '/housing-edge/home-loans' },
+      { id: 'he-protect', icon: <Shield />, label: 'Housing Protect', badge: 'NEW', path: '/housing-edge/protect' },
+      { id: 'he-rent', icon: <FileText />, label: 'Rent Receipt...', path: '/housing-edge/rent-receipt' },
+    ],
+  },
+  {
+    id: 'services',
+    icon: <Shield />,
+    label: 'Services',
+    hasSubmenu: true,
+    submenuItems: [
+      { id: 's-buy', icon: <Home />, label: 'Buy Properties', path: '/services/buy' },
+      { id: 's-rent', icon: <Home />, label: 'Rent Properties', path: '/services/rent' },
+      { id: 's-pg', icon: <Users />, label: 'PG/Co-Living', path: '/services/pg' },
+      { id: 's-applyloan', icon: <CreditCard />, label: 'Apply for Home Loan', path: '/services/apply-loan' },
+      { id: 's-emi', icon: <BarChart />, label: 'EMI Calculator', path: '/services/emi-calculator' },
+      { id: 's-value', icon: <Star />, label: 'Property Value', path: '/services/property-value' },
+    ],
+  },
+  {
+    id: 'housing-advice',
+    icon: <Lightbulb />,
+    label: 'Housing Advice',
+    hasSubmenu: true,
+    submenuItems: [{ id: 'ha-buying', icon: <BookOpen />, label: 'Buying Guide', path: '/housing-advice/buying-guide' }]
+  },
 ];
 
 const bottomMenuItems = [
-    { id: 'unsubscribe', icon: <Bell />, label: 'Unsubscribe Alerts', path: '/unsubscribe' },
-    { id: 'fraud', icon: <Shield />, label: 'Report a Fraud', path: '/report-fraud' },
+  { id: 'unsubscribe', icon: <Bell />, label: 'Unsubscribe Alerts', path: '/unsubscribe' },
+  { id: 'fraud', icon: <Shield />, label: 'Report a Fraud', path: '/report-fraud' },
 ];
 
 const UserSidebar = ({ toggleSidebar, isSidebarOpen }) => {
-    const [expandedMenus, setExpandedMenus] = useState({});
-    const [activeActivity, setActiveActivity] = useState('contacted-properties');
-    const [isActivityDropdownOpen, setIsActivityDropdownOpen] = useState(false); // State for dropdown
-    const navigate = useNavigate();
+  const [expandedMenus, setExpandedMenus] = useState({});
+  const [activeActivity, setActiveActivity] = useState('contacted-properties');
+  const navigate = useNavigate();
 
-    const toggleMenu = (menuId) => {
-        setExpandedMenus((prev) => ({
-            ...prev,
-            [menuId]: !prev[menuId],
-        }));
-    };
+  const toggleMenu = (menuId) => {
+    setExpandedMenus((prev) => ({
+      ...prev,
+      [menuId]: !prev[menuId],
+    }));
+  };
 
-    const toggleActivityDropdown = () => {
-        setIsActivityDropdownOpen((prev) => !prev);
-    };
+  const handleLogin = () => {
+    toggleSidebar();
+    navigate('/login');
+  };
 
-    const handleLogin = () => {
-        toggleSidebar();
-        navigate('/login');
-    };
+  // New handler for navigation
+  const handleNavigate = (path) => {
+    if (path) {
+      toggleSidebar();
+      navigate(path);
+    }
+  };
 
-    const handleNavigate = (path) => {
-        if (path) {
-            toggleSidebar();
-            navigate(path);
-        }
-    };
+  const sidebarVariants = {
+    open: { x: 0 },
+    closed: { x: '100%' },
+  };
 
-    const sidebarVariants = {
-        open: { x: 0 },
-        closed: { x: '100%' },
-    };
+  const backdropVariants = {
+    open: { opacity: 1, display: 'block' },
+    closed: { opacity: 0, transitionEnd: { display: 'none' } },
+  };
 
-    const backdropVariants = {
-        open: { opacity: 1, display: 'block' },
-        closed: { opacity: 0, transitionEnd: { display: 'none' } },
-    };
-
-    const renderActivityContent = () => {
-        switch (activeActivity) {
-            case 'seen-properties':
-                return (
-                    <div className="flex flex-col items-center p-6">
-                        <img
-                            src="https://c.housingcdn.com/demand/s/client/common/assets/fallback.3b935c39.svg"
-                            alt="Start new search illustration"
-                            className="w-full md:w-2/3 mb-6"
-                        />
-                        <Button className="w-full bg-blue-100 text-blue-600 hover:bg-blue-200 rounded-lg py-3 font-semibold">
-                            Start new search
-                        </Button>
-                    </div>
-                );
-            case 'recent-searches':
-                return (
-                    <div className="p-4">
-                        <ul className="space-y-3">
-                            {recentSearches.map((search) => (
-                                <li key={search.id} className="flex items-center justify-between p-3 bg-gray-50 hover:bg-gray-100 rounded-lg cursor-pointer transition-colors">
-                                    <div className="flex items-center space-x-3">
-                                        <Search className="w-4 h-4 text-gray-500" />
-                                        <span className="text-sm font-medium text-gray-700">{search.label}</span>
-                                    </div>
-                                    <ChevronRight className="w-4 h-4 text-gray-400" />
-                                </li>
-                            ))}
-                        </ul>
-                        <p className="text-sm font-semibold text-gray-800 mt-4 px-3">
-                            {recentSearches.length} Recent Searches
-                        </p>
-                    </div>
-                );
-            case 'contacted-properties':
-            case 'saved-properties':
-            default:
-                const loginMessage = activeActivity === 'contacted-properties' ? 'view your Recent Activity' : 'save your Recent Activity';
-                return (
-                    <div className="flex flex-col items-center p-6">
-                        <img
-                            src="https://c.housingcdn.com/demand/s/client/common/assets/fallback.3b935c39.svg"
-                            alt="No activity"
-                            className="w-full md:w-2/3 mb-6"
-                        />
-                        <Button className="w-full bg-blue-600 text-white hover:bg-blue-700 rounded-lg py-3 text-sm flex items-center justify-center" onClick={handleLogin}>
-                            Login to {loginMessage}
-                            <ChevronRight className="ml-2 w-4 h-4" />
-                        </Button>
-                    </div>
-                );
-        }
-    };
-
-    return (
-        <>
-            <motion.div
-                className="fixed inset-0 bg-black bg-opacity-50 z-50"
-                initial="closed"
-                animate={isSidebarOpen ? 'open' : 'closed'}
-                variants={backdropVariants}
-                onClick={toggleSidebar}
+  const renderActivityContent = () => {
+    switch (activeActivity) {
+      case 'seen-properties':
+        return (
+          <div className="flex flex-col items-center p-6">
+            <img
+              src="https://c.housingcdn.com/demand/s/client/common/assets/fallback.3b935c39.svg"
+              alt="Start new search illustration"
+              className="w-full md:w-2/3 mb-6"
             />
+            <Button className="w-full bg-blue-100 text-blue-600 hover:bg-blue-200 rounded-lg py-3 font-semibold">
+              Start new search
+            </Button>
+          </div>
+        );
+      case 'recent-searches':
+        return (
+          <div className="p-4">
+            <ul className="space-y-3">
+              {recentSearches.map((search) => (
+                <li key={search.id} className="flex items-center justify-between p-3 bg-gray-50 hover:bg-gray-100 rounded-lg cursor-pointer transition-colors">
+                  <div className="flex items-center space-x-3">
+                    <Search className="w-4 h-4 text-gray-500" />
+                    <span className="text-sm font-medium text-gray-700">{search.label}</span>
+                  </div>
+                  <ChevronRight className="w-4 h-4 text-gray-400" />
+                </li>
+              ))}
+            </ul>
+            <p className="text-sm font-semibold text-gray-800 mt-4 px-3">
+              {recentSearches.length} Recent Searches
+            </p>
+          </div>
+        );
+      case 'contacted-properties':
+      case 'saved-properties':
+      default:
+        const loginMessage = activeActivity === 'contacted-properties' ? 'view your Recent Activity' : 'save your Recent Activity';
+        return (
+          <div className="flex flex-col items-center p-6">
+            <img
+              src="https://c.housingcdn.com/demand/s/client/common/assets/fallback.3b935c39.svg"
+              alt="No activity"
+              className="w-full md:w-2/3 mb-6"
+            />
+            <Button className="w-full bg-blue-600 text-white hover:bg-blue-700 rounded-lg py-3 text-sm flex items-center justify-center" onClick={handleLogin}>
+              Login to {loginMessage}
+              <ChevronRight className="ml-2 w-4 h-4" />
+            </Button>
+          </div>
+        );
+    }
+  };
+  return (
+    <>
+      <motion.div
+        className="fixed inset-0 bg-black bg-opacity-50 z-50"
+        initial="closed"
+        animate={isSidebarOpen ? 'open' : 'closed'}
+        variants={backdropVariants}
+        onClick={toggleSidebar}
+      />
 
-            <motion.div
-                className="fixed top-0 right-0 h-full w-[24rem] max-w-sm sm:max-w-md md:max-w-lg bg-white shadow-lg z-50 flex flex-col"
-                initial="closed"
-                animate={isSidebarOpen ? 'open' : 'closed'}
-                variants={sidebarVariants}
-                transition={{ duration: 0.3, ease: 'easeInOut' }}
+      <motion.div
+        className="fixed top-0 right-0 h-full w-[24rem] max-w-sm sm:max-w-md md:max-w-lg bg-white shadow-lg z-50 flex flex-col"
+        initial="closed"
+        animate={isSidebarOpen ? 'open' : 'closed'}
+        variants={sidebarVariants}
+        transition={{ duration: 0.3, ease: 'easeInOut' }}
+      >
+        {/* Sidebar Header */}
+        <div className="p-4 md:p-4 border-b bg-gradient-to-r from-blue-700 to-blue-900 text-white relative">
+          <div className="flex items-start justify-between">
+            <div className="flex items-start space-x-4">
+              <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center flex-shrink-0">
+                <User className="w-8 h-8 text-blue-500" />
+              </div>
+              <div className="flex-1">
+                <p className="font-semibold text-2xl">Hello 👋</p>
+                <div className="mt-2 space-y-1">
+                  <p className="flex items-center space-x-2 text-sm text-white/90">
+                    <CheckCircle className="w-4 h-4 text-green-400" />
+                    <span>Easy Contact with sellers</span>
+                  </p>
+                  <p className="flex items-center space-x-2 text-sm text-white/90">
+                    <CheckCircle className="w-4 h-4 text-green-400" />
+                    <span>Personalized experience</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Login Button */}
+            <Button
+              onClick={handleLogin}
+              className="bg-blue-500 text-white hover:bg-blue-600 px-2 py-2 rounded-md font-semibold text-sm mt-9"
             >
-                {/* Sidebar Header */}
-                <div className="p-4 md:p-4 border-b bg-gradient-to-r from-blue-700 to-blue-900 text-white relative">
-                    <div className="flex items-start justify-between">
-                        <div className="flex items-start space-x-4">
-                            <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center flex-shrink-0">
-                                <User className="w-8 h-8 text-blue-500" />
-                            </div>
-                            <div className="flex-1">
-                                <p className="font-semibold text-2xl">Hello 👋</p>
-                                <div className="mt-2 space-y-1">
-                                    <p className="flex items-center space-x-2 text-sm text-white/90">
-                                        <CheckCircle className="w-4 h-4 text-green-400" />
-                                        <span>Easy Contact with sellers</span>
-                                    </p>
-                                    <p className="flex items-center space-x-2 text-sm text-white/90">
-                                        <CheckCircle className="w-4 h-4 text-green-400" />
-                                        <span>Personalized experience</span>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
+              Login
+            </Button>
+          </div>
 
-                        <Button
-                            onClick={handleLogin}
-                            className="bg-blue-500 text-white hover:bg-blue-600 px-2 py-2 rounded-md font-semibold text-sm mt-9"
-                        >
-                            Login
-                        </Button>
-                    </div>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={toggleSidebar}
+            className="absolute top-4 right-4 text-white hover:bg-white/20 p-1 rounded-full"
+          >
+            <X className="w-5 h-5" />
+          </Button>
+        </div>
 
-                    <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={toggleSidebar}
-                        className="absolute top-4 right-4 text-white hover:bg-white/20 p-1 rounded-full"
-                    >
-                        <X className="w-5 h-5" />
-                    </Button>
+        {/* My Activity Section */}
+        <div className="p-4 border-b">
+          <h3 className="font-semibold text-gray-800 text-lg mb-3">My Activity</h3>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+            <div onClick={() => setActiveActivity('contacted-properties')}>
+              <ActivityItem icon={<PhoneCall />} label="Contacted" subLabel="Properties" count="00" highlight={activeActivity === 'contacted-properties'} />
+            </div>
+            <div onClick={() => setActiveActivity('seen-properties')}>
+              <ActivityItem icon={<Eye />} label="Seen" subLabel="Properties" count="00" highlight={activeActivity === 'seen-properties'} />
+            </div>
+            <div onClick={() => setActiveActivity('saved-properties')}>
+              <ActivityItem icon={<Star />} label="Saved" subLabel="Properties" count="00" highlight={activeActivity === 'saved-properties'} />
+            </div>
+            <div onClick={() => setActiveActivity('recent-searches')}>
+              <ActivityItem icon={<Search />} label="Recent" subLabel="Searches" count="02" highlight={activeActivity === 'recent-searches'} />
+            </div>
+          </div>
+        </div>
+
+        <div className="flex-1 overflow-y-auto pb-4">
+          {renderActivityContent()}
+
+          <nav className="p-4 space-y-1">
+            {sidebarMenuItems.map((item) => (
+              <div key={item.id}>
+                <div
+                  className="flex items-center justify-between p-3 hover:bg-gray-100 rounded-lg cursor-pointer transition-colors"
+                  onClick={() => {
+                    if (item.hasSubmenu) {
+                      toggleMenu(item.id);
+                    } else {
+                      handleNavigate(item.path);
+                    }
+                  }}
+                >
+                  <div className="flex items-center space-x-3">
+                    {React.cloneElement(item.icon, { className: 'w-5 h-5 text-blue-600' })}
+                    <span className="text-gray-700 font-medium">{item.label}</span>
+                    {item.badge && (
+                      <span className="bg-pink-500 text-white text-xs font-semibold px-2 py-0.5 rounded-full">
+                        {item.badge}
+                      </span>
+                    )}
+                  </div>
+                  {item.hasSubmenu && (
+                    expandedMenus[item.id] ? (
+                      <ChevronDown className="w-4 h-4 text-gray-400" />
+                    ) : (
+                      <ChevronRight className="w-4 h-4 text-gray-400" />
+                    )
+                  )}
                 </div>
-
-                {/* My Activity Section */}
-                <div className="flex-1 overflow-y-auto pb-4">
-                    <div className="p-4 border-b">
-                        <div
-                            className="flex items-center justify-between cursor-pointer sm:cursor-default"
-                            onClick={toggleActivityDropdown}
-                        >
-                            <h3 className="font-semibold text-gray-800 text-lg">My Activity</h3>
-                            <div className="sm:hidden">
-                                {isActivityDropdownOpen ? (
-                                    <ChevronDown className="w-5 h-5 text-gray-600" />
-                                ) : (
-                                    <ChevronRight className="w-5 h-5 text-gray-600" />
-                                )}
-                            </div>
-                        </div>
-                        <motion.div
-                            initial={{ height: 0, opacity: 0 }}
-                            animate={{
-                                height: isActivityDropdownOpen || window.innerWidth >= 640 ? 'auto' : 0,
-                                opacity: isActivityDropdownOpen || window.innerWidth >= 640 ? 1 : 0,
-                            }}
-                            transition={{ duration: 0.2 }}
-                            className="overflow-hidden sm:block"
-                        >
-                            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-3">
-                                <div onClick={() => setActiveActivity('contacted-properties')}>
-                                    <ActivityItem icon={<PhoneCall />} label="Contacted" subLabel="Properties" count="00" highlight={activeActivity === 'contacted-properties'} />
-                                </div>
-                                <div onClick={() => setActiveActivity('seen-properties')}>
-                                    <ActivityItem icon={<Eye />} label="Seen" subLabel="Properties" count="00" highlight={activeActivity === 'seen-properties'} />
-                                </div>
-                                <div onClick={() => setActiveActivity('saved-properties')}>
-                                    <ActivityItem icon={<Star />} label="Saved" subLabel="Properties" count="00" highlight={activeActivity === 'saved-properties'} />
-                                </div>
-                                <div onClick={() => setActiveActivity('recent-searches')}>
-                                    <ActivityItem icon={<Search />} label="Recent" subLabel="Searches" count="02" highlight={activeActivity === 'recent-searches'} />
-                                </div>
-                            </div>
-                        </motion.div>
-                    </div>
-
-                    {/* Conditionally render activity content based on dropdown state in mobile view */}
-                    {(isActivityDropdownOpen || window.innerWidth >= 640) && renderActivityContent()}
-
-                    <nav className="p-4 space-y-1">
-                        {sidebarMenuItems.map((item) => (
-                            <div key={item.id}>
-                                <div
-                                    className="flex items-center justify-between p-3 hover:bg-gray-100 rounded-lg cursor-pointer transition-colors"
-                                    onClick={() => {
-                                        if (item.hasSubmenu) {
-                                            toggleMenu(item.id);
-                                        } else {
-                                            handleNavigate(item.path);
-                                        }
-                                    }}
-                                >
-                                    <div className="flex items-center space-x-3">
-                                        {React.cloneElement(item.icon, { className: 'w-5 h-5 text-blue-600' })}
-                                        <span className="text-gray-700 font-medium">{item.label}</span>
-                                        {item.badge && (
-                                            <span className="bg-pink-500 text-white text-xs font-semibold px-2 py-0.5 rounded-full">
-                                                {item.badge}
-                                            </span>
-                                        )}
-                                    </div>
-                                    {item.hasSubmenu && (
-                                        expandedMenus[item.id] ? (
-                                            <ChevronDown className="w-4 h-4 text-gray-400" />
-                                        ) : (
-                                            <ChevronRight className="w-4 h-4 text-gray-400" />
-                                        )
-                                    )}
-                                </div>
-                                {item.hasSubmenu && expandedMenus[item.id] && (
-                                    <motion.div
-                                        initial={{ opacity: 0, height: 0 }}
-                                        animate={{ opacity: 1, height: 'auto' }}
-                                        exit={{ opacity: 0, height: 0 }}
-                                        transition={{ duration: 0.2 }}
-                                        className="ml-8 my-2 border-l border-gray-200"
-                                    >
-                                        {item.submenuItems.map((subItem, index) => (
-                                            <div
-                                                key={index}
-                                                className="py-2 px-4 hover:bg-gray-100 rounded-r-lg cursor-pointer text-sm text-gray-600 transition-colors flex items-center space-x-2"
-                                                onClick={(e) => {
-                                                    e.stopPropagation();
-                                                    handleNavigate(subItem.path);
-                                                }}
-                                            >
-                                                {subItem.icon && React.cloneElement(subItem.icon, { className: 'w-4 h-4' })}
-                                                <span>{subItem.label}</span>
-                                                {subItem.badge && (
-                                                    <span className="bg-pink-500 text-white text-xs font-semibold px-2 py-0.5 rounded-full">
-                                                        {subItem.badge}
-                                                    </span>
-                                                )}
-                                            </div>
-                                        ))}
-                                    </motion.div>
-                                )}
-                            </div>
-                        ))}
-                        {bottomMenuItems.map((item) => (
-                            <div
-                                key={item.id}
-                                className="flex items-center justify-between p-3 hover:bg-gray-100 rounded-lg cursor-pointer transition-colors"
-                                onClick={() => handleNavigate(item.path)}
-                            >
-                                <div className="flex items-center space-x-3">
-                                    {React.cloneElement(item.icon, { className: 'w-5 h-5 text-gray-600' })}
-                                    <span className="text-gray-700 font-medium">{item.label}</span>
-                                </div>
-                            </div>
-                        ))}
-                    </nav>
+                {item.hasSubmenu && expandedMenus[item.id] && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: 'auto' }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.2 }}
+                    className="ml-8 my-2 border-l border-gray-200"
+                  >
+                    {item.submenuItems.map((subItem, index) => (
+                      <div
+                        key={index}
+                        className="py-2 px-4 hover:bg-gray-100 rounded-r-lg cursor-pointer text-sm text-gray-600 transition-colors flex items-center space-x-2"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleNavigate(subItem.path);
+                        }}
+                      >
+                        {subItem.icon && React.cloneElement(subItem.icon, { className: 'w-4 h-4' })}
+                        <span>{subItem.label}</span>
+                        {subItem.badge && (
+                          <span className="bg-pink-500 text-white text-xs font-semibold px-2 py-0.5 rounded-full">
+                            {subItem.badge}
+                          </span>
+                        )}
+                      </div>
+                    ))}
+                  </motion.div>
+                )}
+              </div>
+            ))}
+            {bottomMenuItems.map((item) => (
+              <div key={item.id} className="flex items-center justify-between p-3 hover:bg-gray-100 rounded-lg cursor-pointer transition-colors" onClick={() => handleNavigate(item.path)}>
+                <div className="flex items-center space-x-3">
+                  {React.cloneElement(item.icon, { className: 'w-5 h-5 text-gray-600' })}
+                  <span className="text-gray-700 font-medium">{item.label}</span>
                 </div>
+              </div>
+            ))}
+          </nav>
+        </div>
 
-                <div className="p-4 border-t border-gray-200">
-                    <Button className="w-full bg-blue-50 text-blue-600 hover:bg-blue-100 rounded-lg py-3 text-sm flex items-center justify-center space-x-2">
-                        <Download className="w-4 h-4" />
-                        <span>Download App</span>
-                    </Button>
-                </div>
-            </motion.div>
-        </>
-    );
+        <div className="p-4 border-t border-gray-200">
+          <Button className="w-full bg-blue-50 text-blue-600 hover:bg-blue-100 rounded-lg py-3 text-sm flex items-center justify-center space-x-2">
+            <Download className="w-4 h-4" />
+            <span>Download App</span>
+          </Button>
+        </div>
+      </motion.div>
+    </>
+  );
 };
 
 const ActivityItem = ({ icon, label, subLabel, count, highlight }) => (
-    <div
-        className={`flex flex-col items-center p-1 rounded-md transition-colors border
-        ${highlight ? 'bg-blue-100 border-blue-500' : 'bg-gray-100 border-gray-200'}
-        cursor-pointer h-full text-center`}
-    >
-        <div
-            className={`flex items-center justify-center mb-1 rounded-full
-            ${highlight ? 'bg-blue-200' : 'bg-gray-200'}
-            w-8 h-8 sm:w-10 sm:h-10`}
-        >
-            {React.cloneElement(icon, {
-                className: `sm:w-5 sm:h-5 w-4 h-4 ${highlight ? 'text-blue-600' : 'text-gray-600'}`,
-            })}
-        </div>
-        <div className="flex-1 flex flex-col justify-center">
-            <p className={`text-xs font-semibold leading-tight ${highlight ? 'text-blue-700' : 'text-gray-600'}`}>{label}</p>
-            <p className={`text-xs font-semibold leading-tight ${highlight ? 'text-blue-700' : 'text-gray-600'}`}>{subLabel}</p>
-        </div>
-        <p className={`text-sm font-bold mt-1 ${highlight ? 'text-blue-700' : 'text-gray-800'}`}>{count}</p>
+  <div className={`flex flex-col items-center p-1 rounded-md transition-colors border
+    ${highlight ? 'bg-blue-100 border-blue-500' : 'bg-gray-100 border-gray-200'}
+    cursor-pointer h-full text-center`}>
+    <div className={`flex items-center justify-center mb-1 rounded-full
+        ${highlight ? 'bg-blue-200' : 'bg-gray-200'}
+        w-8 h-8 sm:w-10 sm:h-10`}>
+      {React.cloneElement(icon, {
+        className: `sm:w-5 sm:h-5 w-4 h-4 ${highlight ? 'text-blue-600' : 'text-gray-600'}`
+      })}
     </div>
+    <div className="flex-1 flex flex-col justify-center">
+      <p className={`text-xs font-semibold leading-tight ${highlight ? 'text-blue-700' : 'text-gray-600'}`}>{label}</p>
+      <p className={`text-xs font-semibold leading-tight ${highlight ? 'text-blue-700' : 'text-gray-600'}`}>{subLabel}</p>
+    </div>
+    <p className={`text-sm font-bold mt-1 ${highlight ? 'text-blue-700' : 'text-gray-800'}`}>{count}</p>
+  </div>
 );
 
 export default UserSidebar;
